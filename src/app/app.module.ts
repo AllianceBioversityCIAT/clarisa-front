@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/public/login/login.component';
 import { HomeComponent } from './pages/private/home/home.component';
+import { HeaderComponent } from './shared/components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
@@ -20,15 +21,17 @@ import {
   NbCardModule,
   NbButtonModule,
   NbIconModule,
-  NbFormFieldModule
+  NbFormFieldModule,
+  NbUserModule,
+  NbContextMenuModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbInputModule,
     NbDatepickerModule,
     NbDialogModule,
-    NbMenuModule,
+    NbMenuModule.forRoot(),
     NbSidebarModule,
     NbToastrModule,
     NbWindowModule,
@@ -49,6 +52,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbButtonModule,
     NbIconModule,
     NbFormFieldModule,
+    NbUserModule,
+    NbContextMenuModule,
     NbEvaIconsModule
   ],
   providers: [],

@@ -1,0 +1,22 @@
+@import "../../../../themes.scss";
+
+::ng-deep nb-user {
+    align-self: flex-end;
+
+    .initials, .user-title {
+        font-family: $font-primary-regular !important;
+        font-size: $font-s !important;
+    }
+
+    .user-name {
+        font-family: $font-primary-medium !important;
+    }
+}
+
+::ng-deep .cdk-overlay-container {
+    z-index: 9999;
+
+    .menu-title {
+        font-size: $font-s !important;
+    }
+}
