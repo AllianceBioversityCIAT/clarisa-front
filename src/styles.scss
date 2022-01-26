@@ -9,11 +9,30 @@
 @import './themes.scss';
 @import './assets/fonts/scss/fonts.scss';
 
+// Global font setting
 * {
   font-family: $font-primary-regular;
   font-size: $font-m !important;
 }
 
+// Placeholder font for browsers
+input::-webkit-input-placeholder {
+  font-family: $font-primary-medium !important;
+}
+
+input:-ms-input-placeholder { 
+  font-family: $font-primary-medium !important;
+}
+
+input::-moz-placeholder {
+  font-family: $font-primary-medium !important;
+}
+
+input:-moz-placeholder {
+  font-family: $font-primary-medium !important;
+}
+
+// Fonts
 .lightFont {
   font-family: $font-primary-light !important;
 }
@@ -30,6 +49,36 @@
   font-family: $font-primary-bold !important;
 }
 
+// Colors
+.status-basic {
+  color: var(--card-header-basic-background-color);
+}
+
+.status-primary {
+  color: var(--card-header-primary-background-color);
+}
+
+.status-success {
+  color: var(--card-header-success-background-color);
+}
+
+.status-info {
+  color: var(--card-header-info-background-color);
+}
+
+.status-warning {
+  color: var(--card-header-warning-background-color);
+}
+
+.status-danger {
+  color: var(--card-header-danger-background-color);
+}
+
+.status-control {
+  color: var(--card-header-control-background-color);
+}
+
+// Space between elements
 .example-items-rows {
   display: flex;
   margin: 0 -0.5rem;

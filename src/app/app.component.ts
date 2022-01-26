@@ -11,7 +11,7 @@ export class AppComponent {
   showHeader = true;
 
   constructor(private router: Router) { 
-    router.events.forEach((event) => {
+    this.router.events.forEach((event) => {
       if(event instanceof NavigationStart) {
           this.showHeader = event.url !== "/login";
       }
