@@ -1,0 +1,34 @@
+<div class="col-md-4">
+  <nb-card>
+    <nb-card-header class="boldFont">Welcome</nb-card-header>
+    <nb-card-body>Log in with your CGIAR credentials</nb-card-body>
+    <nb-card-body>
+      <form [formGroup]="loginForm">
+        <div class="form-group">
+          <label class="label regularFont">Email address</label>
+          <nb-form-field>
+            <nb-icon nbPrefix class="fas fa-envelope"></nb-icon>
+            <input type="email" nbInput fullWidth class="mediumFont" formControlName="signInEmail" [status]="validateField('signInEmail')">
+          </nb-form-field>
+          <div *ngIf="submitted && form['signInEmail'].errors" class="messageContainer status-danger">
+            <div *ngIf="form['signInEmail'].errors['required']" class="hiddenMessage">Email is required.</div>
+            <div *ngIf="form['signInEmail'].errors['email']" class="hiddenMessage">Email should have a valid format.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="label regularFont">Password</label>
+          <nb-form-field>
+            <nb-icon nbPrefix class="fas fa-lock"></nb-icon>
+            <input type="password" nbInput fullWidth class="mediumFont" formControlName="signInPassword" [status]="validateField('signInPassword')">
+          </nb-form-field>
+          <div *ngIf="submitted && form['signInPassword'].errors" class="messageContainer status-danger">
+            <div *ngIf="form['signInPassword'].errors['required']" class="hiddenMessage">Password is required.</div>
+            <!-- <div *ngIf="form['signInPassword'].errors['minlength']" class="hiddenMessage">Password minimum length is 6.</div> -->
+          </div>
+        </div>
+        <button type="button" nbButton hero status="success" (click)="doLogin()" class="boldFont">Login</button>
+      </form>
+    </nb-card-body>
+    <nb-card-footer>Don’t have an account? Please fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSftv_rq3VVsy0WYHnsapxsJlEpqfUK8xisAeY05OWI2odY94g/viewform" target="_blank">form.</a></nb-card-footer>
+  </nb-card>
+</div>
