@@ -26,12 +26,18 @@ import {
   NbContextMenuModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { DialogUserPromptComponent } from './shared/components/dialog-user-prompt/dialog-user-prompt.component';
+import { DialogDeleteUserPromptComponent } from './shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    DialogUserPromptComponent,
+    DialogDeleteUserPromptComponent
   ],
   imports: [
     BrowserModule,
@@ -42,19 +48,20 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
     NbInputModule,
-    NbDatepickerModule,
-    NbDialogModule,
+    NbDatepickerModule.forRoot(),
+    NbDialogModule.forRoot(),
     NbMenuModule.forRoot(),
-    NbSidebarModule,
-    NbToastrModule,
-    NbWindowModule,
+    NbSidebarModule.forRoot(),
+    NbToastrModule.forRoot(),
+    NbWindowModule.forRoot(),
     NbCardModule,
     NbButtonModule,
     NbIconModule,
     NbFormFieldModule,
     NbUserModule,
     NbContextMenuModule,
-    NbEvaIconsModule
+    NbEvaIconsModule,
+    Ng2SmartTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
