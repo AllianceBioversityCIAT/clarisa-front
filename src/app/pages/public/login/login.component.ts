@@ -52,9 +52,9 @@ export class LoginComponent implements OnInit {
 
   validateField(controlName: string): string {
     let control = this.loginForm.controls[controlName];
-    if (control.invalid && control.touched) {
+    if (this.submitted && control.invalid && control.touched) {
       return 'danger';
-    } if (!control.invalid && control.touched) { 
+    } if (this.submitted && !control.invalid && control.touched) { 
       return 'success';
     } else {
       return 'basic';
