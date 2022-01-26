@@ -31,7 +31,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/nebular-icons/scss/nebular-icons.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
             ],
             "scripts": []
           },
@@ -40,8 +44,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -99,7 +103,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/nebular-icons/scss/nebular-icons.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
             ],
             "scripts": []
           }

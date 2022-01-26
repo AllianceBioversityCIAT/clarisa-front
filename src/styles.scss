@@ -1,1 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'themes' as *;
+@use '@nebular/theme/styles/globals' as *;
+
+@include nb-install() {
+  @include nb-theme-global();
+};
+
+@import './themes.scss';
+@import './assets/fonts/scss/fonts.scss';
+
+* {
+  font-family: $font-primary-regular;
+  font-size: $font-m !important;
+}
+
+.lightFont {
+  font-family: $font-primary-light !important;
+}
+
+.regularFont {
+  font-family: $font-primary-regular !important;
+}
+
+.mediumFont {
+  font-family: $font-primary-medium !important;
+}
+
+.boldFont {
+  font-family: $font-primary-bold !important;
+}
+
+.example-items-rows {
+  display: flex;
+  margin: 0 -0.5rem;
+
+  > * {
+    margin: 0 0.5rem;
+  }
+}
