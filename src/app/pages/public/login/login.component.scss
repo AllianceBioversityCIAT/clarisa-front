@@ -1,0 +1,42 @@
+@import '../../../../themes.scss';
+
+* {
+    box-sizing: border-box;
+}
+
+::ng-deep app-login {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    nb-card {
+        align-items: center;
+
+        nb-card-header {
+            font-size: $font-l !important;
+        }
+    
+        nb-card-footer, nb-card-footer > a {
+            font-size: $font-s !important;
+        }
+    }
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.messageContainer {
+    display: flex;
+    margin-top: 2px;
+}
+
+.hiddenMessage {
+    font-size: $font-s !important;
+}
+
+.status-danger {
+    color: var(--card-header-danger-background-color);
+}
