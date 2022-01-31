@@ -1,7 +1,7 @@
 <nb-card>
     <nb-card-body class="regularFont">Are you sure you want to delete?</nb-card-body>
     <nb-card-footer class="example-items-rows">
-        <button nbButton status="success" class="boldFont">Ok</button>
+        <button nbButton status="success" (click)="submit()" class="boldFont">Ok</button>
         <button nbButton status="danger" (click)="cancel()" class="cancel boldFont">Cancel</button>
     </nb-card-footer>
 </nb-card>

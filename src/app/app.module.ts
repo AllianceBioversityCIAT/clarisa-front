@@ -27,7 +27,7 @@ import {
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { DialogUserPromptComponent } from './shared/components/dialog-user-prompt/dialog-user-prompt.component';
+import { DialogAddUserPromptComponent } from './shared/components/dialog-add-user-prompt/dialog-add-user-prompt.component';
 import { DialogDeleteUserPromptComponent } from './shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
 import { DialogEditUserPromptComponent } from './shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
 
@@ -37,9 +37,9 @@ import { DialogEditUserPromptComponent } from './shared/components/dialog-edit-u
     LoginComponent,
     HomeComponent,
     HeaderComponent,
-    DialogUserPromptComponent,
+    DialogAddUserPromptComponent,
     DialogDeleteUserPromptComponent,
-    DialogEditUserPromptComponent
+    DialogEditUserPromptComponent,
   ],
   imports: [
     BrowserModule,

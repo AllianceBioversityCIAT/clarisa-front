@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  submitted = false;
+  submitted: boolean = false;
 
   constructor(private router: Router, private formBuilder: FormBuilder) {
     this.loginForm = this.createLoginForm();
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
           ])
         ]
       }
-    )
+    );
   }
 
   doLogin() {
@@ -46,15 +46,17 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.controls['signInPassword'].value;
 
     this.submitted = true;
-    console.log(email, password);
-    // this.router.navigate(['/home']);
+    
+    if (this.loginForm.valid) {
+      this.router.navigate(['/home']); 
+    }
   }
 
   validateField(controlName: string): string {
     let control = this.loginForm.controls[controlName];
-    if (this.submitted && control.invalid && control.touched) {
+    if (this.submitted && control.invalid) {
       return 'danger';
-    } if (this.submitted && !control.invalid && control.touched) { 
+    } if (this.submitted && !control.invalid) { 
       return 'success';
     } else {
       return 'basic';
