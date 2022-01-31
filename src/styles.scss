@@ -96,3 +96,12 @@ input:-moz-placeholder {
     margin: 0.5rem 0;
   }
 }
+
+.messageContainer {
+  display: flex;
+  margin-top: 2px;
+}
+
+.hiddenMessage {
+  font-size: $font-s !important;
+}

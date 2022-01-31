@@ -7,10 +7,14 @@ import { NbDialogRef } from '@nebular/theme';
   styleUrls: ['./dialog-delete-user-prompt.component.scss']
 })
 export class DialogDeleteUserPromptComponent implements OnInit {
-
+  
   constructor(@Optional() protected ref: NbDialogRef<any>) { }
 
   ngOnInit(): void {
+  }
+
+  submit() {
+    this.ref.close();
   }
 
   cancel() {

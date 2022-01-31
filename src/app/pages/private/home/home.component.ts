@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
-import { DialogDeleteUserPromptComponent } from 'src/app/shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
+import { DialogAddUserPromptComponent } from 'src/app/shared/components/dialog-add-user-prompt/dialog-add-user-prompt.component';
 import { DialogEditUserPromptComponent } from 'src/app/shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
-import { DialogUserPromptComponent } from 'src/app/shared/components/dialog-user-prompt/dialog-user-prompt.component';
+import { DialogDeleteUserPromptComponent } from 'src/app/shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
 import { SmartTableService } from 'src/app/shared/services/smart-table.service';
 
 @Component({
@@ -53,31 +53,37 @@ export class HomeComponent implements OnInit {
   };
 
   source: LocalDataSource = new LocalDataSource();
+  data: any;
 
   constructor(private service: SmartTableService, private dialogService: NbDialogService) {
-    const data = this.service.getData();
-    this.source.load(data);
+    this.data = this.service.getData();
+    this.source.load(this.data);
   }
 
   ngOnInit(): void {
   }
 
-  addUser(event: any) {
-    // this.open(DialogUserPromptComponent);
-    // console.log(event);
+  addUser() {
+    this.openAddUser(DialogAddUserPromptComponent, this.data);
   }
 
   editUser(event: any) {
-    this.open(DialogEditUserPromptComponent, event.data);
-    // this.dialogEditUser.loadData(event.data);
+    this.openEditUser(DialogEditUserPromptComponent, event.data);
   }
 
   deleteUser(event: any) {
-    // this.open(DialogDeleteUserPromptComponent);
-    // console.log(event);
+    this.openDeleteUser(DialogDeleteUserPromptComponent, event.data);
   }
 
-  open(dialog: any, data: any) {
+  openAddUser(dialog: any, data: any) {
+    this.dialogService.open(dialog, {
+      context: {
+        data: data
+      }
+    }).onClose.subscribe(info => this.source.add(info));
+  }
+
+  openEditUser(dialog: any, data: any) {
     this.dialogService.open(dialog, {
       context: {
         id: data.id,
@@ -86,7 +92,11 @@ export class HomeComponent implements OnInit {
         username: data.username,
         email: data.email,
       }
-    }).onClose.subscribe(m => this.source.update(data, m));
+    }).onClose.subscribe(info => this.source.update(data, info));
+  }
+
+  openDeleteUser(dialog: any, data: any) {
+    this.dialogService.open(dialog).onClose.subscribe(info => this.source.remove(data));
   }
 
 }
