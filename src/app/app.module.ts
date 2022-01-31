@@ -29,6 +29,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { DialogUserPromptComponent } from './shared/components/dialog-user-prompt/dialog-user-prompt.component';
 import { DialogDeleteUserPromptComponent } from './shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
+import { DialogEditUserPromptComponent } from './shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { DialogDeleteUserPromptComponent } from './shared/components/dialog-dele
     HomeComponent,
     HeaderComponent,
     DialogUserPromptComponent,
-    DialogDeleteUserPromptComponent
+    DialogDeleteUserPromptComponent,
+    DialogEditUserPromptComponent
   ],
   imports: [
     BrowserModule,

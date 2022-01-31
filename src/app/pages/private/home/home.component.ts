@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { DialogDeleteUserPromptComponent } from 'src/app/shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
+import { DialogEditUserPromptComponent } from 'src/app/shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
 import { DialogUserPromptComponent } from 'src/app/shared/components/dialog-user-prompt/dialog-user-prompt.component';
 import { SmartTableService } from 'src/app/shared/services/smart-table.service';
 
@@ -45,7 +46,7 @@ export class HomeComponent implements OnInit {
         type: 'string',
       },
       email: {
-        title: 'E-mail',
+        title: 'Email',
         type: 'string',
       }
     },
@@ -62,21 +63,30 @@ export class HomeComponent implements OnInit {
   }
 
   addUser(event: any) {
-    this.open();
-    console.log(event)
+    // this.open(DialogUserPromptComponent);
+    // console.log(event);
   }
 
   editUser(event: any) {
-    console.log(event)
+    this.open(DialogEditUserPromptComponent, event.data);
+    // this.dialogEditUser.loadData(event.data);
   }
 
   deleteUser(event: any) {
-    this.dialogService.open(DialogDeleteUserPromptComponent);
-    console.log(event)
+    // this.open(DialogDeleteUserPromptComponent);
+    // console.log(event);
   }
 
-  open() {
-    this.dialogService.open(DialogUserPromptComponent);
+  open(dialog: any, data: any) {
+    this.dialogService.open(dialog, {
+      context: {
+        id: data.id,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        username: data.username,
+        email: data.email,
+      }
+    }).onClose.subscribe(m => this.source.update(data, m));
   }
 
 }
