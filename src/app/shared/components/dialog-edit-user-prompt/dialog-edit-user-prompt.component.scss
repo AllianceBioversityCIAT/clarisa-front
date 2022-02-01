@@ -3,6 +3,8 @@ nb-card {
     align-items: center;
     
     nb-card-body {
-        flex-flow: column;
+        form {
+            flex-flow: column;
+        }
     }
 }
