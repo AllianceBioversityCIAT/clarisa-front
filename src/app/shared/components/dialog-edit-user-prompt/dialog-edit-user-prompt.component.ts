@@ -8,7 +8,7 @@ import { NbDialogRef } from '@nebular/theme';
   styleUrls: ['./dialog-edit-user-prompt.component.scss']
 })
 export class DialogEditUserPromptComponent implements OnInit {
-  @Input() id: string = '';
+  @Input() id: number = 0;
   @Input() firstName: string = '';
   @Input() lastName: string = '';
   @Input() username: string = '';

@@ -11,7 +11,7 @@ export class DialogAddUserPromptComponent implements OnInit {
   @Input() data: any;
   addUserForm: FormGroup;
   submitted: boolean = false;
-  id: string = '';
+  id: number = 0;
   userInfo: object = {};
   
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder) {
