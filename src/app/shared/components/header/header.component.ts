@@ -10,6 +10,8 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  fullName: string = '';
+  email: string = '';
   items = [
     { title: 'Logout' },
   ];
@@ -18,6 +20,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.fullName = this.authenticationService.currentUserValue['first_name'] + ' ' + this.authenticationService.currentUserValue['last_name'];
+    this.email = this.authenticationService.currentUserValue['email'];
+
     this.nbMenuService.onItemClick()
       .pipe(
         filter(({ tag }) => tag === 'my-context-menu'),
