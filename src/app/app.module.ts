@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/public/login/login.component';
 import { HomeComponent } from './pages/private/home/home.component';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { DialogAddUserPromptComponent } from './shared/components/dialog-add-user-prompt/dialog-add-user-prompt.component';
+import { DialogDeleteUserPromptComponent } from './shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
+import { DialogEditUserPromptComponent } from './shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
@@ -27,9 +30,8 @@ import {
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { DialogAddUserPromptComponent } from './shared/components/dialog-add-user-prompt/dialog-add-user-prompt.component';
-import { DialogDeleteUserPromptComponent } from './shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
-import { DialogEditUserPromptComponent } from './shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BasicAuthInterceptor } from './shared/helpers/basic-auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -63,9 +65,12 @@ import { DialogEditUserPromptComponent } from './shared/components/dialog-edit-u
     NbUserModule,
     NbContextMenuModule,
     NbEvaIconsModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

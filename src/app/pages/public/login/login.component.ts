@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted: boolean = false;
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private authenticationService: AuthService) {
     this.loginForm = this.createLoginForm();
   }
 
@@ -46,9 +47,20 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.controls['signInPassword'].value;
 
     this.submitted = true;
-    
+
     if (this.loginForm.valid) {
-      this.router.navigate(['/home']); 
+      this.authenticationService.loginAD(email, password).subscribe(
+        res => {
+          if (res.authenticated === true) {
+            this.router.navigate(['/home']);
+          } else {
+            // this.alertService.error('Invalid password');
+            console.log('Invalid password');
+          }
+        }, error => {
+          console.log('doLogin', error)
+          // this.alertService.error('User not found');
+        });
     }
   }
 
@@ -56,7 +68,7 @@ export class LoginComponent implements OnInit {
     let control = this.loginForm.controls[controlName];
     if (this.submitted && control.invalid) {
       return 'danger';
-    } if (this.submitted && !control.invalid) { 
+    } if (this.submitted && !control.invalid) {
       return 'success';
     } else {
       return 'basic';
