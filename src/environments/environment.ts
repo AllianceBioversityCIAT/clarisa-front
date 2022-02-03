@@ -3,7 +3,18 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: '/api',
+  app_user: 'marlosadmin',
+  app_password: '6723646',
+  default_user:{
+    email: 'MARLOSupport@cgiar.org',
+    name: 'MARLO support',
+    comments: 'CLARISA Frontend App'
+  },
+  config:{
+    apiUrl:'apiUrl'
+  }
 };
 
 /*

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbMenuService } from '@nebular/theme';
 import { filter, map } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ export class HeaderComponent implements OnInit {
     { title: 'Logout' },
   ];
 
-  constructor(private nbMenuService: NbMenuService, private router: Router) {
+  constructor(private nbMenuService: NbMenuService, private router: Router, private authenticationService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit {
       .subscribe(title => {
         switch (title) {
           case 'Logout':
+            this.authenticationService.logout();
             this.router.navigate(['/login']);
             break;
 
