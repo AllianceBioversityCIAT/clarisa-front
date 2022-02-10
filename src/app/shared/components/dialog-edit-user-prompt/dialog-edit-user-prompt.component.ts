@@ -124,8 +124,13 @@ export class DialogEditUserPromptComponent implements OnInit {
       this.showPasswordField = true;
     }
 
-    this.editUserForm = this.createEditUserForm();
-    this.loadUserInfo();
+    this.editUserForm.controls['password'].clearValidators();
+
+    if(this.showPasswordField){
+      this.editUserForm.controls['password'].addValidators(Validators.required);
+    } 
+
+    this.editUserForm.controls['password'].updateValueAndValidity();
   }
 
   getInputType() {

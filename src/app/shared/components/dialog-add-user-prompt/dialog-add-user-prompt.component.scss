@@ -1,4 +1,7 @@
+@import "../../../../themes.scss";
+
 nb-card {
+    width: 520px;
     display: flex;
     align-items: center;
     margin-bottom: 0;
@@ -6,6 +9,27 @@ nb-card {
     nb-card-body {
         form {
             flex-flow: column;
+
+            .one-column {
+                width: calc(50% - 1rem) !important;
+            }
+
+            .two-columns {
+                display: flex;
+                flex-flow: row;
+
+                > * {
+                    width: 50%;
+                }
+            }
+
+            .field-margin {
+                margin: 0 0.5rem;
+            }
         }
     }
+}
+
+::ng-deep nb-option {
+    font-family: $font-primary-regular !important;
 }

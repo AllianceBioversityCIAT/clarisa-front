@@ -13,6 +13,7 @@ export class SmartTableService {
     isCGIAR: 'No',
     email: 'mdo@gmail.com',
     password: 'xgTbsHakJiH',
+    lastLogin: '02-10-2022',
     age: '28',
   }, {
     id: 2,
@@ -22,6 +23,7 @@ export class SmartTableService {
     isCGIAR: 'Yes',
     email: 'j.thornton@cgiar.org',
     password: 'iHjYtklWe',
+    lastLogin: '02-10-2022',
     age: '45',
   }, {
     id: 3,
@@ -31,6 +33,7 @@ export class SmartTableService {
     isCGIAR: 'No',
     email: 'twitter@outlook.com',
     password: 'oPytRghJwsF',
+    lastLogin: '02-10-2022',
     age: '18',
   }, {
     id: 4,
