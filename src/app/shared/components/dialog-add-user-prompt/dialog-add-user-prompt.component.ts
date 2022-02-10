@@ -13,9 +13,13 @@ export class DialogAddUserPromptComponent implements OnInit {
   submitted: boolean = false;
   id: number = 0;
   userInfo: object = {};
+  isCGIAR: string = 'No';
+  showPasswordField: boolean = true;
+  showPassword: boolean = true;
   
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder) {
     this.addUserForm = this.createAddUserForm();
+    this.addUserForm.controls['isCGIAR'].setValue(this.isCGIAR);
    }
 
   ngOnInit(): void {
@@ -44,11 +48,23 @@ export class DialogAddUserPromptComponent implements OnInit {
             Validators.required
           ])
         ],
+        isCGIAR: [
+          null,
+          Validators.compose([
+            Validators.required
+          ])
+        ],
         email: [
           null,
           Validators.compose([
             Validators.email,
             Validators.required
+          ])
+        ],
+        password: [
+          null,
+          Validators.compose([
+            (this.showPasswordField) ? Validators.required : null
           ])
         ]
       }
@@ -66,7 +82,7 @@ export class DialogAddUserPromptComponent implements OnInit {
     }
   }
   
-  submit(firstName: any, lastName: any, username: any, email: any) {
+  submit(firstName: any, lastName: any, username: any, isCGIAR: any, email: any, password?: any) {
     this.submitted = true;
 
     if (this.addUserForm.valid) {
@@ -75,11 +91,40 @@ export class DialogAddUserPromptComponent implements OnInit {
         firstName: firstName,
         lastName: lastName,
         username: username,
-        email: email
+        isCGIAR: isCGIAR,
+        email: email,
+        password: password
       };
-  
+
       this.ref.close(this.userInfo);
     }
+  }
+
+  onSelectChange(event: any) {
+    if (event == 'Yes') {
+      this.showPasswordField = false;
+    } else {
+      this.showPasswordField = true;
+    }
+
+    this.addUserForm.controls['password'].clearValidators();
+
+    if(this.showPasswordField){
+      this.addUserForm.controls['password'].addValidators(Validators.required);
+    } 
+
+    this.addUserForm.controls['password'].updateValueAndValidity();
+  }
+
+  getInputType() {
+    if (this.showPassword) {
+      return 'text';
+    }
+    return 'password';
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   cancel() {
