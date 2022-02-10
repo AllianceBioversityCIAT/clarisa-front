@@ -21,8 +21,7 @@ export class DialogEditUserPromptComponent implements OnInit {
   showPasswordField: boolean = false;
   showPassword: boolean = false;
 
-  constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder) {
-  }
+  constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder) { }
   
   ngOnInit(): void {
     this.showPasswordField = (this.isCGIAR == 'Yes') ? false : true;
@@ -124,7 +123,9 @@ export class DialogEditUserPromptComponent implements OnInit {
     } else {
       this.showPasswordField = true;
     }
-    console.log(event)
+
+    this.editUserForm = this.createEditUserForm();
+    this.loadUserInfo();
   }
 
   getInputType() {
