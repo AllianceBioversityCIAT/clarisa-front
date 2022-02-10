@@ -1,5 +1,7 @@
 app-header {
     width: 100%;
     display: flex;
-    flex-flow: column;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
 }

@@ -1,7 +1,8 @@
 nb-card {
     display: flex;
     align-items: center;
-    
+    margin-bottom: 0;
+
     nb-card-body {
         form {
             flex-flow: column;

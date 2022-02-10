@@ -11,13 +11,17 @@ export class SmartTableService {
     lastName: 'Otto',
     username: '@mdo',
     email: 'mdo@gmail.com',
+    password: 'xgTbsHakJiH',
+    isCGIAR: 'No',
     age: '28',
   }, {
     id: 2,
     firstName: 'Jacob',
     lastName: 'Thornton',
-    username: '@fat',
-    email: 'fat@yandex.ru',
+    username: 'jthornton',
+    email: 'j.thornton@cgiar.org',
+    password: 'iHjYtklWe',
+    isCGIAR: 'Yes',
     age: '45',
   }, {
     id: 3,
@@ -25,6 +29,8 @@ export class SmartTableService {
     lastName: 'Bird',
     username: '@twitter',
     email: 'twitter@outlook.com',
+    password: 'oPytRghJwsF',
+    isCGIAR: 'No',
     age: '18',
   }, {
     id: 4,
