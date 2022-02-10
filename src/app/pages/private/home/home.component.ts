@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
       id: {
         title: 'ID',
         type: 'number',
+        width: '5%',
       },
       firstName: {
         title: 'First Name',
@@ -45,9 +46,18 @@ export class HomeComponent implements OnInit {
         title: 'Username',
         type: 'string',
       },
+      isCGIAR: {
+        title: 'Is CGIAR',
+        type: 'string',
+        width: '11%',
+      },
       email: {
         title: 'Email',
         type: 'string',
+      },
+      lastLogin: {
+        title: 'Last Login',
+        type: 'string'
       }
     },
   };
@@ -90,7 +100,9 @@ export class HomeComponent implements OnInit {
         firstName: data.firstName,
         lastName: data.lastName,
         username: data.username,
+        isCGIAR: data.isCGIAR,
         email: data.email,
+        password: data.password
       }
     }).onClose.subscribe(info => this.source.update(data, info));
   }

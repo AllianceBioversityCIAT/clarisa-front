@@ -8,12 +8,12 @@ import { NavigationStart, Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'clarisa-frontend';
-  showHeader = true;
+  show = true;
 
   constructor(private router: Router) { 
     this.router.events.forEach((event) => {
       if(event instanceof NavigationStart) {
-          this.showHeader = event.url == "/home";
+          this.show = event.url == "/home";
       }
     });
   }

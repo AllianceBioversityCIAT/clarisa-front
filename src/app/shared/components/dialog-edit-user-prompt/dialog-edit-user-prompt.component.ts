@@ -12,16 +12,21 @@ export class DialogEditUserPromptComponent implements OnInit {
   @Input() firstName: string = '';
   @Input() lastName: string = '';
   @Input() username: string = '';
+  @Input() isCGIAR: string = '';
   @Input() email: string = '';
-  editUserForm: FormGroup;
+  @Input() password: string = '';
+  editUserForm!: FormGroup;
   submitted: boolean = false;
   userInfo: object = {};
+  showPasswordField: boolean = false;
+  showPassword: boolean = false;
 
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder) {
-    this.editUserForm = this.createEditUserForm();
   }
   
   ngOnInit(): void {
+    this.showPasswordField = (this.isCGIAR == 'Yes') ? false : true;
+    this.editUserForm = this.createEditUserForm();
     this.loadUserInfo();
   }
 
@@ -30,15 +35,6 @@ export class DialogEditUserPromptComponent implements OnInit {
   createEditUserForm(): FormGroup {
     return this.formBuilder.group(
       {
-        id: [
-          {
-            value: '',
-            disabled: true
-          },
-          Validators.compose([
-            Validators.required
-          ])
-        ],
         firstName: [
           null,
           Validators.compose([
@@ -57,11 +53,23 @@ export class DialogEditUserPromptComponent implements OnInit {
             Validators.required
           ])
         ],
+        isCGIAR: [
+          null,
+          Validators.compose([
+            Validators.required
+          ])
+        ],
         email: [
           null,
           Validators.compose([
             Validators.email,
             Validators.required
+          ])
+        ],
+        password: [
+          null,
+          Validators.compose([
+            (this.showPasswordField) ? Validators.required : null
           ])
         ]
       }
@@ -69,11 +77,17 @@ export class DialogEditUserPromptComponent implements OnInit {
   }
 
   loadUserInfo() {
-    this.editUserForm.controls['id'].setValue(this.id);
     this.editUserForm.controls['firstName'].setValue(this.firstName);
     this.editUserForm.controls['lastName'].setValue(this.lastName);
     this.editUserForm.controls['username'].setValue(this.username);
+    if (this.isCGIAR && this.isCGIAR != undefined) {
+      this.editUserForm.controls['isCGIAR'].setValue(this.isCGIAR);
+    } else {
+      this.editUserForm.controls['isCGIAR'].setValue('No');
+      this.showPasswordField = true;
+    }
     this.editUserForm.controls['email'].setValue(this.email);
+    this.editUserForm.controls['password'].setValue(this.password);
   }
 
   validateField(controlName: string): string {
@@ -87,7 +101,7 @@ export class DialogEditUserPromptComponent implements OnInit {
     }
   }
 
-  submit(firstName: any, lastName: any, username: any, email: any) {
+  submit(firstName: any, lastName: any, username: any, isCGIAR: any, email: any, password?: any) {
     this.submitted = true;
 
     if (this.editUserForm.valid) {
@@ -95,11 +109,33 @@ export class DialogEditUserPromptComponent implements OnInit {
         firstName: firstName,
         lastName: lastName,
         username: username,
-        email: email
+        isCGIAR: isCGIAR,
+        email: email,
+        password: password
       };
 
       this.ref.close(this.userInfo);
     }
+  }
+
+  onSelectChange(event: any) {
+    if (event == 'Yes') {
+      this.showPasswordField = false;
+    } else {
+      this.showPasswordField = true;
+    }
+    console.log(event)
+  }
+
+  getInputType() {
+    if (this.showPassword) {
+      return 'text';
+    }
+    return 'password';
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   cancel() {

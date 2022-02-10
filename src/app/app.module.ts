@@ -26,12 +26,14 @@ import {
   NbIconModule,
   NbFormFieldModule,
   NbUserModule,
-  NbContextMenuModule
+  NbContextMenuModule,
+  NbSelectModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BasicAuthInterceptor } from './shared/helpers/basic-auth.interceptor';
+import { MenuComponent } from './shared/components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { BasicAuthInterceptor } from './shared/helpers/basic-auth.interceptor';
     DialogAddUserPromptComponent,
     DialogDeleteUserPromptComponent,
     DialogEditUserPromptComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ import { BasicAuthInterceptor } from './shared/helpers/basic-auth.interceptor';
     NbUserModule,
     NbContextMenuModule,
     NbEvaIconsModule,
+    NbSelectModule,
     Ng2SmartTableModule,
     HttpClientModule
   ],
