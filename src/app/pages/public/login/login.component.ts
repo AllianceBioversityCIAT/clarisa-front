@@ -51,7 +51,9 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authenticationService.loginAD(email, password).subscribe(
         res => {
+          console.log(res)
           if (res.authenticated === true) {
+            console.log(res.authenticated)
             this.router.navigate(['/home']);
           } else {
             // this.alertService.error('Invalid password');

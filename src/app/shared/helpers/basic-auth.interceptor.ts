@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class BasicAuthInterceptor implements HttpInterceptor {
 
-    constructor() { }
+    constructor(private auth: AuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let oa = `${environment['app_user']}:${environment['app_password']}`
+        let token = this.auth.currentUserValue.token;
 
-        console.log('Intercerptor oa ' + `${environment['app_user']}`)
+        console.log('Intercerptor oa ' + token);
         request = request.clone({
             setHeaders: {
                 'Cache-Control': 'no-cache',
-                Authorization: `Basic ` + btoa(oa)
+                Authorization: token
             }
         });
 
