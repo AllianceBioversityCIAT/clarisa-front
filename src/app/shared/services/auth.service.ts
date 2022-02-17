@@ -29,10 +29,8 @@ export class AuthService {
   }
 
   getUserAD(userEmail: string, userPassword: string) {
-    let oa = `${environment['app_user']}:${environment['app_password']}`
     var httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'application/json');
-    httpHeaders.append("Authorization", "Basic " + oa);
     const httpOptions = {
       headers: httpHeaders
     };
@@ -40,16 +38,15 @@ export class AuthService {
       "email": userEmail,
       "password": userPassword
     }
-    return this.http.post<any>(`${environment['apiUrl']}/UserAuthentication`, params, httpOptions);
+    return this.http.post<any>(`${environment['apiUrl']}auth/login`, params, httpOptions);
   }
 
   loginAD(email: string, password: string) {
     return this.getUserAD(email, password).pipe(map((user: User) => {
       console.log(user.email);
       console.log(user.authenticated);
-      user.token = 'fake-jwt-token';
-      user.expiresIn = moment().add(30, 'minutes').unix();
-      // delete user.password
+      console.log(user.token);
+      delete user.password;
       localStorage.setItem('currentUser', JSON.stringify(user));
       if (this.currentUserSubject) {
         this.currentUserSubject.next(user);
