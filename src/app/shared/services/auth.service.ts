@@ -4,7 +4,6 @@ import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { User } from '../interfaces/User';
-import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -43,9 +42,9 @@ export class AuthService {
 
   loginAD(email: string, password: string) {
     return this.getUserAD(email, password).pipe(map((user: User) => {
-      console.log(user.email);
-      console.log(user.authenticated);
-      console.log(user.token);
+      // console.log(user.email);
+      // console.log(user.authenticated);
+      // console.log(user.token);
       delete user.password;
       localStorage.setItem('currentUser', JSON.stringify(user));
       if (this.currentUserSubject) {
