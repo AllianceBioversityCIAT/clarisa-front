@@ -4,7 +4,8 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { DialogAddUserPromptComponent } from 'src/app/shared/components/dialog-add-user-prompt/dialog-add-user-prompt.component';
 import { DialogEditUserPromptComponent } from 'src/app/shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
 import { DialogDeleteUserPromptComponent } from 'src/app/shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
-import { SmartTableService } from 'src/app/shared/services/smart-table.service';
+// import { SmartTableService } from 'src/app/shared/services/smart-table.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -65,12 +66,16 @@ export class HomeComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   data: any;
 
-  constructor(private service: SmartTableService, private dialogService: NbDialogService) {
-    this.data = this.service.getData();
-    this.source.load(this.data);
+  constructor(/*private service: SmartTableService,*/ private dialogService: NbDialogService, private user: UserService) {
+    // this.data = this.service.getData();
+    // this.source.load(this.data);
   }
 
   ngOnInit(): void {
+    this.user.getUsers().subscribe(x => {
+      console.log(x);
+      this.source.load(x);
+    });
   }
 
   addUser() {
