@@ -11,6 +11,11 @@
     align-items: center;
     justify-content: center;
 
+    nb-alert {
+        align-items: center;
+        font-family: $font-primary-medium !important;
+    }
+
     nb-card {
         align-items: center;
 

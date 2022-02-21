@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dialog-add-user-prompt',
@@ -11,15 +12,17 @@ export class DialogAddUserPromptComponent implements OnInit {
   @Input() data: any;
   addUserForm: FormGroup;
   submitted: boolean = false;
-  id: number = 0;
   userInfo: object = {};
-  isCGIAR: string = 'No';
-  showPasswordField: boolean = true;
+  cgiarUser: string = 'Yes';
+  showField: boolean = false;
+  disableField: boolean = true;
+  showPasswordField: boolean = false;
   showPassword: boolean = true;
+  searchUser: boolean = false;
   
-  constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder) {
+  constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private userService: UserService) {
     this.addUserForm = this.createAddUserForm();
-    this.addUserForm.controls['isCGIAR'].setValue(this.isCGIAR);
+    this.addUserForm.controls['cgiarUser'].setValue(this.cgiarUser);
    }
 
   ngOnInit(): void {
@@ -48,7 +51,7 @@ export class DialogAddUserPromptComponent implements OnInit {
             Validators.required
           ])
         ],
-        isCGIAR: [
+        cgiarUser: [
           null,
           Validators.compose([
             Validators.required
@@ -82,28 +85,31 @@ export class DialogAddUserPromptComponent implements OnInit {
     }
   }
   
-  submit(firstName: any, lastName: any, username: any, isCGIAR: any, email: any, password?: any) {
+  submit(firstName: any, lastName: any, username: any, cgiarUser: any, email: any, password?: any) {
     this.submitted = true;
 
     if (this.addUserForm.valid) {
       this.userInfo = {
-        id: this.data.length+1,
         firstName: firstName,
         lastName: lastName,
         username: username,
-        isCGIAR: isCGIAR,
+        cgiarUser: cgiarUser == 'Yes' ? true : false,
         email: email,
         password: password
       };
 
-      this.ref.close(this.userInfo);
+      this.userService.postUser(this.userInfo).subscribe(x => {
+        this.ref.close(x);
+      });
     }
   }
 
   onSelectChange(event: any) {
     if (event == 'Yes') {
       this.showPasswordField = false;
+      this.disableField = true;
     } else {
+      this.disableField = false;
       this.showPasswordField = true;
     }
 
@@ -114,6 +120,20 @@ export class DialogAddUserPromptComponent implements OnInit {
     } 
 
     this.addUserForm.controls['password'].updateValueAndValidity();
+  }
+
+  loadUserInfo() {
+    this.searchUser = true;
+    let email = this.addUserForm.controls['email'].value;
+    let cgiarUser = this.addUserForm.controls['cgiarUser'].value == 'Yes' ? true : false;
+
+    this.userService.getUserByEmail({email, cgiarUser}).subscribe(x => {
+      this.addUserForm.controls['username'].setValue(x[0].username);
+      this.addUserForm.controls['firstName'].setValue(x[0].firstName);
+      this.addUserForm.controls['lastName'].setValue(x[0].lastName);
+    });
+
+    this.showField = true;
   }
 
   getInputType() {

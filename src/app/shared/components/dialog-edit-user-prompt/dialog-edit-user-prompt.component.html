@@ -35,13 +35,13 @@
                 <div class="field-margin">
                     <label class="label regularFont">Is CGIAR</label>
                     <nb-form-field>
-                        <nb-select #isCGIARInput class="regularFont" formControlName="isCGIAR" [(selected)]="isCGIAR" [status]="validateField('isCGIAR')" (selectedChange)="onSelectChange($event)">
+                        <nb-select #cgiarUserInput class="regularFont" formControlName="cgiarUser" [(selected)]="cgiarUser" [status]="validateField('cgiarUser')" (selectedChange)="onSelectChange($event)">
                             <nb-option value="Yes">Yes</nb-option>
                             <nb-option value="No">No</nb-option>
                         </nb-select>
                     </nb-form-field>
-                    <div *ngIf="submitted && form['isCGIAR'].errors" class="messageContainer status-danger">
-                        <div *ngIf="form['isCGIAR'].errors['required']" class="hiddenMessage">Is CGIAR is required.</div>
+                    <div *ngIf="submitted && form['cgiarUser'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['cgiarUser'].errors['required']" class="hiddenMessage">Is CGIAR is required.</div>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
         </form>
     </nb-card-body>
     <nb-card-footer class="example-items-rows">
-        <button nbButton status="success" class="boldFont" (click)="submit(firstNameInput.value, lastNameInput.value, usernameInput.value, isCGIARInput.selected, emailInput.value, passwordInput.value)">Submit</button>
+        <button nbButton status="success" class="boldFont" (click)="submit(firstNameInput.value, lastNameInput.value, usernameInput.value, cgiarUserInput.selected, emailInput.value, passwordInput.value)">Submit</button>
         <button nbButton status="danger" (click)="cancel()" class="cancel boldFont">Cancel</button>
     </nb-card-footer>
 </nb-card>

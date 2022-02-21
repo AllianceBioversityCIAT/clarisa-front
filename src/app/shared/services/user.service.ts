@@ -11,25 +11,31 @@ export class UserService {
   constructor(private http: HttpClient, private auth: AuthService) { }
 
   getUsers() {
-    let token = `Bearer ${this.auth.currentUserValue.token}`;
-    var httpHeaders = new HttpHeaders();
-
-    httpHeaders = httpHeaders.append('Cache-Control', 'no-cache');
-    httpHeaders = httpHeaders.append('Authorization', token);
-
-    
-    const httpOptions = {
-      headers: httpHeaders
-    };
-
-    return this.http.get<any>(`${environment['apiUrl']}users/all`, httpOptions);
+    return this.http.get<any>(`${environment['apiUrl']}users/all`);
   }
 
-  postUser() {
+  getUserByEmail(searchData: any) {
+    const body = {
+      "username": searchData['email'],
+      "isCgiarUser": searchData['isCGIAR']
+    }
 
+    return this.http.post<any>(`${environment['apiUrl']}users/get/username`, body);
   }
 
-  deleteUser() {
+  postUser(user: any) {
+    const body = user;
 
+    return this.http.post<any>(`${environment['apiUrl']}users/save`, body);
+  }
+
+  updateUser(user: any) {
+    const body = user;
+
+    return this.http.put<any>(`${environment['apiUrl']}users/update`, body);
+  }
+
+  deleteUser(user: any) {
+    return this.http.delete<any>(`${environment['apiUrl']}users/delete/${user['id']}`);
   }
 }

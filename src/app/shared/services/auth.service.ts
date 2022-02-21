@@ -42,9 +42,6 @@ export class AuthService {
 
   loginAD(email: string, password: string) {
     return this.getUserAD(email, password).pipe(map((user: User) => {
-      // console.log(user.email);
-      // console.log(user.authenticated);
-      // console.log(user.token);
       delete user.password;
       localStorage.setItem('currentUser', JSON.stringify(user));
       if (this.currentUserSubject) {

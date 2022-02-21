@@ -27,7 +27,8 @@ import {
   NbFormFieldModule,
   NbUserModule,
   NbContextMenuModule,
-  NbSelectModule
+  NbSelectModule,
+  NbAlertModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -69,6 +70,7 @@ import { MenuComponent } from './shared/components/menu/menu.component';
     NbContextMenuModule,
     NbEvaIconsModule,
     NbSelectModule,
+    NbAlertModule,
     Ng2SmartTableModule,
     HttpClientModule
   ],
