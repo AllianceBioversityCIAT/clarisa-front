@@ -6,10 +6,10 @@ import { AuthService } from '../services/auth.service';
 @Injectable()
 export class BasicAuthInterceptor implements HttpInterceptor {
 
-    constructor(private auth: AuthService) { }
+    constructor(private authenticationService: AuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let token = this.auth.currentUserValue?.token??'';
+        let token = this.authenticationService.currentUserValue?.token??'';
 
         // console.log('Intercerptor oa ' + token);
         request = request.clone({

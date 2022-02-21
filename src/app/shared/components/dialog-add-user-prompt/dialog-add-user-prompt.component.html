@@ -1,62 +1,48 @@
 <nb-card>
+    <!-- <nb-alert status="danger">User no</nb-alert> -->
     <nb-card-header class="boldFont">Enter user information below</nb-card-header>
     <nb-card-body>
         <form [formGroup]="addUserForm" class="example-items-columns">
             <div class="two-columns">
                 <div class="field-margin">
-                    <label class="label regularFont">First Name</label>
+                    <label class="label regularFont">Email</label>
                     <nb-form-field>
-                        <input #firstNameInput nbInput class="regularFont" formControlName="firstName" [status]="validateField('firstName')">
+                        <input #emailInput nbInput class="regularFont" formControlName="email" [status]="validateField('email')">
+                        <button nbSuffix nbButton ghost (click)="loadUserInfo()">
+                            <nb-icon icon="search-outline" pack="eva" >
+                            </nb-icon>
+                        </button>
                     </nb-form-field>
-                    <div *ngIf="submitted && form['firstName'].errors" class="messageContainer status-danger">
-                        <div *ngIf="form['firstName'].errors['required']" class="hiddenMessage">First Name is required.</div>
+                    <div *ngIf="(submitted || searchUser) && form['email'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['email'].errors['required']" class="hiddenMessage">Email is required.</div>
+                        <div *ngIf="form['email'].errors['email']" class="hiddenMessage">Email should have a valid format.</div>
                     </div>
                 </div>
                 <div class="field-margin">
-                    <label class="label regularFont">Last Name</label>
+                    <label class="label regularFont">Is CGIAR User?</label>
                     <nb-form-field>
-                        <input #lastNameInput nbInput class="regularFont" formControlName="lastName" [status]="validateField('lastName')">
+                        <nb-select #cgiarUserInput class="regularFont" formControlName="cgiarUser" [(selected)]="cgiarUser" [status]="validateField('cgiarUser')" (selectedChange)="onSelectChange($event)">
+                            <nb-option value="Yes">Yes</nb-option>
+                            <nb-option value="No">No</nb-option>
+                        </nb-select>
                     </nb-form-field>
-                    <div *ngIf="submitted && form['lastName'].errors" class="messageContainer status-danger">
-                        <div *ngIf="form['lastName'].errors['required']" class="hiddenMessage">Last Name is required.</div>
+                    <div *ngIf="submitted && form['cgiarUser'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['cgiarUser'].errors['required']" class="hiddenMessage">Is CGIAR is required.</div>
                     </div>
                 </div>
             </div>
+            
             <div class="two-columns">
-                <div class="field-margin">
+                <div [class]="showPasswordField ? 'field-margin' : 'one-column field-margin'" [style]="showField ? 'display: block' : 'display: none'">
                     <label class="label regularFont">Username</label>
                     <nb-form-field>
-                        <input #usernameInput nbInput class="regularFont" formControlName="username" [status]="validateField('username')">
+                        <input #usernameInput nbInput class="regularFont" formControlName="username" [status]="validateField('username')" [readonly]="disableField">
                     </nb-form-field>
                     <div *ngIf="submitted && form['username'].errors" class="messageContainer status-danger">
                         <div *ngIf="form['username'].errors['required']" class="hiddenMessage">Username is required.</div>
                     </div>
                 </div>
-                <div class="field-margin">
-                    <label class="label regularFont">Is CGIAR</label>
-                    <nb-form-field>
-                        <nb-select #isCGIARInput class="regularFont" formControlName="isCGIAR" [(selected)]="isCGIAR" [status]="validateField('isCGIAR')" (selectedChange)="onSelectChange($event)">
-                            <nb-option value="Yes">Yes</nb-option>
-                            <nb-option value="No">No</nb-option>
-                        </nb-select>
-                    </nb-form-field>
-                    <div *ngIf="submitted && form['isCGIAR'].errors" class="messageContainer status-danger">
-                        <div *ngIf="form['isCGIAR'].errors['required']" class="hiddenMessage">Is CGIAR is required.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="two-columns">
-                <div [class]="showPasswordField ? 'field-margin' : 'one-column field-margin'">
-                    <label class="label regularFont">Email</label>
-                    <nb-form-field>
-                        <input #emailInput nbInput class="regularFont" formControlName="email" [status]="validateField('email')">
-                    </nb-form-field>
-                    <div *ngIf="submitted && form['email'].errors" class="messageContainer status-danger">
-                        <div *ngIf="form['email'].errors['required']" class="hiddenMessage">Email is required.</div>
-                        <div *ngIf="form['email'].errors['email']" class="hiddenMessage">Email should have a valid format.</div>
-                    </div>
-                </div>
-                <div class="field-margin" [style]="showPasswordField ? 'display: block' : 'display: none'">
+                <div class="field-margin" [style]="showPasswordField && showField ? 'display: block' : 'display: none'">
                     <label class="label regularFont">Password</label>
                     <nb-form-field>
                         <input #passwordInput nbInput class="regularFont" [type]="getInputType()" formControlName="password" [status]="validateField('password')">
@@ -70,10 +56,30 @@
                     </div>
                 </div>
             </div>
+            <div class="two-columns">
+                <div class="field-margin" [style]="showField ? 'display: block' : 'display: none'">
+                    <label class="label regularFont">First Name</label>
+                    <nb-form-field>
+                        <input #firstNameInput nbInput class="regularFont" formControlName="firstName" [status]="validateField('firstName')" [readonly]="disableField">
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['firstName'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['firstName'].errors['required']" class="hiddenMessage">First Name is required.</div>
+                    </div>
+                </div>
+                <div class="field-margin" [style]="showField ? 'display: block' : 'display: none'">
+                    <label class="label regularFont">Last Name</label>
+                    <nb-form-field>
+                        <input #lastNameInput nbInput class="regularFont" formControlName="lastName" [status]="validateField('lastName')" [readonly]="disableField">
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['lastName'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['lastName'].errors['required']" class="hiddenMessage">Last Name is required.</div>
+                    </div>
+                </div>
+            </div>
         </form>
     </nb-card-body>
     <nb-card-footer class="example-items-rows">
-        <button nbButton status="success" class="boldFont" (click)="submit(firstNameInput.value, lastNameInput.value, usernameInput.value, isCGIARInput.selected, emailInput.value, passwordInput.value)">Submit</button>
+        <button nbButton status="success" class="boldFont" (click)="submit(firstNameInput.value, lastNameInput.value, usernameInput.value, cgiarUserInput.selected, emailInput.value, passwordInput.value)">Submit</button>
         <button nbButton status="danger" (click)="cancel()" class="cancel boldFont">Cancel</button>
     </nb-card-footer>
 </nb-card>

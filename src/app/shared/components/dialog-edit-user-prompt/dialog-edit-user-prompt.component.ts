@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dialog-edit-user-prompt',
@@ -12,7 +13,7 @@ export class DialogEditUserPromptComponent implements OnInit {
   @Input() firstName: string = '';
   @Input() lastName: string = '';
   @Input() username: string = '';
-  @Input() isCGIAR: string = '';
+  @Input() cgiarUser: string = '';
   @Input() email: string = '';
   @Input() password: string = '';
   editUserForm!: FormGroup;
@@ -21,10 +22,10 @@ export class DialogEditUserPromptComponent implements OnInit {
   showPasswordField: boolean = false;
   showPassword: boolean = false;
 
-  constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder) { }
+  constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private userService: UserService) { }
   
   ngOnInit(): void {
-    this.showPasswordField = (this.isCGIAR == 'Yes') ? false : true;
+    this.showPasswordField = (this.cgiarUser == 'Yes') ? false : true;
     this.editUserForm = this.createEditUserForm();
     this.loadUserInfo();
   }
@@ -52,7 +53,7 @@ export class DialogEditUserPromptComponent implements OnInit {
             Validators.required
           ])
         ],
-        isCGIAR: [
+        cgiarUser: [
           null,
           Validators.compose([
             Validators.required
@@ -79,10 +80,10 @@ export class DialogEditUserPromptComponent implements OnInit {
     this.editUserForm.controls['firstName'].setValue(this.firstName);
     this.editUserForm.controls['lastName'].setValue(this.lastName);
     this.editUserForm.controls['username'].setValue(this.username);
-    if (this.isCGIAR && this.isCGIAR != undefined) {
-      this.editUserForm.controls['isCGIAR'].setValue(this.isCGIAR);
+    if (this.cgiarUser && this.cgiarUser != undefined) {
+      this.editUserForm.controls['cgiarUser'].setValue(this.cgiarUser);
     } else {
-      this.editUserForm.controls['isCGIAR'].setValue('No');
+      this.editUserForm.controls['cgiarUser'].setValue('No');
       this.showPasswordField = true;
     }
     this.editUserForm.controls['email'].setValue(this.email);
@@ -100,7 +101,7 @@ export class DialogEditUserPromptComponent implements OnInit {
     }
   }
 
-  submit(firstName: any, lastName: any, username: any, isCGIAR: any, email: any, password?: any) {
+  submit(firstName: any, lastName: any, username: any, cgiarUser: any, email: any, password?: any) {
     this.submitted = true;
 
     if (this.editUserForm.valid) {
@@ -108,12 +109,14 @@ export class DialogEditUserPromptComponent implements OnInit {
         firstName: firstName,
         lastName: lastName,
         username: username,
-        isCGIAR: isCGIAR,
+        cgiarUser: cgiarUser,
         email: email,
         password: password
       };
 
-      this.ref.close(this.userInfo);
+      this.userService.updateUser(this.userInfo).subscribe(x => {
+        this.ref.close(x);
+      })
     }
   }
 

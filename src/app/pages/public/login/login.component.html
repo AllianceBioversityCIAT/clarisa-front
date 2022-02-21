@@ -1,4 +1,6 @@
 <div class="col-md-4">
+  <nb-alert status="danger" [style]="userDoesNotExist ? 'display: flex' : 'display: none'">The user does not exist</nb-alert>
+  <nb-alert status="danger" [style]="incorrectPassword ? 'display: flex' : 'display: none'">The password is incorrect</nb-alert>
   <nb-card>
     <nb-card-header class="boldFont">Welcome</nb-card-header>
     <nb-card-body>Log in with your CGIAR credentials</nb-card-body>

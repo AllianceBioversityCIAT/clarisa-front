@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted: boolean = false;
+  userDoesNotExist: boolean = false;
+  incorrectPassword: boolean = false;
 
   constructor(private router: Router, private formBuilder: FormBuilder, private authenticationService: AuthService) {
     this.loginForm = this.createLoginForm();
@@ -53,13 +55,16 @@ export class LoginComponent implements OnInit {
         res => {
           if (res.authenticated === true) {
             this.router.navigate(['/home']);
-          } else {
-            // this.alertService.error('Invalid password');
-            console.log('Invalid password');
           }
         }, error => {
           console.log('doLogin', error);
-          // this.alertService.error('User not found');
+          if (error.status == 403) {
+            this.userDoesNotExist = false;
+            this.incorrectPassword = true;
+          } else if (error.status == 404) {
+            this.userDoesNotExist = true;
+            this.incorrectPassword = false;
+          }
         });
     }
   }

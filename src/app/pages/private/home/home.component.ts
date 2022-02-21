@@ -4,7 +4,6 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { DialogAddUserPromptComponent } from 'src/app/shared/components/dialog-add-user-prompt/dialog-add-user-prompt.component';
 import { DialogEditUserPromptComponent } from 'src/app/shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
 import { DialogDeleteUserPromptComponent } from 'src/app/shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
-// import { SmartTableService } from 'src/app/shared/services/smart-table.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -47,10 +46,13 @@ export class HomeComponent implements OnInit {
         title: 'Username',
         type: 'string',
       },
-      isCGIAR: {
+      cgiarUser: {
         title: 'Is CGIAR',
         type: 'string',
         width: '11%',
+        valuePrepareFunction: (value: any) => {
+          return value ? 'Yes' : 'No';
+        },
       },
       email: {
         title: 'Email',
@@ -66,14 +68,11 @@ export class HomeComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   data: any;
 
-  constructor(/*private service: SmartTableService,*/ private dialogService: NbDialogService, private user: UserService) {
-    // this.data = this.service.getData();
-    // this.source.load(this.data);
+  constructor(private dialogService: NbDialogService, private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.user.getUsers().subscribe(x => {
-      console.log(x);
+    this.userService.getUsers().subscribe(x => {
       this.source.load(x);
     });
   }
@@ -105,7 +104,7 @@ export class HomeComponent implements OnInit {
         firstName: data.firstName,
         lastName: data.lastName,
         username: data.username,
-        isCGIAR: data.isCGIAR,
+        cgiarUser: data.cgiarUser,
         email: data.email,
         password: data.password
       }
@@ -113,7 +112,11 @@ export class HomeComponent implements OnInit {
   }
 
   openDeleteUser(dialog: any, data: any) {
-    this.dialogService.open(dialog).onClose.subscribe(info => this.source.remove(data));
+    this.dialogService.open(dialog, {
+      context: {
+        data: data
+      }
+    }).onClose.subscribe(info => this.source.remove(data));
   }
 
 }
