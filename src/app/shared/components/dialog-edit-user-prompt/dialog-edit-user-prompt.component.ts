@@ -19,14 +19,12 @@ export class DialogEditUserPromptComponent implements OnInit {
   editUserForm!: FormGroup;
   submitted: boolean = false;
   userInfo: object = {};
-  showPasswordField: boolean = false;
-  showPassword: boolean = false;
 
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private userService: UserService) { }
   
   ngOnInit(): void {
-    this.showPasswordField = (this.cgiarUser == 'Yes') ? false : true;
     this.editUserForm = this.createEditUserForm();
+    this.cgiarUser = this.cgiarUser ? 'Yes' : 'No';
     this.loadUserInfo();
   }
 
@@ -65,12 +63,6 @@ export class DialogEditUserPromptComponent implements OnInit {
             Validators.email,
             Validators.required
           ])
-        ],
-        password: [
-          null,
-          Validators.compose([
-            (this.showPasswordField) ? Validators.required : null
-          ])
         ]
       }
     );
@@ -80,14 +72,14 @@ export class DialogEditUserPromptComponent implements OnInit {
     this.editUserForm.controls['firstName'].setValue(this.firstName);
     this.editUserForm.controls['lastName'].setValue(this.lastName);
     this.editUserForm.controls['username'].setValue(this.username);
+    
     if (this.cgiarUser && this.cgiarUser != undefined) {
       this.editUserForm.controls['cgiarUser'].setValue(this.cgiarUser);
     } else {
       this.editUserForm.controls['cgiarUser'].setValue('No');
-      this.showPasswordField = true;
     }
+
     this.editUserForm.controls['email'].setValue(this.email);
-    this.editUserForm.controls['password'].setValue(this.password);
   }
 
   validateField(controlName: string): string {
@@ -101,50 +93,23 @@ export class DialogEditUserPromptComponent implements OnInit {
     }
   }
 
-  submit(firstName: any, lastName: any, username: any, cgiarUser: any, email: any, password?: any) {
+  submit(firstName: any, lastName: any, username: any, cgiarUser: any, email: any) {
     this.submitted = true;
 
     if (this.editUserForm.valid) {
       this.userInfo = {
+        id: this.id,
         firstName: firstName,
         lastName: lastName,
         username: username,
-        cgiarUser: cgiarUser,
+        cgiarUser: cgiarUser == 'Yes' ? true : false,
         email: email,
-        password: password
       };
 
       this.userService.updateUser(this.userInfo).subscribe(x => {
         this.ref.close(x);
       })
     }
-  }
-
-  onSelectChange(event: any) {
-    if (event == 'Yes') {
-      this.showPasswordField = false;
-    } else {
-      this.showPasswordField = true;
-    }
-
-    this.editUserForm.controls['password'].clearValidators();
-
-    if(this.showPasswordField){
-      this.editUserForm.controls['password'].addValidators(Validators.required);
-    } 
-
-    this.editUserForm.controls['password'].updateValueAndValidity();
-  }
-
-  getInputType() {
-    if (this.showPassword) {
-      return 'text';
-    }
-    return 'password';
-  }
-
-  toggleShowPassword() {
-    this.showPassword = !this.showPassword;
   }
 
   cancel() {

@@ -1,10 +1,11 @@
+<nb-alert status="danger" [style]="userAlreadyExists ? 'display: flex' : 'display: none'">This user already exists</nb-alert>
+<nb-alert status="success" [style]="userSuccesfullyAdded ? 'display: flex' : 'display: none'">User successfully added</nb-alert>
 <nb-card>
-    <!-- <nb-alert status="danger">User no</nb-alert> -->
     <nb-card-header class="boldFont">Enter user information below</nb-card-header>
     <nb-card-body>
         <form [formGroup]="addUserForm" class="example-items-columns">
             <div class="two-columns">
-                <div class="field-margin">
+                <div [class]="showField ? 'field-margin' : 'full-column field-margin'">
                     <label class="label regularFont">Email</label>
                     <nb-form-field>
                         <input #emailInput nbInput class="regularFont" formControlName="email" [status]="validateField('email')">
@@ -18,7 +19,7 @@
                         <div *ngIf="form['email'].errors['email']" class="hiddenMessage">Email should have a valid format.</div>
                     </div>
                 </div>
-                <div class="field-margin">
+                <div class="field-margin" [style]="showField ? 'display: block' : 'display: none'">
                     <label class="label regularFont">Is CGIAR User?</label>
                     <nb-form-field>
                         <nb-select #cgiarUserInput class="regularFont" formControlName="cgiarUser" [(selected)]="cgiarUser" [status]="validateField('cgiarUser')" (selectedChange)="onSelectChange($event)">
@@ -31,7 +32,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="two-columns">
                 <div [class]="showPasswordField ? 'field-margin' : 'one-column field-margin'" [style]="showField ? 'display: block' : 'display: none'">
                     <label class="label regularFont">Username</label>

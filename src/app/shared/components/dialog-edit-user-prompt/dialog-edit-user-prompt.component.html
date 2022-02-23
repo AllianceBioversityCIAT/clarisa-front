@@ -33,9 +33,9 @@
                     </div>
                 </div>
                 <div class="field-margin">
-                    <label class="label regularFont">Is CGIAR</label>
+                    <label class="label regularFont">Is CGIAR User?</label>
                     <nb-form-field>
-                        <nb-select #cgiarUserInput class="regularFont" formControlName="cgiarUser" [(selected)]="cgiarUser" [status]="validateField('cgiarUser')" (selectedChange)="onSelectChange($event)">
+                        <nb-select #cgiarUserInput class="regularFont" formControlName="cgiarUser" [(selected)]="cgiarUser" [status]="validateField('cgiarUser')">
                             <nb-option value="Yes">Yes</nb-option>
                             <nb-option value="No">No</nb-option>
                         </nb-select>
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="two-columns">
-                <div [class]="showPasswordField ? 'field-margin' : 'one-column field-margin'">
+                <div class="one-column field-margin">
                     <label class="label regularFont">Email</label>
                     <nb-form-field>
                         <input #emailInput nbInput class="regularFont" formControlName="email" [status]="validateField('email')">
@@ -56,24 +56,11 @@
                         <div *ngIf="form['email'].errors['email']" class="hiddenMessage">Email should have a valid format.</div>
                     </div>
                 </div>
-                <div class="field-margin" [style]="showPasswordField ? 'display: block' : 'display: none'">
-                    <label class="label regularFont">Password</label>
-                    <nb-form-field>
-                        <input #passwordInput nbInput class="regularFont" [type]="getInputType()" formControlName="password" [status]="validateField('password')">
-                        <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
-                            <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'" pack="eva" [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
-                            </nb-icon>
-                        </button>
-                    </nb-form-field>
-                    <div *ngIf="submitted && form['password'].errors" class="messageContainer status-danger">
-                        <div *ngIf="form['password'].errors['required']" class="hiddenMessage">Password is required.</div>
-                    </div>
-                </div>
             </div>
         </form>
     </nb-card-body>
     <nb-card-footer class="example-items-rows">
-        <button nbButton status="success" class="boldFont" (click)="submit(firstNameInput.value, lastNameInput.value, usernameInput.value, cgiarUserInput.selected, emailInput.value, passwordInput.value)">Submit</button>
+        <button nbButton status="success" class="boldFont" (click)="submit(firstNameInput.value, lastNameInput.value, usernameInput.value, cgiarUserInput.selected, emailInput.value)">Submit</button>
         <button nbButton status="danger" (click)="cancel()" class="cancel boldFont">Cancel</button>
     </nb-card-footer>
 </nb-card>

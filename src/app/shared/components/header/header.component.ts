@@ -21,8 +21,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fullName = this.authenticationService.currentUserValue['first_name'] + ' ' + this.authenticationService.currentUserValue['last_name'];
-    this.email = this.authenticationService.currentUserValue['email'];
+    let currentUserValue = this.authenticationService.currentUserValue;
+    if (currentUserValue) {
+      this.fullName = currentUserValue['first_name'] + ' ' + currentUserValue['last_name'];
+      this.email = currentUserValue['email'];
+    }
 
     this.nbMenuService.onItemClick()
       .pipe(
