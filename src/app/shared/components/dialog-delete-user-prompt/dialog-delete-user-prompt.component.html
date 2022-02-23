@@ -1,4 +1,6 @@
+<nb-alert status="success" [style]="userDeleted ? 'display: flex' : 'display: none'">User successfully deleted</nb-alert>
 <nb-card>
+    <nb-card-header class="boldFont">Delete user: <a class="boldFont">{{ email }}</a></nb-card-header>
     <nb-card-body class="regularFont">Are you sure you want to delete?</nb-card-body>
     <nb-card-footer class="example-items-rows">
         <button nbButton status="success" (click)="submit()" class="boldFont">Ok</button>

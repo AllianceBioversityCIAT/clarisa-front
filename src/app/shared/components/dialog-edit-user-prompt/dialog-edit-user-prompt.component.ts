@@ -18,6 +18,7 @@ export class DialogEditUserPromptComponent implements OnInit {
   @Input() password: string = '';
   editUserForm!: FormGroup;
   submitted: boolean = false;
+  userUpdated: boolean = false;
   userInfo: object = {};
 
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private userService: UserService) { }
@@ -107,7 +108,11 @@ export class DialogEditUserPromptComponent implements OnInit {
       };
 
       this.userService.updateUser(this.userInfo).subscribe(x => {
-        this.ref.close(x);
+        this.userUpdated = true;
+        setTimeout(() => {
+          this.userUpdated = false;
+          this.ref.close(x);
+        }, 3000);
       })
     }
   }

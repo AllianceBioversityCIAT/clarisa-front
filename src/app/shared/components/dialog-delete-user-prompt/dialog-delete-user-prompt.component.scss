@@ -1,5 +1,18 @@
+@import "../../../../themes.scss";
+
+nb-alert {
+    align-items: center;
+    font-family: $font-primary-medium !important;
+}
+
 nb-card {
     display: flex;
     align-items: center;
     margin-bottom: 0;
+}
+
+::ng-deep nb-card-header {
+    > a {
+        text-decoration: none !important;
+    }
 }

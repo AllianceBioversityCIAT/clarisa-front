@@ -14,11 +14,14 @@ nb-card-header {
     float: left;
     width: auto;
     display: flex;
-    // margin-top: 1em;
 
     a.ng2-smart-action.ng2-smart-action-custom-custom {
         margin-left: 0.5em;
     }
+}
+
+::ng-deep.nb-theme-default ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child) {
+    border-right: none !important;
 }
 
 ::ng-deep .hide-action td.ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:nth-child(2) {
