@@ -1,5 +1,10 @@
 @import "../../../../themes.scss";
 
+nb-alert {
+    align-items: center;
+    font-family: $font-primary-medium !important;
+}
+
 nb-card {
     width: 520px;
     display: flex;
