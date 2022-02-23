@@ -1,10 +1,34 @@
-@import '../../../../themes.scss';
+@import "../../../../themes.scss";
 
 nb-card-header {
     font-size: $font-l !important;
 }
 
-::ng-deep .ng2-smart-title, ::ng-deep a {
+::ng-deep .ng2-smart-title,
+::ng-deep a {
     font-family: $font-primary-medium !important;
     font-weight: 800 !important;
+}
+
+::ng-deep ng2-st-tbody-custom {
+    float: left;
+    width: auto;
+    display: flex;
+    // margin-top: 1em;
+
+    a.ng2-smart-action.ng2-smart-action-custom-custom {
+        margin-left: 0.5em;
+    }
+}
+
+::ng-deep .hide-action td.ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:nth-child(2) {
+    pointer-events: none;
+
+    > i.fa-key {
+        color: lightgrey;
+    }
+}
+
+::ng-deep td.ng2-smart-actions ng2-st-tbody-edit-delete {
+    display: none !important;
 }

@@ -9,6 +9,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { DialogAddUserPromptComponent } from './shared/components/dialog-add-user-prompt/dialog-add-user-prompt.component';
 import { DialogDeleteUserPromptComponent } from './shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
 import { DialogEditUserPromptComponent } from './shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
+import { DialogResetPasswordPromptComponent } from './shared/components/dialog-reset-password-prompt/dialog-reset-password-prompt.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
@@ -43,6 +44,7 @@ import { MenuComponent } from './shared/components/menu/menu.component';
     HomeComponent,
     HeaderComponent,
     DialogAddUserPromptComponent,
+    DialogResetPasswordPromptComponent,
     DialogDeleteUserPromptComponent,
     DialogEditUserPromptComponent,
     MenuComponent,

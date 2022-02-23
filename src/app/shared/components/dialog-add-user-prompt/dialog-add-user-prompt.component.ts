@@ -19,6 +19,8 @@ export class DialogAddUserPromptComponent implements OnInit {
   showPasswordField: boolean = false;
   showPassword: boolean = true;
   searchUser: boolean = false;
+  userAlreadyExists: boolean = false;
+  userSuccesfullyAdded: boolean = false;
   
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private userService: UserService) {
     this.addUserForm = this.createAddUserForm();
@@ -99,7 +101,11 @@ export class DialogAddUserPromptComponent implements OnInit {
       };
 
       this.userService.postUser(this.userInfo).subscribe(x => {
-        this.ref.close(x);
+        this.userSuccesfullyAdded = true;
+        setTimeout(() => {
+          this.userSuccesfullyAdded = false;
+          this.ref.close(x);
+        }, 3000)
       });
     }
   }
@@ -125,12 +131,21 @@ export class DialogAddUserPromptComponent implements OnInit {
   loadUserInfo() {
     this.searchUser = true;
     let email = this.addUserForm.controls['email'].value;
-    let cgiarUser = this.addUserForm.controls['cgiarUser'].value == 'Yes' ? true : false;
 
-    this.userService.getUserByEmail({email, cgiarUser}).subscribe(x => {
-      this.addUserForm.controls['username'].setValue(x[0].username);
-      this.addUserForm.controls['firstName'].setValue(x[0].firstName);
-      this.addUserForm.controls['lastName'].setValue(x[0].lastName);
+    this.userService.getUserByEmail(email).subscribe(x => {
+      if (x[0]) {
+        if (x[0].id && x[0].id != null) {
+          this.userAlreadyExists = true;
+          this.addUserForm.controls['username'].setValue(x[0].username);
+          this.addUserForm.controls['firstName'].setValue(x[0].firstName);
+          this.addUserForm.controls['lastName'].setValue(x[0].lastName);
+        } 
+      } else {
+        this.userAlreadyExists = false;
+        this.addUserForm.controls['username'].reset();
+        this.addUserForm.controls['firstName'].reset();
+        this.addUserForm.controls['lastName'].reset();
+      }
     });
 
     this.showField = true;
