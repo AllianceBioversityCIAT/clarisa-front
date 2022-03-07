@@ -36,8 +36,7 @@ export class LoginComponent implements OnInit {
         signInPassword: [
           null,
           Validators.compose([
-            Validators.required,
-            // Validators.minLength(6)
+            Validators.required
           ])
         ]
       }
@@ -54,7 +53,7 @@ export class LoginComponent implements OnInit {
       this.authenticationService.loginAD(email, password).subscribe(
         res => {
           if (res.authenticated === true) {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/home/users']);
           }
         }, error => {
           console.log('doLogin', error);

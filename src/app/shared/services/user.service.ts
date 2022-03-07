@@ -48,7 +48,7 @@ export class UserService {
       username: userInfo['username'],
       newPassword: userInfo['newPassword']
     }
-
+    
     return this.http.post<any>(`${environment['apiUrl']}users/passwordChange`, body);
   }
 }

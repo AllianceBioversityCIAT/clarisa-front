@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/public/login/login.component';
+import { ResetAdminPasswordComponent } from './shared/components/reset-admin-password/reset-admin-password.component';
 import { IsSignedInGuard } from './shared/guards/is-signed-in.guard';
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
       (m) => m.HomeModule 
     )
   },
+  // { path: 'reset-password', component: ResetAdminPasswordComponent},
   { path: '**', redirectTo: '/login'}
 ];
 

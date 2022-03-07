@@ -4,12 +4,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'User Management',
     icon: 'home-outline',
-    link: '/home',
+    link: '/home/users',
     home: true,
   },
   {
     title: 'Role Management',
     icon: 'people-outline',
-    // link: '/role/',
+    link: '/home/roles',
   }
 ]

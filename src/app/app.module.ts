@@ -36,6 +36,9 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BasicAuthInterceptor } from './shared/helpers/basic-auth.interceptor';
 import { MenuComponent } from './shared/components/menu/menu.component';
+import { ResetAdminPasswordComponent } from './shared/components/reset-admin-password/reset-admin-password.component';
+import { RolesComponent } from './pages/private/home/sections/roles/roles.component';
+import { UsersComponent } from './pages/private/home/sections/users/users.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import { MenuComponent } from './shared/components/menu/menu.component';
     DialogDeleteUserPromptComponent,
     DialogEditUserPromptComponent,
     MenuComponent,
+    ResetAdminPasswordComponent,
+    RolesComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
