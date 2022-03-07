@@ -25,12 +25,11 @@
           </nb-form-field>
           <div *ngIf="submitted && form['signInPassword'].errors" class="messageContainer status-danger">
             <div *ngIf="form['signInPassword'].errors['required']" class="hiddenMessage">Password is required.</div>
-            <!-- <div *ngIf="form['signInPassword'].errors['minlength']" class="hiddenMessage">Password minimum length is 6.</div> -->
           </div>
         </div>
         <button type="button" nbButton hero status="success" (click)="doLogin()" class="boldFont">Login</button>
       </form>
     </nb-card-body>
-    <nb-card-footer>Don’t have an account? Please fill out this <a href="https://docs.google.com/forms/d/e/1FAIpQLSftv_rq3VVsy0WYHnsapxsJlEpqfUK8xisAeY05OWI2odY94g/viewform" target="_blank">form.</a></nb-card-footer>
+    <!-- <nb-card-footer><a href="/reset-password">Forgot your password?</a></nb-card-footer> -->
   </nb-card>
 </div>
