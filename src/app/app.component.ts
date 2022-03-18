@@ -8,12 +8,16 @@ import { NavigationStart, Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'clarisa-frontend';
-  show = true;
+  show = false;
 
   constructor(private router: Router) { 
     this.router.events.forEach((event) => {
       if(event instanceof NavigationStart) {
-          this.show = event.url != "/login";
+        if (event.url == "/home" || event.url == "/home/users" || event.url == "/home/roles" || event.url == "/home/permissions") {
+          this.show = true;
+        } else {
+          this.show = false;
+        }
       }
     });
   }
