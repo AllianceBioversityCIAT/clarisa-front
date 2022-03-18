@@ -5,6 +5,7 @@ import { IsSignedInGuard } from 'src/app/shared/guards/is-signed-in.guard';
 import { HomeComponent } from './home.component';
 import { RolesComponent } from './sections/roles/roles.component';
 import { UsersComponent } from './sections/users/users.component';
+import { PermissionsComponent } from './sections/permissions/permissions.component';
 
 const routes: Routes = [
   {
@@ -14,17 +15,25 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'Home',
-      authGuardPipe: IsSignedInGuard
-    }
+      // authGuardPipe: IsSignedInGuard
+    },
+    redirectTo: 'users'
   },
   {
     path: 'users',
-    component: UsersComponent
+    component: UsersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'roles',
-    component: RolesComponent
-  }
+    component: RolesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'permissions',
+    component: PermissionsComponent,
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

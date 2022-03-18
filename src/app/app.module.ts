@@ -39,6 +39,7 @@ import { MenuComponent } from './shared/components/menu/menu.component';
 import { ResetAdminPasswordComponent } from './shared/components/reset-admin-password/reset-admin-password.component';
 import { RolesComponent } from './pages/private/home/sections/roles/roles.component';
 import { UsersComponent } from './pages/private/home/sections/users/users.component';
+import { PermissionsComponent } from './pages/private/home/sections/permissions/permissions.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { UsersComponent } from './pages/private/home/sections/users/users.compon
     ResetAdminPasswordComponent,
     RolesComponent,
     UsersComponent,
+    PermissionsComponent
   ],
   imports: [
     BrowserModule,
