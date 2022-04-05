@@ -6,6 +6,7 @@ import { DialogEditUserPromptComponent } from 'src/app/shared/components/dialog-
 import { DialogDeleteUserPromptComponent } from 'src/app/shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import { DialogResetPasswordPromptComponent } from 'src/app/shared/components/dialog-reset-password-prompt/dialog-reset-password-prompt.component';
+import { DialogUserPermissionsPromptComponent } from 'src/app/shared/components/dialog-user-permissions-prompt/dialog-user-permissions-prompt.component';
 
 @Component({
   selector: 'app-users',
@@ -35,6 +36,10 @@ export class UsersComponent implements OnInit {
         {
           name: 'delete',
           title: '<i class="fas fa-trash-alt"></i>'
+        },
+        {
+          name: 'permissions',
+          title: '<i class="fas fa-user-lock"></i>'
         }
       ],
     },
@@ -76,10 +81,10 @@ export class UsersComponent implements OnInit {
         title: 'Email',
         type: 'string',
       },
-      lastLogin: {
-        title: 'Last Login',
-        type: 'string'
-      }
+      // lastLogin: {
+      //   title: 'Last Login',
+      //   type: 'string'
+      // }
     },
   };
 
@@ -113,6 +118,9 @@ export class UsersComponent implements OnInit {
       case 'delete':
         this.deleteUser(event);
         break;
+      case 'permissions':
+        this.userPermissions(event);
+        break;
 
       default:
         break;
@@ -131,6 +139,10 @@ export class UsersComponent implements OnInit {
     this.openDeleteUser(DialogDeleteUserPromptComponent, event.data);
   }
 
+  userPermissions(event: any) {
+    this.openUserPermissions(DialogUserPermissionsPromptComponent, event.data);
+  }
+
   openAddUser(dialog: any, data: any) {
     this.dialogService.open(dialog, {
       context: {
@@ -140,6 +152,7 @@ export class UsersComponent implements OnInit {
   }
 
   openEditUser(dialog: any, data: any) {
+    console.log(data)
     this.dialogService.open(dialog, {
       context: {
         id: data.id,
@@ -167,6 +180,14 @@ export class UsersComponent implements OnInit {
         data: data
       }
     }).onClose.subscribe(info => info != undefined ? this.source.remove(data) : null);
+  }
+
+  openUserPermissions(dialog: any, data: any) {
+    this.dialogService.open(dialog, {
+      context: {
+        email: data.email,
+      }
+    });
   }
 
 }

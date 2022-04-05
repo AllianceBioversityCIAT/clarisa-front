@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
       this.authenticationService.loginAD(email, password).subscribe(
         res => {
           if (res.authenticated === true) {
+            console.log('entró al login')
             this.router.navigate(['/home/users']);
           }
         }, error => {

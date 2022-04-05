@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   getUsers() {
     return this.http.get<any>(`${environment['apiUrl']}users/all`);
@@ -50,5 +49,9 @@ export class UserService {
     }
     
     return this.http.post<any>(`${environment['apiUrl']}users/passwordChange`, body);
+  }
+
+  getRolePermissionsByUser(username: any) {
+    return this.http.get<any>(`${environment['apiUrl']}rolepermissions/rolePermission/${username}`);
   }
 }
