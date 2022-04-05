@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { User } from '../interfaces/User';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,14 @@ export class AuthService {
     return null as any;
   }
 
+  public get isLoggedIn(): boolean {
+    if (this.currentUserValue && moment().isBefore(moment.unix(Number(this.currentUserValue.expiresIn)))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   getUserAD(userEmail: string, userPassword: string) {
     var httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'application/json');
@@ -47,6 +56,7 @@ export class AuthService {
       if (this.currentUserSubject) {
         this.currentUserSubject.next(user);
       }
+      console.log(user)
       return user;
     }));
   }
