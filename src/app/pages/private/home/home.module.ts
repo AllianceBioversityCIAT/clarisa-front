@@ -5,7 +5,9 @@ import { SmartTableService } from 'src/app/shared/services/smart-table.service';
 import { NbDialogService } from '@nebular/theme';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+ 
+  ],
   imports: [
     CommonModule,
     HomeRoutingModule,
