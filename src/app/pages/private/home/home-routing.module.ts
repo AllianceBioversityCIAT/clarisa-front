@@ -27,7 +27,8 @@ const routes: Routes = [
   },
   {
     path: 'institutions',
-    component: InstitutionsComponent
+    component: InstitutionsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'roles',
