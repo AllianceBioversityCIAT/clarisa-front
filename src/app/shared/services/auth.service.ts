@@ -56,7 +56,6 @@ export class AuthService {
       if (this.currentUserSubject) {
         this.currentUserSubject.next(user);
       }
-      console.log(user)
       return user;
     }));
   }
