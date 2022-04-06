@@ -1,4 +1,4 @@
-@import "../../../../themes.scss";
+@import "../../../../../themes.scss";
 
 nb-alert {
     align-items: center;
@@ -28,16 +28,17 @@ nb-card {
                 }
             }
 
+            .full-column {
+                width: 100% !important;
+            }
+
             .field-margin {
                 margin: 0 0.5rem;
             }
-
         }
     }
 }
 
-::ng-deep nb-card-header {
-    > a {
-        text-decoration: none !important;
-    }
+::ng-deep nb-option {
+    font-family: $font-primary-regular !important;
 }

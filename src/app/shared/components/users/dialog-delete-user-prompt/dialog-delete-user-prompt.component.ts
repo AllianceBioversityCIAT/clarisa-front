@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Optional } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-dialog-delete-user-prompt',

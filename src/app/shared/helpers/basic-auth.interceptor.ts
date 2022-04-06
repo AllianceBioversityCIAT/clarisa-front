@@ -11,7 +11,6 @@ export class BasicAuthInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let token = this.authenticationService.currentUserValue?.token??'';
 
-        // console.log('Intercerptor oa ' + token);
         request = request.clone({
             setHeaders: {
                 'Cache-Control': 'no-cache',

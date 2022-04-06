@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
-import { CustomValidators } from '../../helpers/custom-validators';
-import { UserService } from '../../services/user.service';
+import { CustomValidators } from '../../../helpers/custom-validators';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-dialog-reset-password-prompt',
