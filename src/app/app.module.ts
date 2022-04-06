@@ -10,6 +10,7 @@ import { DialogAddUserPromptComponent } from './shared/components/dialog-add-use
 import { DialogDeleteUserPromptComponent } from './shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
 import { DialogEditUserPromptComponent } from './shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
 import { DialogResetPasswordPromptComponent } from './shared/components/dialog-reset-password-prompt/dialog-reset-password-prompt.component';
+import { DialogUserPermissionsPromptComponent } from './shared/components/dialog-user-permissions-prompt/dialog-user-permissions-prompt.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
@@ -40,6 +41,7 @@ import { ResetAdminPasswordComponent } from './shared/components/reset-admin-pas
 import { RolesComponent } from './pages/private/home/sections/roles/roles.component';
 import { UsersComponent } from './pages/private/home/sections/users/users.component';
 import { InstitutionsComponent } from './pages/private/home/sections/institutions/institutions.component';
+import { PermissionsComponent } from './pages/private/home/sections/permissions/permissions.component';
 
 @NgModule({
   declarations: [
@@ -51,11 +53,13 @@ import { InstitutionsComponent } from './pages/private/home/sections/institution
     DialogResetPasswordPromptComponent,
     DialogDeleteUserPromptComponent,
     DialogEditUserPromptComponent,
+    DialogUserPermissionsPromptComponent,
     MenuComponent,
     ResetAdminPasswordComponent,
     RolesComponent,
     UsersComponent,
-    InstitutionsComponent
+    InstitutionsComponent,
+    PermissionsComponent
   ],
   imports: [
     BrowserModule,

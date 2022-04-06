@@ -11,10 +11,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Roles',
     icon: 'people-outline',
     link: '/home/roles',
+  }, 
+  {
+    title: 'Permissions',
+    icon: 'lock-outline',
+    link: '/home/permissions',
   },
   {
     title: 'Institutions',
     icon: 'briefcase-outline',
     link: '/home/institutions',
-  }
+  },
 ]

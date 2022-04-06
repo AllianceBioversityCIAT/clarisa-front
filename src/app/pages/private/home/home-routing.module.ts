@@ -6,6 +6,7 @@ import { HomeComponent } from './home.component';
 import { InstitutionsComponent } from './sections/institutions/institutions.component';
 import { RolesComponent } from './sections/roles/roles.component';
 import { UsersComponent } from './sections/users/users.component';
+import { PermissionsComponent } from './sections/permissions/permissions.component';
 
 const routes: Routes = [
   {
@@ -15,20 +16,28 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       title: 'Home',
-      authGuardPipe: IsSignedInGuard
-    }
+      // authGuardPipe: IsSignedInGuard
+    },
+    redirectTo: 'users'
   },
   {
     path: 'users',
-    component: UsersComponent
-  },
-  {
-    path: 'roles',
-    component: RolesComponent
+    component: UsersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'institutions',
     component: InstitutionsComponent
+  },
+  {
+    path: 'roles',
+  component: RolesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'permissions',
+    component: PermissionsComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +9,16 @@ import { NavigationStart, Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'clarisa-frontend';
-  show = true;
+  show = false;
 
-  constructor(private router: Router) { 
+  constructor(private router: Router, private authenticationService: AuthService) { 
     this.router.events.forEach((event) => {
       if(event instanceof NavigationStart) {
-          this.show = event.url != "/login";
+        if ((event.url == "/home" || event.url == "/home/users" || event.url == "/home/roles" || event.url == "/home/permissions") && this.authenticationService.isLoggedIn) {
+          this.show = true;
+        } else {
+          this.show = false;
+        }
       }
     });
   }
