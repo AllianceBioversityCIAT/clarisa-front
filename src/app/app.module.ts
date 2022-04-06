@@ -40,10 +40,13 @@ import { MenuComponent } from './shared/components/menu/menu.component';
 import { ResetAdminPasswordComponent } from './shared/components/reset-admin-password/reset-admin-password.component';
 import { RolesComponent } from './pages/private/home/sections/roles/roles.component';
 import { UsersComponent } from './pages/private/home/sections/users/users.component';
+import { InstitutionsComponent } from './pages/private/home/sections/institutions/institutions.component';
 import { PermissionsComponent } from './pages/private/home/sections/permissions/permissions.component';
 import { DialogAddRolePromptComponent } from './shared/components/roles/dialog-add-role-prompt/dialog-add-role-prompt.component';
 import { DialogEditRolePromptComponent } from './shared/components/roles/dialog-edit-role-prompt/dialog-edit-role-prompt.component';
 import { DialogDeleteRolePromptComponent } from './shared/components/roles/dialog-delete-role-prompt/dialog-delete-role-prompt.component';
+import { DialogAddInstitutionPromptComponent } from './shared/components/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
+
 
 @NgModule({
   declarations: [
@@ -60,10 +63,12 @@ import { DialogDeleteRolePromptComponent } from './shared/components/roles/dialo
     ResetAdminPasswordComponent,
     RolesComponent,
     UsersComponent,
+    InstitutionsComponent,
     PermissionsComponent,
     DialogAddRolePromptComponent,
     DialogEditRolePromptComponent,
     DialogDeleteRolePromptComponent,
+    DialogAddInstitutionPromptComponent,
   ],
   imports: [
     BrowserModule,
