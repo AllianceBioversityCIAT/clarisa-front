@@ -13,6 +13,10 @@ import { environment } from '../../../environments/environment';
     return this.http.get<any>(`${environment['apiUrl']}institution/all`);
   }
 
+  getInstitutionbyId(id: any) {
+    return this.http.get<any>(`${environment['apiUrl']}institution/get/${id}`);
+  }
+
   postInstitution(institution: any) {
     const body = institution;
 

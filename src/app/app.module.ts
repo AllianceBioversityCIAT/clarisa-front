@@ -11,6 +11,7 @@ import { DialogDeleteUserPromptComponent } from './shared/components/dialog-dele
 import { DialogEditUserPromptComponent } from './shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
 import { DialogResetPasswordPromptComponent } from './shared/components/dialog-reset-password-prompt/dialog-reset-password-prompt.component';
 import { DialogUserPermissionsPromptComponent } from './shared/components/dialog-user-permissions-prompt/dialog-user-permissions-prompt.component';
+import { DialogAddInstitutionPromptComponent } from './shared/components/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
@@ -43,6 +44,7 @@ import { UsersComponent } from './pages/private/home/sections/users/users.compon
 import { InstitutionsComponent } from './pages/private/home/sections/institutions/institutions.component';
 import { PermissionsComponent } from './pages/private/home/sections/permissions/permissions.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +61,8 @@ import { PermissionsComponent } from './pages/private/home/sections/permissions/
     RolesComponent,
     UsersComponent,
     InstitutionsComponent,
-    PermissionsComponent
+    PermissionsComponent,
+    DialogAddInstitutionPromptComponent,
   ],
   imports: [
     BrowserModule,
