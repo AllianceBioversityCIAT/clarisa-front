@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:9090/',
+  apiUrl: 'http://172.22.52.88:8080/clarisa-web/',
   config:{
     apiUrl:'apiUrl'
   }
