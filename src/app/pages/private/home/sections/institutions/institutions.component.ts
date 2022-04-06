@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbDialogService } from '@nebular/theme';
 import { InstitutionService } from 'src/app/shared/services/institution.service';
+import { DialogAddInstitutionPromptComponent } from 'src/app/shared/components/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
 
 @Component({
   selector: 'app-institutions',
@@ -73,6 +74,15 @@ export class InstitutionsComponent implements OnInit {
   }
 
   addInstitution() {
+    this.openAddInstitution(DialogAddInstitutionPromptComponent, this.data);
+  }
+  
+  openAddInstitution(dialog: any, data: any) {
+    this.dialogService.open(dialog, {
+      context: {
+        data: data
+      }
+    }).onClose.subscribe(info => this.source.add(info));
   }
 
   onCustom(event: any) {
