@@ -6,11 +6,11 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/public/login/login.component';
 import { HomeComponent } from './pages/private/home/home.component';
 import { HeaderComponent } from './shared/components/header/header.component';
-import { DialogAddUserPromptComponent } from './shared/components/dialog-add-user-prompt/dialog-add-user-prompt.component';
-import { DialogDeleteUserPromptComponent } from './shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
-import { DialogEditUserPromptComponent } from './shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
-import { DialogResetPasswordPromptComponent } from './shared/components/dialog-reset-password-prompt/dialog-reset-password-prompt.component';
-import { DialogUserPermissionsPromptComponent } from './shared/components/dialog-user-permissions-prompt/dialog-user-permissions-prompt.component';
+import { DialogAddUserPromptComponent } from './shared/components/users/dialog-add-user-prompt/dialog-add-user-prompt.component';
+import { DialogDeleteUserPromptComponent } from './shared/components/users/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
+import { DialogEditUserPromptComponent } from './shared/components/users/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
+import { DialogResetPasswordPromptComponent } from './shared/components/users/dialog-reset-password-prompt/dialog-reset-password-prompt.component';
+import { DialogUserPermissionsPromptComponent } from './shared/components/users/dialog-user-permissions-prompt/dialog-user-permissions-prompt.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
@@ -41,6 +41,9 @@ import { ResetAdminPasswordComponent } from './shared/components/reset-admin-pas
 import { RolesComponent } from './pages/private/home/sections/roles/roles.component';
 import { UsersComponent } from './pages/private/home/sections/users/users.component';
 import { PermissionsComponent } from './pages/private/home/sections/permissions/permissions.component';
+import { DialogAddRolePromptComponent } from './shared/components/roles/dialog-add-role-prompt/dialog-add-role-prompt.component';
+import { DialogEditRolePromptComponent } from './shared/components/roles/dialog-edit-role-prompt/dialog-edit-role-prompt.component';
+import { DialogDeleteRolePromptComponent } from './shared/components/roles/dialog-delete-role-prompt/dialog-delete-role-prompt.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,9 @@ import { PermissionsComponent } from './pages/private/home/sections/permissions/
     RolesComponent,
     UsersComponent,
     PermissionsComponent,
+    DialogAddRolePromptComponent,
+    DialogEditRolePromptComponent,
+    DialogDeleteRolePromptComponent,
   ],
   imports: [
     BrowserModule,

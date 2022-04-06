@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
-import { DialogAddUserPromptComponent } from 'src/app/shared/components/dialog-add-user-prompt/dialog-add-user-prompt.component';
-import { DialogEditUserPromptComponent } from 'src/app/shared/components/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
-import { DialogDeleteUserPromptComponent } from 'src/app/shared/components/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
 import { UserService } from 'src/app/shared/services/user.service';
-import { DialogResetPasswordPromptComponent } from 'src/app/shared/components/dialog-reset-password-prompt/dialog-reset-password-prompt.component';
-import { DialogUserPermissionsPromptComponent } from 'src/app/shared/components/dialog-user-permissions-prompt/dialog-user-permissions-prompt.component';
+import { DialogAddUserPromptComponent } from 'src/app/shared/components/users/dialog-add-user-prompt/dialog-add-user-prompt.component';
+import { DialogEditUserPromptComponent } from 'src/app/shared/components/users/dialog-edit-user-prompt/dialog-edit-user-prompt.component';
+import { DialogDeleteUserPromptComponent } from 'src/app/shared/components/users/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
+import { DialogResetPasswordPromptComponent } from 'src/app/shared/components/users/dialog-reset-password-prompt/dialog-reset-password-prompt.component';
+import { DialogUserPermissionsPromptComponent } from 'src/app/shared/components/users/dialog-user-permissions-prompt/dialog-user-permissions-prompt.component';
 
 @Component({
   selector: 'app-users',
@@ -81,10 +81,6 @@ export class UsersComponent implements OnInit {
         title: 'Email',
         type: 'string',
       },
-      // lastLogin: {
-      //   title: 'Last Login',
-      //   type: 'string'
-      // }
     },
   };
 
@@ -98,7 +94,6 @@ export class UsersComponent implements OnInit {
     this.userService.getUsers().subscribe(x => {
       this.source.load(x);
     });
-
   }
 
   addUser() {
@@ -152,7 +147,6 @@ export class UsersComponent implements OnInit {
   }
 
   openEditUser(dialog: any, data: any) {
-    console.log(data)
     this.dialogService.open(dialog, {
       context: {
         id: data.id,

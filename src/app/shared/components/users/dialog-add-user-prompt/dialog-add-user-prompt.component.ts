@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-dialog-add-user-prompt',
@@ -90,7 +90,7 @@ export class DialogAddUserPromptComponent implements OnInit {
   submit(firstName: any, lastName: any, username: any, cgiarUser: any, email: any, password?: any) {
     this.submitted = true;
 
-    if (this.addUserForm.valid) {
+    if (this.addUserForm.valid && !this.userAlreadyExists) {
       this.userInfo = {
         firstName: firstName,
         lastName: lastName,
