@@ -1,0 +1,44 @@
+@import "../../../../themes.scss";
+
+nb-alert {
+    align-items: center;
+    font-family: $font-primary-medium !important;
+}
+
+nb-card {
+    width: 520px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+
+    nb-card-body {
+        form {
+            flex-flow: column;
+
+            .one-column {
+                width: calc(50% - 1rem) !important;
+            }
+
+            .two-columns {
+                display: flex;
+                flex-flow: row;
+
+                > * {
+                    width: 50%;
+                }
+            }
+
+            .full-column {
+                width: 100% !important;
+            }
+
+            .field-margin {
+                margin: 0 0.5rem;
+            }
+        }
+    }
+}
+
+::ng-deep nb-option {
+    font-family: $font-primary-regular !important;
+}
