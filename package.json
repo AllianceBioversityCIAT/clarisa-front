@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.1.4",
-    "@angular/cli": "~13.1.4",
+    "@angular/cli": "^13.1.4",
     "@angular/compiler-cli": "~13.1.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@schematics/angular": "~13.1.4",
