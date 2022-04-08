@@ -38,10 +38,6 @@ export class RolesComponent implements OnInit {
         title: 'ID',
         type: 'number',
       },
-      name: {
-        title: 'Name',
-        type: 'string',
-      },
       description: {
         title: 'Description',
         type: 'string',
@@ -50,16 +46,19 @@ export class RolesComponent implements OnInit {
         title: 'Acronym',
         type: 'string',
       },
-      isActive: {
+      active: {
         title: 'Is Active',
         type: 'string',
         valuePrepareFunction: (value: any) => {
           return value ? 'Yes' : 'No';
         },
       },
-      cgiarEntity: {
+      globalUnit: {
         title: 'CGIAR Entity',
         type: 'string',
+        valuePrepareFunction: (value: any) => {
+          return value.acronym;
+        },
       },
     },
   };
@@ -96,11 +95,11 @@ export class RolesComponent implements OnInit {
   }
 
   editRole(event: any) {
-    // this.openEditRole(DialogEditRolePromptComponent, event.data);
+    this.openEditRole(DialogEditRolePromptComponent, event.data);
   }
 
   deleteRole(event: any) {
-    // this.openDeleteRole(DialogDeleteRolePromptComponent, event.data);
+    this.openDeleteRole(DialogDeleteRolePromptComponent, event.data);
   }
 
   openAddRole(dialog: any, data: any) {
@@ -115,11 +114,10 @@ export class RolesComponent implements OnInit {
     this.dialogService.open(dialog, {
       context: {
         id: data.id,
-        name: data.name,
         description: data.description,
         acronym: data.acronym,
-        isActive: data.isActive,
-        cgiarEntity: data.cgiarEntity,
+        active: data.active,
+        globalUnit: data.globalUnit.id,
       }
     }).onClose.subscribe(info => this.source.update(data, info));
   }
