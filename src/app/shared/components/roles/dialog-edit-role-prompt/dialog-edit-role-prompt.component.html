@@ -1,1 +1,57 @@
-<p>dialog-edit-role-prompt works!</p>
+<nb-alert status="success" [style]="roleUpdated ? 'display: flex' : 'display: none'">Role successfully updated</nb-alert>
+<nb-card>
+    <nb-card-header class="boldFont">Edit role information below</nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="editRoleForm" class="example-items-columns">
+            <div class="two-columns">
+                <div class="field-margin">
+                    <label class="label regularFont">Description</label>
+                    <nb-form-field>
+                        <input #descriptionInput nbInput class="regularFont" formControlName="description" [status]="validateField('description')">
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['description'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['description'].errors['required']" class="hiddenMessage">Description is required.</div>
+                    </div>
+                </div>
+                <div class="field-margin">
+                    <label class="label regularFont">Acronym</label>
+                    <nb-form-field>
+                        <input #acronymInput nbInput class="regularFont" formControlName="acronym" [status]="validateField('acronym')">
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['acronym'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['acronym'].errors['required']" class="hiddenMessage">Acronym is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="two-columns">
+                <div class="field-margin">
+                    <label class="label regularFont">Is Active?</label>
+                    <nb-form-field>
+                        <nb-select #activeInput class="regularFont" formControlName="active" [(selected)]="active" [status]="validateField('active')">
+                            <nb-option value="Yes">Yes</nb-option>
+                            <nb-option value="No">No</nb-option>
+                        </nb-select>
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['active'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['active'].errors['required']" class="hiddenMessage">Is Active is required.</div>
+                    </div>
+                </div>
+                <div class="field-margin">
+                    <label class="label regularFont">CGIAR Entity</label>
+                    <nb-form-field>
+                        <nb-select #globalUnitInput class="regularFont" formControlName="globalUnit" [selected]="globalUnit" [status]="validateField('globalUnit')">
+                            <nb-option *ngFor="let item of list" [value]="item.id">{{ item.name }}</nb-option>
+                        </nb-select>
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['globalUnit'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['globalUnit'].errors['required']" class="hiddenMessage">CGIAR Entity is required.</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer class="example-items-rows">
+        <button nbButton status="success" class="boldFont" (click)="submit(descriptionInput.value, acronymInput.value, activeInput.selected, globalUnitInput.selected)">Submit</button>
+        <button nbButton status="danger" (click)="cancel()" class="cancel boldFont">Cancel</button>
+    </nb-card-footer>
+</nb-card>
