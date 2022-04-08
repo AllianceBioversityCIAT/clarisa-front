@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit, Optional } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { UserService } from '../../../services/user.service';
 

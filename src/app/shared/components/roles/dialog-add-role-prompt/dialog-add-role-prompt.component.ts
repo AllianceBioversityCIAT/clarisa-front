@@ -13,13 +13,16 @@ export class DialogAddRolePromptComponent implements OnInit {
   addRoleForm: FormGroup;
   submitted: boolean = false;
   roleInfo: object = {};
-  isActive: string = 'Yes';
+  active: string = 'Yes';
+  cgiarEntity: string = '';
+  list: any[] = [];
   roleAlreadyExists: boolean = false;
   roleSuccesfullyAdded: boolean = false;
 
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private roleService: RoleService) {
     this.addRoleForm = this.createAddRoleForm();
-    this.addRoleForm.controls['isActive'].setValue(this.isActive);
+    this.addRoleForm.controls['active'].setValue(this.active);
+    this.loadCGIAREntities();
   }
 
   ngOnInit(): void {
@@ -30,12 +33,6 @@ export class DialogAddRolePromptComponent implements OnInit {
   createAddRoleForm(): FormGroup {
     return this.formBuilder.group(
       {
-        name: [
-          null,
-          Validators.compose([
-            Validators.required
-          ])
-        ],
         description: [
           null,
           Validators.compose([
@@ -48,13 +45,13 @@ export class DialogAddRolePromptComponent implements OnInit {
             Validators.required
           ])
         ],
-        isActive: [
+        active: [
           null,
           Validators.compose([
             Validators.required
           ])
         ],
-        cgiarEntity: [
+        globalUnit: [
           null,
           Validators.compose([
             Validators.required
@@ -62,6 +59,14 @@ export class DialogAddRolePromptComponent implements OnInit {
         ]
       }
     );
+  }
+
+  loadCGIAREntities() {
+    this.roleService.getGlobalUnits().subscribe(x => {
+      this.list = x;
+      this.cgiarEntity = this.list[0].id;
+      this.addRoleForm.controls['globalUnit'].setValue(this.cgiarEntity);
+    });
   }
 
   validateField(controlName: string): string {
@@ -75,26 +80,40 @@ export class DialogAddRolePromptComponent implements OnInit {
     }
   }
 
-  submit(name: any, description: any, acronym: any, isActive: any, cgiarEntity: any) {
+  submit(description: any, acronym: any, active: any, globalUnit: any) {
     this.submitted = true;
+    // this.findRole(acronym, globalUnit);
 
-    if (this.addRoleForm.valid) {
+
+
+    if (this.addRoleForm.valid && !this.roleAlreadyExists) {
       this.roleInfo = {
-        name: name,
         description: description,
         acronym: acronym,
-        isActive: isActive == 'Yes' ? true : false,
-        cgiarEntity: cgiarEntity,
+        active: active == 'Yes' ? true : false,
+        globalUnit: {
+          id: globalUnit,
+        }
       };
 
-      this.roleService.updateRole(this.roleInfo).subscribe(x => {
+      this.roleService.postRole(this.roleInfo).subscribe(x => {
         this.roleSuccesfullyAdded = true;
         setTimeout(() => {
           this.roleSuccesfullyAdded = false;
           this.ref.close(x);
         }, 3000);
-      })
+      });
     }
+  }
+
+  findRole(acronym: any, globalUnit: any) {
+    this.roleService.getRoleByAcronymCGIAREntity(acronym, globalUnit).subscribe(x => {
+      console.log(x.acronym, x.globalUnit)
+      console.log(x)
+      // if (condition) {
+
+      // }
+    });
   }
 
   cancel() {
