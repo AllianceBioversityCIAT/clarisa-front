@@ -52,7 +52,7 @@ export class RoleService {
 
   updateRole(role: any) {
     const body = role;
-
+    
     return this.http.put<any>(`${environment['apiUrl']}roles/update`, body);
   }
 

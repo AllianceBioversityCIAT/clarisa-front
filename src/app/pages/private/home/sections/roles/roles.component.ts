@@ -37,6 +37,7 @@ export class RolesComponent implements OnInit {
       id: {
         title: 'ID',
         type: 'number',
+        width: '5%'
       },
       description: {
         title: 'Description',
@@ -49,6 +50,7 @@ export class RolesComponent implements OnInit {
       active: {
         title: 'Is Active',
         type: 'string',
+        width: '10%',
         valuePrepareFunction: (value: any) => {
           return value ? 'Yes' : 'No';
         },
