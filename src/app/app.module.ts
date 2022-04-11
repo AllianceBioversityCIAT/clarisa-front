@@ -30,7 +30,8 @@ import {
   NbUserModule,
   NbContextMenuModule,
   NbSelectModule,
-  NbAlertModule
+  NbAlertModule, 
+  NbTagModule,  
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -45,7 +46,7 @@ import { PermissionsComponent } from './pages/private/home/sections/permissions/
 import { DialogAddRolePromptComponent } from './shared/components/roles/dialog-add-role-prompt/dialog-add-role-prompt.component';
 import { DialogEditRolePromptComponent } from './shared/components/roles/dialog-edit-role-prompt/dialog-edit-role-prompt.component';
 import { DialogDeleteRolePromptComponent } from './shared/components/roles/dialog-delete-role-prompt/dialog-delete-role-prompt.component';
-import { DialogAddInstitutionPromptComponent } from './shared/components/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
+import { DialogAddInstitutionPromptComponent } from './shared/components/institutions/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
 
 
 @NgModule({
@@ -95,7 +96,9 @@ import { DialogAddInstitutionPromptComponent } from './shared/components/dialog-
     NbSelectModule,
     NbAlertModule,
     Ng2SmartTableModule,
-    HttpClientModule
+    HttpClientModule,
+    NbTagModule
+   
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }

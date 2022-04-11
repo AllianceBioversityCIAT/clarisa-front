@@ -1,7 +1,10 @@
 import { Component, Input, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogRef } from '@nebular/theme';
-import { InstitutionService } from '../../services/institution.service';
+import { NbDialogRef, NbTagComponent } from '@nebular/theme';
+import { LocElement } from 'src/app/shared/interfaces/LocElement';
+import { InstitutionTypeService } from 'src/app/shared/services/institutiontype.service';
+import { LocationService } from 'src/app/shared/services/location.service';
+import { InstitutionService } from '../../../services/institution.service';
 
 @Component({
   selector: 'app-dialog-add-institution-prompt',
@@ -15,13 +18,23 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
   institutionInfo: object = {};  
   showField: boolean = false;
   disableField: boolean = true;
-  
+  institutionType: string = '';
+  institutionHq:LocElement=<LocElement> (<unknown>null);
+  institutionLocations: LocElement=<LocElement> (<unknown>null);
+  list: any[] = [];
+  hqCountryList: any[]=[];
+  countryList: any[]=[];
+  institutionLocationList: Set<LocElement>= new Set([]);
   searchInstitution: boolean = false;
   institutionAlreadyExists: boolean = false;
   institutionSuccesfullyAdded: boolean = false;
   
-  constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private institutionService: InstitutionService) {
+  constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private institutionService: InstitutionService
+  ,private innstitutionTypeService: InstitutionTypeService,private locationsService: LocationService) {
     this.addInstitutionForm = this.createAddInstitutionForm();
+    this.loadInstitutionTypes();
+    this.loadInstitutionHQ();
+    this.loadInstitutionLocations();
    }
 
   ngOnInit(): void {
@@ -55,10 +68,49 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
           Validators.compose([
             Validators.required
           ])
+        ],
+        institutionHq: [ 
+          null,
+          Validators.compose([
+            Validators.required
+          ])
+        ],
+        institutionLocations: [ 
+          null,
+          Validators.compose([
+            Validators.required
+          ])
         ]
       }
     );
   }
+
+  loadInstitutionTypes() {
+    this.innstitutionTypeService.getInstitutionType().subscribe(x => {
+      this.list = x;
+      this.institutionType = this.list[0].id;
+      this.addInstitutionForm.controls['type'].setValue(this.institutionType);      
+    });
+  }
+
+  loadInstitutionHQ() {
+    this.locationsService.getCountries().subscribe(x => {
+      this.hqCountryList = x;
+      this.institutionHq = this.hqCountryList[0];
+      this.addInstitutionForm.controls['hqCountry'].setValue(this.institutionHq); 
+         
+    });
+    
+  }
+  loadInstitutionLocations() {
+    this.locationsService.getCountries().subscribe(x => {
+      this.countryList=x;
+      this.institutionLocations=this.countryList[0];
+      this.addInstitutionForm.controls['institutionLocations'].setValue(this.institutionLocations);  
+    });
+    }
+
+
 
   validateField(controlName: string): string {
     let control = this.addInstitutionForm.controls[controlName];
@@ -78,8 +130,10 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
       this.institutionInfo = {
         name: name,
         acronym: acronym,
-        website: website,
-        type: type 
+        websiteLink: website,
+        institutionType: {
+          id: type
+        }
       };
 
       this.institutionService.postInstitution(this.institutionInfo).subscribe(x => {
@@ -120,5 +174,30 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
   
   cancel() {
     this.ref.close();
+  }
+
+  onTagRemove(tagToRemove: NbTagComponent): void {
+    let valueFind: LocElement= <LocElement> (<unknown>null);
+    let found: boolean= false;    
+    for(let value of this.institutionLocationList ){
+      if(value.name === tagToRemove.text){
+        valueFind=value;
+        found=true;
+      }
+    }
+    if(found){
+      this.institutionLocationList.delete(valueFind);
+    }
+    
+  }
+
+  addCountry(location : any){       
+    console.log(location);
+    let obj: LocElement ={
+      id: location.id,
+      name: location.name,
+      alpha2: location.alpha2
+    }
+    this.institutionLocationList.add(obj);
   }
 }
