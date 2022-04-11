@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbDialogService } from '@nebular/theme';
 import { InstitutionService } from 'src/app/shared/services/institution.service';
-import { DialogAddInstitutionPromptComponent } from 'src/app/shared/components/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
+import { DialogAddInstitutionPromptComponent } from 'src/app/shared/components/institutions/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
 
 @Component({
   selector: 'app-institutions',
-  templateUrl: './institutions.component.html',
+  templateUrl: './institutions.component.html', 
   styleUrls: ['./institutions.component.scss']
 })
 export class InstitutionsComponent implements OnInit {

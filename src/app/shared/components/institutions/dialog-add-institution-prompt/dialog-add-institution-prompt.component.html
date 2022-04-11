@@ -1,0 +1,98 @@
+<nb-alert status="danger" [style]="institutionAlreadyExists ? 'display: flex' : 'display: none'">This institution already exists</nb-alert>
+<nb-alert status="success" [style]="institutionSuccesfullyAdded ? 'display: flex' : 'display: none'">Institution successfully added</nb-alert>
+<nb-card> 
+    <nb-card-header class="boldFont">Enter Institution information below</nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="addInstitutionForm" class="example-items-columns">
+            <div class="two-columns">
+                <div class="field-margin">
+                    <label class="label regularFont">Name</label>
+                    <nb-form-field>
+                        <input #nameInput nbInput class="regularFont" formControlName="name" [status]="validateField('name')">                        
+                    </nb-form-field>
+                    <div *ngIf="(submitted || searchInstitution) && form['name'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['name'].errors['required']" class="hiddenMessage">Name is required.</div>                        
+                    </div>
+                </div>
+
+                <div class="field-margin">
+                    <label class="label regularFont">Acronym</label>
+                    <nb-form-field>
+                        <input #acronymnameInput nbInput class="regularFont" formControlName="acronym" [status]="validateField('acronym')">
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['acronym'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['acronym'].errors['required']" class="hiddenMessage">Acronym is required.</div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="two-columns">                
+                <div class="field-margin">
+                    <label class="label regularFont">Website</label>
+                    <nb-form-field>
+                        <input #websiteInput nbInput class="regularFont"  formControlName="website" [status]="validateField('website')">
+                        
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['website'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['website'].errors['required']" class="hiddenMessage">website is required.</div>
+                    </div>
+                </div>
+                <div class="field-margin">
+                    <label class="label regularFont">Institution Type</label>
+                    <nb-form-field>
+                        <nb-select #typeInput class="regularFont" formControlName="type" [selected]="institutionType" [status]="validateField('type')">
+                            <nb-option *ngFor="let item of list" [value]="item.id" >{{ item.name }}</nb-option>
+                        </nb-select>
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['type'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['type'].errors['required']" class="hiddenMessage">Institution type is required.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="two-columns">
+                <div class="field-margin">
+                    <label class="label regularFont">Institution Headquarter</label>
+                    <nb-form-field>
+                        <nb-select #hqInput class="regularFont" formControlName="hqCountry" [selected]="institutionHq" [status]="validateField('hqCountry')">
+                            <nb-option *ngFor="let item of hqCountryList" [value]="item" >{{ item.name}}</nb-option>
+                        </nb-select>
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['hqCountry'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['hqCountry'].errors['required']" class="hiddenMessage">Institution HQ is required.</div>
+                    </div>
+                </div>     
+            </div>
+            <div class="two-columns">
+                <div class="field-margin">
+                    <label class="label regularFont">Institution Locations</label>
+                    <nb-form-field>
+                        <nb-select #locationsInput class="regularFont" formControlName="institutionLocations" [selected]="institutionLocations" [status]="validateField('institutionLocations')">
+                            <nb-option *ngFor="let item of countryList" [value]="item">{{ item.name }}</nb-option>
+                        </nb-select>                                 
+                    </nb-form-field>
+                    <div *ngIf="submitted && form['institutionLocations'].errors" class="messageContainer status-danger">
+                        <div *ngIf="form['institutionLocations'].errors['required']" class="hiddenMessage">Institution Location is required.</div>
+                    </div>
+                </div>  
+                <div class="field-margin">
+                    <label class="label regularFont"></label>
+                    <button nbButton status="basic" class="boldFont"  (click)="addCountry(locationsInput.selected)">Add</button>
+                </div>                            
+            </div>
+            <div class="two-columns">
+                <div class="field-margin">
+                    <nb-tag-list (tagRemove)="onTagRemove($event)"> 
+                        <nb-tag *ngFor="let locs of institutionLocationList" [text]="locs.name " [removable]="true"></nb-tag>
+                      </nb-tag-list>                    
+                </div>
+               
+            </div>
+            
+        </form>
+    </nb-card-body>
+    <nb-card-footer class="example-items-rows">
+        <button nbButton status="success" class="boldFont" (click)="submit(nameInput.value, acronymnameInput.value, websiteInput.value,typeInput.selected)">Submit</button>
+        <button nbButton status="danger" (click)="cancel()" class="cancel boldFont">Cancel</button>
+    </nb-card-footer>
+</nb-card>
