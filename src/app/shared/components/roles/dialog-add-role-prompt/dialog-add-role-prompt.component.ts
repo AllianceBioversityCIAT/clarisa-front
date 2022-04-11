@@ -82,37 +82,37 @@ export class DialogAddRolePromptComponent implements OnInit {
 
   submit(description: any, acronym: any, active: any, globalUnit: any) {
     this.submitted = true;
-    // this.findRole(acronym, globalUnit);
+    this.findRole(acronym, globalUnit);
 
-
-
-    if (this.addRoleForm.valid && !this.roleAlreadyExists) {
-      this.roleInfo = {
-        description: description,
-        acronym: acronym,
-        active: active == 'Yes' ? true : false,
-        globalUnit: {
-          id: globalUnit,
-        }
-      };
-
-      this.roleService.postRole(this.roleInfo).subscribe(x => {
-        this.roleSuccesfullyAdded = true;
-        setTimeout(() => {
-          this.roleSuccesfullyAdded = false;
-          this.ref.close(x);
-        }, 3000);
-      });
-    }
+    setTimeout(() => {
+      if (this.addRoleForm.valid && !this.roleAlreadyExists) {
+        this.roleInfo = {
+          description: description,
+          acronym: acronym,
+          active: active == 'Yes' ? true : false,
+          globalUnit: {
+            id: globalUnit,
+          }
+        };
+  
+        this.roleService.postRole(this.roleInfo).subscribe(x => {
+          this.roleSuccesfullyAdded = true;
+          setTimeout(() => {
+            this.roleSuccesfullyAdded = false;
+            this.ref.close(x);
+          }, 3000);
+        });
+      }
+    }, 1000);
   }
 
   findRole(acronym: any, globalUnit: any) {
     this.roleService.getRoleByAcronymCGIAREntity(acronym, globalUnit).subscribe(x => {
-      console.log(x.acronym, x.globalUnit)
-      console.log(x)
-      // if (condition) {
-
-      // }
+      if (x && x != null) {
+        this.roleAlreadyExists = true;
+      } else {
+        this.roleAlreadyExists = false;
+      }
     });
   }
 
