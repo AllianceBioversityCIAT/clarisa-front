@@ -105,3 +105,13 @@ input:-moz-placeholder {
 .hiddenMessage {
   font-size: $font-s !important;
 }
+
+.displayFlags{
+  display:flex;
+  gap: 5px;
+}
+
+.sizeFlags{
+  width: 30px;
+  height: 20px;
+}
