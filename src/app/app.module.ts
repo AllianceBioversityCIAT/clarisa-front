@@ -31,7 +31,8 @@ import {
   NbContextMenuModule,
   NbSelectModule,
   NbAlertModule, 
-  NbTagModule,  
+  NbTagModule, 
+  NbSpinnerModule 
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -47,6 +48,7 @@ import { DialogAddRolePromptComponent } from './shared/components/roles/dialog-a
 import { DialogEditRolePromptComponent } from './shared/components/roles/dialog-edit-role-prompt/dialog-edit-role-prompt.component';
 import { DialogDeleteRolePromptComponent } from './shared/components/roles/dialog-delete-role-prompt/dialog-delete-role-prompt.component';
 import { DialogAddInstitutionPromptComponent } from './shared/components/institutions/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
+import { DialogEditInstitutionPromptComponent } from './shared/components/institutions/dialog-edit-institution-prompt/dialog-edit-institution-prompt.component';
 
 
 @NgModule({
@@ -70,6 +72,7 @@ import { DialogAddInstitutionPromptComponent } from './shared/components/institu
     DialogEditRolePromptComponent,
     DialogDeleteRolePromptComponent,
     DialogAddInstitutionPromptComponent,
+    DialogEditInstitutionPromptComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +100,8 @@ import { DialogAddInstitutionPromptComponent } from './shared/components/institu
     NbAlertModule,
     Ng2SmartTableModule,
     HttpClientModule,
-    NbTagModule
+    NbTagModule,
+    NbSpinnerModule
    
   ],
   providers: [

@@ -7,11 +7,11 @@ import { LocationService } from 'src/app/shared/services/location.service';
 import { InstitutionService } from '../../../services/institution.service';
 
 @Component({
-  selector: 'app-dialog-add-institution-prompt',
-  templateUrl: './dialog-add-institution-prompt.component.html',
-  styleUrls: ['./dialog-add-institution-prompt.component.scss']
+  selector: 'app-dialog-edit-institution-prompt',
+  templateUrl: './dialog-edit-institution-prompt.component.html',
+  styleUrls: ['./dialog-edit-institution-prompt.component.scss']
 })
-export class DialogAddInstitutionPromptComponent implements OnInit {
+export class DialogEditInstitutionPromptComponent implements OnInit {
   @Input() data: any;
   addInstitutionForm: FormGroup;
   submitted: boolean = false;
@@ -27,7 +27,7 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
   institutionLocationList: Set<LocElement>= new Set([]);
   searchInstitution: boolean = false;
   institutionAlreadyExists: boolean = false;
-  institutionSuccesfullyAdded: boolean = false;
+  institutionSuccesfullyUpdated: boolean = false;
   
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private institutionService: InstitutionService
   ,private innstitutionTypeService: InstitutionTypeService,private locationsService: LocationService) {
@@ -144,10 +144,10 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
       ]
       };
       console.log(this.institutionInfo)
-      this.institutionService.postInstitution(this.institutionInfo).subscribe(x => {
-        this.institutionSuccesfullyAdded = true;
+      this.institutionService.updateInstitution(this.institutionInfo).subscribe(x => {
+        this.institutionSuccesfullyUpdated = true;
         setTimeout(() => {
-          this.institutionSuccesfullyAdded = false;
+          this.institutionSuccesfullyUpdated = false;
           this.ref.close(x);
         }, 3000)
       });

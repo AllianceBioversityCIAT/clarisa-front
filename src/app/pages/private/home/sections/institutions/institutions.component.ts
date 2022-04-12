@@ -3,13 +3,15 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { NbDialogService } from '@nebular/theme';
 import { InstitutionService } from 'src/app/shared/services/institution.service';
 import { DialogAddInstitutionPromptComponent } from 'src/app/shared/components/institutions/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
+import { LocElement } from 'src/app/shared/interfaces/LocElement';
+import { institutionLocation } from 'src/app/shared/interfaces/InstitutionLocation';
 
 @Component({
   selector: 'app-institutions',
   templateUrl: './institutions.component.html', 
   styleUrls: ['./institutions.component.scss']
 })
-export class InstitutionsComponent implements OnInit {
+export class InstitutionsComponent implements OnInit {  
   settings = {
     mode: 'external',
     add: {
@@ -49,9 +51,19 @@ export class InstitutionsComponent implements OnInit {
          title: 'Website',
          type: 'string',
        },
-       added: {
-         title: 'Added Date',
-         type: 'string',
+       locations: {
+         title: 'Locations',
+         type: 'html',
+         valuePrepareFunction: (value: any[]) => {
+           
+           let dataInfo='<div class="displayFlags" >'
+           for(let data of value){
+           
+            dataInfo+= `<span data-toggle="tooltip" title="${data.location.name}" class="flag-icon flag-icon-${data.location.isoAlpha2.toLowerCase()} sizeFlags"
+            style="padding: 0 15px;"></span>`                        
+           }
+          return dataInfo+'</div>';
+        }        
        },
        institutionType: {
          title: 'Institution Type',
@@ -64,13 +76,17 @@ export class InstitutionsComponent implements OnInit {
   };
   source: LocalDataSource = new LocalDataSource();
   data: any;
+  loading = false;
 
   constructor(private dialogService: NbDialogService, private institutionService: InstitutionService) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.institutionService.getInstitution().subscribe(x => {
       this.source.load(x);
+      this.loading = false;
     });
+   
   }
 
   addInstitution() {
