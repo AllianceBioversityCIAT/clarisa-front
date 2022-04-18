@@ -51,20 +51,24 @@ export class LoginComponent implements OnInit {
 
     if (this.loginForm.valid) {
       this.authenticationService.loginAD(email, password).subscribe(
-        res => {
-          if (res.authenticated === true) {
-            this.router.navigate(['/home/users']);
+        {
+          next: (res) => {
+            if (res.authenticated === true) {
+              this.router.navigate(['/home/users']);
+            }
+          }, 
+          error: (error) => {
+            console.log('doLogin', error);
+            if (error.status == 403) {
+              this.userDoesNotExist = false;
+              this.incorrectPassword = true;
+            } else if (error.status == 404) {
+              this.userDoesNotExist = true;
+              this.incorrectPassword = false;
+            }
           }
-        }, error => {
-          console.log('doLogin', error);
-          if (error.status == 403) {
-            this.userDoesNotExist = false;
-            this.incorrectPassword = true;
-          } else if (error.status == 404) {
-            this.userDoesNotExist = true;
-            this.incorrectPassword = false;
-          }
-        });
+        }
+      );
     }
   }
 
