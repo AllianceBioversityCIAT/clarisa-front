@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { GenericService } from './generic.service';
-import { Permission } from '../interfaces/Permission';
+import { CGIAREntity } from '../interfaces/CGIAREntity';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class PermissionService extends GenericService<Permission>{
+export class CGIAREntityService extends GenericService<CGIAREntity> {
 
-  private baseServiceUrl = `${environment.apiUrl}permissions`;
+    private baseServiceUrl = `${environment.apiUrl}globalUnits`;
 
     constructor(private client: HttpClient) { super(); }
 
@@ -20,4 +20,5 @@ export class PermissionService extends GenericService<Permission>{
     protected getServiceBaseUrl(): string {
         return this.baseServiceUrl;
     }
+
 }
