@@ -107,7 +107,7 @@ export class DialogAddRolePromptComponent implements OnInit {
   }
 
   findRole(acronym: any, globalUnit: any) {
-    this.roleService.getRoleByAcronymCGIAREntity(acronym, globalUnit).subscribe(x => {
+    this.roleService.getRoleByAcronymAndCGIAREntity(acronym, globalUnit).subscribe(x => {
       if (x && x != null) {
         this.roleAlreadyExists = true;
       } else {
