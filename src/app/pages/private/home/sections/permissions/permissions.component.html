@@ -17,7 +17,7 @@
                         (selectedChange)="loadRoleList()"
                     >
                         <nb-option>{{defaultValue}}</nb-option>
-                        <nb-option *ngFor="let entity of entityList$ | async" [value]="entity">{{entity.acronym}}</nb-option>
+                        <nb-option *ngFor="let entity of entityList$ | async" [value]="entity">{{entity.acronym??'' | orElse : entity.officialCode??''}}</nb-option>
                     </nb-select>
                 </nb-form-field>
                 <!--div *ngIf="submitted && form['cgiarEntity'].errors" class="messageContainer status-danger">
@@ -52,21 +52,29 @@
     </nb-card-header>
 
     <nb-card-body>
-        <nb-form-field>
-            <nb-tag-list (tagRemove)="onPermissionRemove($event)">
-                <nb-tag *ngFor="let tag of selectedPermissions" [text]="tag.name" removable></nb-tag>
-                <input type="text" nbTagInput (tagAdd)="onPermissionAddByString($event.value)" [nbAutocomplete]="autocomplete" fullWidth>
-            </nb-tag-list>
-      
-            <nb-icon nbSuffix icon="search" pack="eva"></nb-icon>
-        </nb-form-field>
-      
-        <nb-autocomplete #autocomplete (selectedChange)="onPermissionAdd($event)">
-            <nb-option *ngFor="let currentPermission of currentPermissionList" [value]="currentPermission">{{ currentPermission.name }}</nb-option>
-        </nb-autocomplete>
+        <div class="field-margin">
+            <div class="field-spacing">
+                <nb-form-field>
+                    <nb-select 
+                        #permissionInput 
+                        class="regularFont" 
+                        [placeholder]="defaultValue"
+                        [formControl]="permissionControl" 
+                        (selectedChange)="onPermissionAdd($event)"
+                    >
+                        <nb-option>{{defaultValue}}</nb-option>
+                        <nb-option *ngFor="let permission of currentPermissionList" [value]="permission">{{permission.name}}</nb-option>
+                    </nb-select>
+                </nb-form-field>
+            </div>
+            <div class="field-spacing">
+                <nb-tag-list (tagRemove)="onPermissionRemove($event)">
+                    <nb-tag *ngFor="let tag of selectedPermissions" [text]="tag.name" removable></nb-tag>
+                </nb-tag-list>
+            </div>
+        </div>
     </nb-card-body>
     <nb-card-footer class="example-items-rows">
-        <button nbButton status="success" class="boldFont" (click)="save()">Update Role</button>
+        <button nbButton status="success" class="boldFont" (click)="save()" [disabled]="role?.id===0">Update Permissions</button>
     </nb-card-footer>
 </nb-card>
-<nb-alert status="success" [style]="roleUpdated ? 'display: flex' : 'display: none'">Role successfully updated</nb-alert>
