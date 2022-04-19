@@ -50,6 +50,8 @@ import { DialogEditRolePromptComponent } from './shared/components/roles/dialog-
 import { DialogDeleteRolePromptComponent } from './shared/components/roles/dialog-delete-role-prompt/dialog-delete-role-prompt.component';
 import { DialogAddInstitutionPromptComponent } from './shared/components/institutions/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
 import { DialogEditInstitutionPromptComponent } from './shared/components/institutions/dialog-edit-institution-prompt/dialog-edit-institution-prompt.component';
+import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
+import { OrElsePipe } from './shared/pipes/or-else.pipe';
 
 
 @NgModule({
@@ -73,7 +75,9 @@ import { DialogEditInstitutionPromptComponent } from './shared/components/instit
     DialogEditRolePromptComponent,
     DialogDeleteRolePromptComponent,
     DialogAddInstitutionPromptComponent,
-    DialogEditInstitutionPromptComponent
+    DialogEditInstitutionPromptComponent,
+    ConfirmationDialogComponent,
+    OrElsePipe
   ],
   imports: [
     BrowserModule,
