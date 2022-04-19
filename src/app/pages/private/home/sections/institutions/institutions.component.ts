@@ -4,7 +4,7 @@ import { NbDialogService } from '@nebular/theme';
 import { InstitutionService } from 'src/app/shared/services/institution.service';
 import { DialogAddInstitutionPromptComponent } from 'src/app/shared/components/institutions/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
 import { LocElement } from 'src/app/shared/interfaces/LocElement';
-import { institutionLocation } from 'src/app/shared/interfaces/InstitutionLocation';
+import { InstitutionLocation } from 'src/app/shared/interfaces/InstitutionLocation';
 
 @Component({
   selector: 'app-institutions',
