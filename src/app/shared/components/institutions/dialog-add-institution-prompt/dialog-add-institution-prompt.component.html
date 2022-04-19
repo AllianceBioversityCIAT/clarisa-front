@@ -84,7 +84,7 @@
                 <div class="field-margin">
                     <nb-tag-list #locationtagInput (tagRemove)="onTagRemove($event)"> 
                         <nb-tag *ngFor="let locs of institutionLocationList"  [text]="locs.name" [removable]="true">
-                            <span [className]="'flag-icon flag-icon-'+locs.isoalpha2+' sizeFlags'"></span>
+                            <span [className]="'flag-icon flag-icon-'+locs.isoAlpha2+' sizeFlags'"></span>
                         </nb-tag>
                         
                     </nb-tag-list>                    

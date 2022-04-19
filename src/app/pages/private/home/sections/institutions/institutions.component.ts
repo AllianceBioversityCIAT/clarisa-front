@@ -5,6 +5,9 @@ import { InstitutionService } from 'src/app/shared/services/institution.service'
 import { DialogAddInstitutionPromptComponent } from 'src/app/shared/components/institutions/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
 import { LocElement } from 'src/app/shared/interfaces/LocElement';
 import { institutionLocation } from 'src/app/shared/interfaces/InstitutionLocation';
+import { DialogEditInstitutionPromptComponent } from 'src/app/shared/components/institutions/dialog-edit-institution-prompt/dialog-edit-institution-prompt.component';
+import { DialogDeleteInstitutionPromptComponent } from 'src/app/shared/components/institutions/dialog-delete-institution-prompt/dialog-delete-institution-prompt.component';
+
 
 @Component({
   selector: 'app-institutions',
@@ -92,6 +95,14 @@ export class InstitutionsComponent implements OnInit {
   addInstitution() {
     this.openAddInstitution(DialogAddInstitutionPromptComponent, this.data);
   }
+
+  editInstitution(event: any){
+    this.openEditInstitution(DialogEditInstitutionPromptComponent, event.data);
+  }
+
+  deleteInstitution(event: any){
+    this.openDeleteInstitution(DialogDeleteInstitutionPromptComponent, event.data);
+  }
   
   openAddInstitution(dialog: any, data: any) {
     this.dialogService.open(dialog, {
@@ -100,8 +111,50 @@ export class InstitutionsComponent implements OnInit {
       }
     }).onClose.subscribe(info => this.source.add(info));
   }
+  openEditInstitution(dialog: any, data: any) {
+    
+    let locations:any[]=[];
+    let location:any=null;
+    for (let loc of data.locations ){
+      if(loc.headquarter){
+        location=loc;        
+      }else{
+        locations.push(loc.location);
+      }
+    }
+   
+    this.dialogService.open(dialog, {
+      context: {
+        id: data.id,
+        name: data.name,
+        acronym: data.acronym,
+        website: data.websiteLink,
+        type: data.institutionType.id,
+        hq: location==null?null:location.location,
+        locations:locations
+      }      
+    }).onClose.subscribe(info => this.source.update(data, info));
+  }
 
   onCustom(event: any) {
     let action = event['action'];
+    switch (action) {
+      case 'edit':
+        this.editInstitution(event);
+        break;
+      case 'delete':
+        this.deleteInstitution(event);
+        break;
+
+      default:
+        break;
+    }
+  }
+  openDeleteInstitution(dialog: any, data: any) {
+    this.dialogService.open(dialog, {
+      context: {
+        data: data
+      }
+    }).onClose.subscribe(info => info != undefined ? this.source.remove(data) : null);
   }
 }

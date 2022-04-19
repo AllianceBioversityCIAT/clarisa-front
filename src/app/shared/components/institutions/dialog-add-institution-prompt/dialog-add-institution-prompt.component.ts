@@ -105,7 +105,7 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
   loadInstitutionLocations() {
     this.locationsService.getCountries().subscribe(x => {
       this.countryList=x;
-      this.institutionLocations=this.countryList[0];
+      this.institutionLocations=this.countryList[0];      
       this.addInstitutionForm.controls['institutionLocations'].setValue(this.institutionLocations);  
     });
     }
@@ -125,6 +125,25 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
   
   submit(name: any, acronym: any, website: any, type: any,locationhq:any) {
     this.submitted = true;
+    var data=[];
+    data.push({
+      location:{
+        id: locationhq.id,
+        name: locationhq.name,
+        isoAlpha2: locationhq.isoAlpha2
+      },
+      headquarter: true                 
+    });
+    for(let location of this.institutionLocationList){
+      data.push({
+        location:{
+          id: location.id,
+          name: location.name,
+          isoAlpha2: location.isoAlpha2
+        },
+        headquarter: false                 
+      });
+    }
     if (this.addInstitutionForm.valid) {      
       this.institutionInfo = {
         name: name,
@@ -133,17 +152,8 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
         institutionType: {
           id: type
         },
-        locations:[{
-          location:{
-            id: locationhq.id,
-            name: locationhq.name,
-            isoalpha2: locationhq.isoalpha2
-          },
-          headquarter: true                 
-        }
-      ]
-      };
-      console.log(this.institutionInfo)
+        locations:data
+      };      
       this.institutionService.postInstitution(this.institutionInfo).subscribe(x => {
         this.institutionSuccesfullyAdded = true;
         setTimeout(() => {
@@ -203,7 +213,7 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
       let obj: LocElement ={
       id: location.id,
       name: location.name,
-      isoalpha2: location.isoalpha2
+      isoAlpha2: location.isoAlpha2
     }
     let found:Boolean=false;
     for(let data of this.institutionLocationList){
@@ -212,7 +222,9 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
       }
     }
     if(!found){
-      this.institutionLocationList.add(obj);
+      if(obj.id!=this.institutionHq.id){
+        this.institutionLocationList.add(obj);
+      }     
     }   
     this.institutionLocations=this.countryList[0];
   }

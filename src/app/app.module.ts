@@ -49,6 +49,7 @@ import { DialogEditRolePromptComponent } from './shared/components/roles/dialog-
 import { DialogDeleteRolePromptComponent } from './shared/components/roles/dialog-delete-role-prompt/dialog-delete-role-prompt.component';
 import { DialogAddInstitutionPromptComponent } from './shared/components/institutions/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
 import { DialogEditInstitutionPromptComponent } from './shared/components/institutions/dialog-edit-institution-prompt/dialog-edit-institution-prompt.component';
+import { DialogDeleteInstitutionPromptComponent } from './shared/components/institutions/dialog-delete-institution-prompt/dialog-delete-institution-prompt.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { DialogEditInstitutionPromptComponent } from './shared/components/instit
     DialogEditRolePromptComponent,
     DialogDeleteRolePromptComponent,
     DialogAddInstitutionPromptComponent,
-    DialogEditInstitutionPromptComponent
+    DialogEditInstitutionPromptComponent,
+    DialogDeleteInstitutionPromptComponent
   ],
   imports: [
     BrowserModule,

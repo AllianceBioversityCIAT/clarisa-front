@@ -13,36 +13,41 @@ import { InstitutionService } from '../../../services/institution.service';
 })
 export class DialogEditInstitutionPromptComponent implements OnInit {
   @Input() data: any;
-  addInstitutionForm: FormGroup;
+  @Input() id: number = 0;
+  @Input() name: string = '';
+  @Input() acronym: string = '';
+  @Input() website: string = '';
+  @Input() type: string = '';
+  @Input() hq:  LocElement =<LocElement> (<unknown>null);
+  @Input() locations: LocElement[]=[];
+  editInstitutionForm!: FormGroup;
   submitted: boolean = false;
-  institutionInfo: object = {};  
-  showField: boolean = false;
-  disableField: boolean = true;
+  institutionInfo: object = {};   
   institutionType: string = '';
-  institutionHq:LocElement=<LocElement> (<unknown>null);
+  institutionHq: LocElement=<LocElement> (<unknown>null);
   institutionLocations: LocElement=<LocElement> (<unknown>null);
   list: any[] = [];
   hqCountryList: any[]=[];
   countryList: any[]=[];
   institutionLocationList: Set<LocElement>= new Set([]);
-  searchInstitution: boolean = false;
+  
   institutionAlreadyExists: boolean = false;
   institutionSuccesfullyUpdated: boolean = false;
   
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private institutionService: InstitutionService
-  ,private innstitutionTypeService: InstitutionTypeService,private locationsService: LocationService) {
-    this.addInstitutionForm = this.createAddInstitutionForm();
+  ,private innstitutionTypeService: InstitutionTypeService,private locationsService: LocationService) { }
+
+  ngOnInit(): void {
+    this.editInstitutionForm = this.createEditInstitutionForm();
     this.loadInstitutionTypes();
     this.loadInstitutionHQ();
     this.loadInstitutionLocations();
-   }
-
-  ngOnInit(): void {
+    this.loadInstitutionInfo();
   }
 
-  get form() { return this.addInstitutionForm.controls; }
+  get form() { return this.editInstitutionForm.controls; }
 
-  createAddInstitutionForm(): FormGroup {
+  createEditInstitutionForm(): FormGroup {
     return this.formBuilder.group(
       {
         name: [
@@ -87,18 +92,19 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
 
   loadInstitutionTypes() {
     this.innstitutionTypeService.getInstitutionType().subscribe(x => {
-      this.list = x;
-      this.institutionType = this.list[0].id;
-      this.addInstitutionForm.controls['type'].setValue(this.institutionType);      
+      this.list = x;         
+      this.institutionType=this.type;
+      this.editInstitutionForm.controls['type'].setValue(this.type);  
+      
+      this.locations.forEach(loc => this.institutionLocationList.add(loc));
     });
   }
 
   loadInstitutionHQ() {
     this.locationsService.getCountries().subscribe(x => {
-      this.hqCountryList = x;
-      this.institutionHq = this.hqCountryList[0];
-      this.addInstitutionForm.controls['institutionHq'].setValue(this.institutionHq); 
-         
+      this.hqCountryList = x;  
+      this.institutionHq=this.hqCountryList.find(country => country.id==this.hq.id);          
+      this.editInstitutionForm.controls['institutionHq'].setValue(this.hq);         
     });
     
   }
@@ -106,14 +112,14 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
     this.locationsService.getCountries().subscribe(x => {
       this.countryList=x;
       this.institutionLocations=this.countryList[0];
-      this.addInstitutionForm.controls['institutionLocations'].setValue(this.institutionLocations);  
+      this.editInstitutionForm.controls['institutionLocations'].setValue(this.institutionLocations);  
     });
     }
 
 
 
   validateField(controlName: string): string {
-    let control = this.addInstitutionForm.controls[controlName];
+    let control = this.editInstitutionForm.controls[controlName];
     if (this.submitted && control.invalid) {
       return 'danger';
     } if (this.submitted && !control.invalid) { 
@@ -125,25 +131,36 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
   
   submit(name: any, acronym: any, website: any, type: any,locationhq:any) {
     this.submitted = true;
-    if (this.addInstitutionForm.valid) {      
+    var data=[];
+    data.push({
+      location:{
+        id: locationhq.id,
+        name: locationhq.name,
+        isoAlpha2: locationhq.isoAlpha2
+      },
+      headquarter: true                 
+    });
+    for(let location of this.institutionLocationList){
+      data.push({
+        location:{
+          id: location.id,
+          name: location.name,
+          isoAlpha2: location.isoAlpha2
+        },
+        headquarter: false                 
+      });
+    }
+    if (this.editInstitutionForm.valid) {      
       this.institutionInfo = {
+        id:this.id,
         name: name,
         acronym: acronym,
         websiteLink: website,
         institutionType: {
           id: type
         },
-        locations:[{
-          location:{
-            id: locationhq.id,
-            name: locationhq.name,
-            isoalpha2: locationhq.isoalpha2
-          },
-          headquarter: true                 
-        }
-      ]
-      };
-      console.log(this.institutionInfo)
+        locations:data
+      };      
       this.institutionService.updateInstitution(this.institutionInfo).subscribe(x => {
         this.institutionSuccesfullyUpdated = true;
         setTimeout(() => {
@@ -155,27 +172,12 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
   }
   
 
-  loadInstitutionInfo() {
-    this.searchInstitution = true;
-    let id = this.addInstitutionForm.controls['id'].value;
-
-    this.institutionService.getInstitutionbyId(id).subscribe(x => {
-      if (x[0]) {
-        if (x[0].id && x[0].id != null) {
+  loadInstitutionInfo() {            
           this.institutionAlreadyExists = true;
-          this.addInstitutionForm.controls['name'].setValue(x[0].username);
-          this.addInstitutionForm.controls['acronym'].setValue(x[0].firstName);
-          this.addInstitutionForm.controls['website'].setValue(x[0].lastName);
-        } 
-      } else {
-        this.institutionAlreadyExists = false;
-        this.addInstitutionForm.controls['name'].reset();
-        this.addInstitutionForm.controls['acronym'].reset();
-        this.addInstitutionForm.controls['website'].reset();
-      }
-    });
+          this.editInstitutionForm.controls['name'].setValue(this.name);
+          this.editInstitutionForm.controls['acronym'].setValue(this.acronym);
+          this.editInstitutionForm.controls['website'].setValue(this.website);  
 
-    this.showField = true;
   }
 
 
@@ -203,7 +205,7 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
       let obj: LocElement ={
       id: location.id,
       name: location.name,
-      isoalpha2: location.isoalpha2
+      isoAlpha2: location.isoAlpha2
     }
     let found:Boolean=false;
     for(let data of this.institutionLocationList){
@@ -212,7 +214,10 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
       }
     }
     if(!found){
-      this.institutionLocationList.add(obj);
+      if(obj.id!=this.institutionHq.id){
+        this.institutionLocationList.add(obj);
+      }
+     
     }   
     this.institutionLocations=this.countryList[0];
   }
