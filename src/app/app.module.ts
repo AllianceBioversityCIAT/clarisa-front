@@ -31,7 +31,8 @@ import {
   NbContextMenuModule,
   NbSelectModule,
   NbAlertModule, 
-  NbTagModule, 
+  NbTagModule,
+  NbAutocompleteModule,
   NbSpinnerModule 
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -101,8 +102,8 @@ import { DialogEditInstitutionPromptComponent } from './shared/components/instit
     Ng2SmartTableModule,
     HttpClientModule,
     NbTagModule,
+    NbAutocompleteModule,
     NbSpinnerModule
-   
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }
