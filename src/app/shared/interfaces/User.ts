@@ -1,5 +1,6 @@
-export interface User {
-    id: number;
+import { BaseDTO } from "./BaseDTO";
+
+export interface User extends BaseDTO {
     email: string;
     password?: string;
     first_name: string;

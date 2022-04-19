@@ -1,5 +1,5 @@
-export interface LocElement{
-    id: number;
-    name: string;
+import { SimpleDTO } from "./SimpleDTO";
+
+export interface LocElement extends SimpleDTO{
     isoalpha2: string;
 }
