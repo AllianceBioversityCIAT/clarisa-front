@@ -1,26 +1,26 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, Optional, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { NbDialogRef, NbTagComponent, NbTagInputDirective } from '@nebular/theme';
-import { Observable, of } from 'rxjs';
+import { NbDialogRef, NbDialogService, NbTagComponent, NbToastrService } from '@nebular/theme';
+import { firstValueFrom, Observable, of } from 'rxjs';
 import { CGIAREntity } from 'src/app/shared/interfaces/CGIAREntity';
 import { Permission } from 'src/app/shared/interfaces/Permission';
 import { Role } from 'src/app/shared/interfaces/Role';
 import { CGIAREntityService } from 'src/app/shared/services/cgiar-entity.service';
 import { RoleService } from 'src/app/shared/services/role.service';
 import { PermissionService } from 'src/app/shared/services/permission.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { Confirmation } from 'src/app/shared/interfaces/Confirmation';
 
 @Component({
   selector: 'app-permissions',
   templateUrl: './permissions.component.html',
   styleUrls: ['./permissions.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PermissionsComponent implements OnInit {
 
   // html-bound variables
   @Input() public cgiarEntity: CGIAREntity = new CGIAREntity(0,"");
   @Input() public role: Role = new Role(0);
-  @ViewChild(NbTagInputDirective, { read: ElementRef }) permissionInput!: ElementRef<HTMLInputElement>;
 
   // variables
   public defaultValue : string = "Select an option...";
@@ -30,19 +30,21 @@ export class PermissionsComponent implements OnInit {
   public roleControl: FormControl = new FormControl({
     formState: this.defaultValue
   });
+  public permissionControl: FormControl = new FormControl({
+    formState: this.defaultValue
+  });
   public entityList$!: Observable<CGIAREntity[]>;
   public roleList$!: Observable<Role[]>;
   public fullPermissionList!: Permission[];
   public currentPermissionList!: Permission[];
   public selectedPermissions: Set<Permission> = new Set<Permission>();
-  public roleUpdated: boolean = false;
 
   constructor(
-    @Optional() protected ref: NbDialogRef<any>,
-    private formBuilder: FormBuilder,
+    private dialogService: NbDialogService,
     private roleService: RoleService,
     private entityService: CGIAREntityService,
-    private permissionService : PermissionService
+    private permissionService : PermissionService,
+    private toastrService: NbToastrService
   ) { }
 
   ngOnInit(): void {
@@ -50,7 +52,7 @@ export class PermissionsComponent implements OnInit {
   }
 
   private loadEntityList(): void {
-    this.entityList$ = this.entityService.findAll();
+    this.entityList$ = this.entityService.findAllActive();
   }
 
   public loadRoleList(): void {    
@@ -75,10 +77,10 @@ export class PermissionsComponent implements OnInit {
       this.permissionService.findAll().subscribe({
         next: (permissions) => {
           this.fullPermissionList = permissions;
-          this.currentPermissionList = permissions;
+          this.selectedPermissions = new Set(this.role.rolePermissions);
+          this.currentPermissionList = permissions.filter(cp => !(this.role.rolePermissions?.find(rp => rp.id === cp.id)));
         }
       });
-      this.selectedPermissions = new Set(this.role.rolePermissions);
     }
   }
   
@@ -102,28 +104,33 @@ export class PermissionsComponent implements OnInit {
     return 0;
   }
 
-  onPermissionRemove(tagToRemove: NbTagComponent): void {
-    this.deleteByRoute(tagToRemove.text);
-    this.currentPermissionList.push(this.fullPermissionList.find(p => tagToRemove.text === p.name)!);
-    this.currentPermissionList.sort(this.permissionSorting);
+  async onPermissionRemove(tagToRemove: NbTagComponent) : Promise<void> {
+    let data: Confirmation = {body: "Are you sure you want to remove this permission?"};
+    //FIXME NG0100 on dialog open
+    let dialogRef : NbDialogRef<ConfirmationDialogComponent> = this.dialogService.open(ConfirmationDialogComponent, {context: {data}});
+    dialogRef.onClose.subscribe(result => {
+      if(result){
+        this.deleteByRoute(tagToRemove.text);
+        this.currentPermissionList.push(this.fullPermissionList.find(p => tagToRemove.text === p.name)!);
+        this.currentPermissionList.sort(this.permissionSorting);
+      }
+    });
   }
 
-  onPermissionAddByString(value: string): void { 
-    if (value) {   
-      this.selectedPermissions.add(this.fullPermissionList.find(p => value === p.name)!);
-      this.currentPermissionList = this.currentPermissionList.filter(p => p.name !== value);
-    }
-
-    this.permissionInput.nativeElement.value = '';
-  }
-
-  onPermissionAdd(value: Permission): void { 
+  onPermissionAdd(value: Permission): void {   
     if (value) {   
       this.selectedPermissions.add(this.fullPermissionList.find(p => value === p)!);
       this.currentPermissionList = this.currentPermissionList.filter(p => p !== value);
     }
 
-    this.permissionInput.nativeElement.value = '';
+    this.permissionControl.setValue(null);
+  }
+
+  showUpdateToast(){
+    this.toastrService.show(
+      `The permissions for the role ${this.role.acronym} - ${this.role.description} from ${this.cgiarEntity.acronym} has been updated successfully` ,
+      'Permissions updated!',
+      { duration: 5000, status: 'success' });
   }
 
   save(){
@@ -131,16 +138,9 @@ export class PermissionsComponent implements OnInit {
       this.role.rolePermissions = Array.from(this.selectedPermissions);
       this.roleService.updateRole(this.role).subscribe({
         next: (role) => {
-          this.roleUpdated = true;
-        },
-        complete: () => {
-          setTimeout(() => {
-            this.roleUpdated = false;
-          }, 3000);
+          this.showUpdateToast();
         }
       });
-    } else {
-      this.roleUpdated = false;
     }
   }
 
