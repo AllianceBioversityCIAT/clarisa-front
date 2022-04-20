@@ -22,14 +22,20 @@ export class AuthService {
   }
 
   public get currentUserValue(): User {
-    if (this.currentUserSubject) {
+    if (this.currentUserSubject && this.isUserOnStorage) {
       return this.currentUserSubject.value;
     }
     return null as any;
   }
 
+  private get isUserOnStorage() : boolean {
+    let user : string = localStorage.getItem('currentUser')??'';
+    return user.trim().length > 0;
+  }
+
   public get isLoggedIn(): boolean {
-    if (this.currentUserValue && moment().isBefore(moment.unix(Number(this.currentUserValue.expiresIn)))) {
+    const expiration : moment.Moment = moment(Number(this.currentUserValue.expiresIn));
+    if (this.currentUserValue && moment().isBefore(expiration)) {
       return true;
     } else {
       return false;
