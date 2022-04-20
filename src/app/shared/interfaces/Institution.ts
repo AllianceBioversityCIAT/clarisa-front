@@ -1,6 +1,6 @@
-export interface Institution{
-    id: number;
-    name: String;
+import { SimpleDTO } from "./SimpleDTO";
+
+export interface Institution extends SimpleDTO{
     acronym: String;
     websiteLink: String;
     added: String;

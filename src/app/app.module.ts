@@ -31,7 +31,8 @@ import {
   NbContextMenuModule,
   NbSelectModule,
   NbAlertModule, 
-  NbTagModule, 
+  NbTagModule,
+  NbAutocompleteModule,
   NbSpinnerModule 
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -49,7 +50,12 @@ import { DialogEditRolePromptComponent } from './shared/components/roles/dialog-
 import { DialogDeleteRolePromptComponent } from './shared/components/roles/dialog-delete-role-prompt/dialog-delete-role-prompt.component';
 import { DialogAddInstitutionPromptComponent } from './shared/components/institutions/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
 import { DialogEditInstitutionPromptComponent } from './shared/components/institutions/dialog-edit-institution-prompt/dialog-edit-institution-prompt.component';
+<<<<<<< HEAD
 import { DialogDeleteInstitutionPromptComponent } from './shared/components/institutions/dialog-delete-institution-prompt/dialog-delete-institution-prompt.component';
+=======
+import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
+import { OrElsePipe } from './shared/pipes/or-else.pipe';
+>>>>>>> staging
 
 
 @NgModule({
@@ -74,7 +80,12 @@ import { DialogDeleteInstitutionPromptComponent } from './shared/components/inst
     DialogDeleteRolePromptComponent,
     DialogAddInstitutionPromptComponent,
     DialogEditInstitutionPromptComponent,
+<<<<<<< HEAD
     DialogDeleteInstitutionPromptComponent
+=======
+    ConfirmationDialogComponent,
+    OrElsePipe
+>>>>>>> staging
   ],
   imports: [
     BrowserModule,
@@ -103,8 +114,8 @@ import { DialogDeleteInstitutionPromptComponent } from './shared/components/inst
     Ng2SmartTableModule,
     HttpClientModule,
     NbTagModule,
+    NbAutocompleteModule,
     NbSpinnerModule
-   
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }

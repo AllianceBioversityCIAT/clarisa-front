@@ -4,7 +4,46 @@
     </nb-card-header>
 
     <nb-card-body>
-        
+        <div class="two-columns">
+            <div class="field-margin">
+                <label class="label regularFont">CGIAR Entity</label>
+                <nb-form-field>
+                    <nb-select 
+                        #cgiarEntityInput 
+                        class="regularFont" 
+                        [placeholder]="defaultValue"
+                        [formControl]="cgiarEntityControl" 
+                        [(selected)]="cgiarEntity" 
+                        (selectedChange)="loadRoleList()"
+                    >
+                        <nb-option>{{defaultValue}}</nb-option>
+                        <nb-option *ngFor="let entity of entityList$ | async" [value]="entity">{{entity.acronym??'' | orElse : entity.officialCode??''}}</nb-option>
+                    </nb-select>
+                </nb-form-field>
+                <!--div *ngIf="submitted && form['cgiarEntity'].errors" class="messageContainer status-danger">
+                    <div *ngIf="form['cgiarEntity'].errors['required']" class="hiddenMessage">Is CGIAR is required.</div>
+                </div-->
+            </div>
+            <div class="field-margin">
+                <label class="label regularFont">Role</label>
+                <nb-form-field>
+                    <nb-select 
+                        #roleInput 
+                        [placeholder]="defaultValue"
+                        class="regularFont" 
+                        [formControl]="roleControl" 
+                        [(selected)]="role"
+                        (selectedChange)="loadPermissionList()"
+                    >
+                        <nb-option>{{defaultValue}}</nb-option>
+                        <nb-option *ngFor="let role of roleList$ | async" [value]="role">{{role.acronym}} - {{role.description}}</nb-option>
+                    </nb-select>
+                </nb-form-field>
+                <!--div *ngIf="submitted && form['role'].errors" class="messageContainer status-danger">
+                    <div *ngIf="form['role'].errors['required']" class="hiddenMessage">Is CGIAR is required.</div>
+                </div-->
+            </div>
+        </div>
     </nb-card-body>
 </nb-card>
 <nb-card>
@@ -13,6 +52,29 @@
     </nb-card-header>
 
     <nb-card-body>
-        
+        <div class="field-margin">
+            <div class="field-spacing">
+                <nb-form-field>
+                    <nb-select 
+                        #permissionInput 
+                        class="regularFont" 
+                        [placeholder]="defaultValue"
+                        [formControl]="permissionControl" 
+                        (selectedChange)="onPermissionAdd($event)"
+                    >
+                        <nb-option>{{defaultValue}}</nb-option>
+                        <nb-option *ngFor="let permission of currentPermissionList" [value]="permission">{{permission.name}}</nb-option>
+                    </nb-select>
+                </nb-form-field>
+            </div>
+            <div class="field-spacing">
+                <nb-tag-list (tagRemove)="onPermissionRemove($event)">
+                    <nb-tag *ngFor="let tag of selectedPermissions" [text]="tag.name" removable></nb-tag>
+                </nb-tag-list>
+            </div>
+        </div>
     </nb-card-body>
+    <nb-card-footer class="example-items-rows">
+        <button nbButton status="success" class="boldFont" (click)="save()" [disabled]="role?.id===0">Update Permissions</button>
+    </nb-card-footer>
 </nb-card>

@@ -1,0 +1,14 @@
+<nb-card>
+    <nb-card-header *ngIf="data?.title" class="boldFont">
+        {{data.title}}
+    </nb-card-header>
+    <nb-card-body>
+        <label class="label regularFont">{{data.body}}</label>
+    </nb-card-body>
+    <nb-card-footer>
+        <div class="two-columns">
+            <button nbButton status="success" class="boldFont" (click)="accept()">{{data.confirmAction??'Yes'}}</button>
+            <button nbButton status="danger" (click)="cancel()" class="cancel boldFont">{{data.confirmAction??'No'}}</button>
+        </div>
+    </nb-card-footer>
+</nb-card>
