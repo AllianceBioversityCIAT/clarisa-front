@@ -50,12 +50,9 @@ import { DialogEditRolePromptComponent } from './shared/components/roles/dialog-
 import { DialogDeleteRolePromptComponent } from './shared/components/roles/dialog-delete-role-prompt/dialog-delete-role-prompt.component';
 import { DialogAddInstitutionPromptComponent } from './shared/components/institutions/dialog-add-institution-prompt/dialog-add-institution-prompt.component';
 import { DialogEditInstitutionPromptComponent } from './shared/components/institutions/dialog-edit-institution-prompt/dialog-edit-institution-prompt.component';
-<<<<<<< HEAD
 import { DialogDeleteInstitutionPromptComponent } from './shared/components/institutions/dialog-delete-institution-prompt/dialog-delete-institution-prompt.component';
-=======
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { OrElsePipe } from './shared/pipes/or-else.pipe';
->>>>>>> staging
 
 
 @NgModule({
@@ -80,12 +77,9 @@ import { OrElsePipe } from './shared/pipes/or-else.pipe';
     DialogDeleteRolePromptComponent,
     DialogAddInstitutionPromptComponent,
     DialogEditInstitutionPromptComponent,
-<<<<<<< HEAD
-    DialogDeleteInstitutionPromptComponent
-=======
+    DialogDeleteInstitutionPromptComponent,
     ConfirmationDialogComponent,
     OrElsePipe
->>>>>>> staging
   ],
   imports: [
     BrowserModule,
