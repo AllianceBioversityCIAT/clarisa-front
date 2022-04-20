@@ -13,9 +13,12 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   userDoesNotExist: boolean = false;
   incorrectPassword: boolean = false;
+  public tokenExpired : any = false;
 
   constructor(private router: Router, private formBuilder: FormBuilder, private authenticationService: AuthService) {
     this.loginForm = this.createLoginForm();
+    const state = this.router.getCurrentNavigation()?.extras?.state;
+    this.tokenExpired = state?['tokenExpired']:false;
   }
 
   ngOnInit(): void {
@@ -59,6 +62,7 @@ export class LoginComponent implements OnInit {
           }, 
           error: (error) => {
             console.log('doLogin', error);
+            this.tokenExpired = false;
             if (error.status == 403) {
               this.userDoesNotExist = false;
               this.incorrectPassword = true;
