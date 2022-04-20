@@ -13,6 +13,7 @@ import { InstitutionService } from '../../../services/institution.service';
 })
 export class DialogAddInstitutionPromptComponent implements OnInit {
   @Input() data: any;
+  public defaultValue : string = "Select an option...";
   addInstitutionForm: FormGroup;
   submitted: boolean = false;
   institutionInfo: object = {};  
@@ -28,7 +29,11 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
   searchInstitution: boolean = false;
   institutionAlreadyExists: boolean = false;
   institutionSuccesfullyAdded: boolean = false;
-  
+  defaultLocation:LocElement={
+    id:0,
+    name: "",
+    isoAlpha2:""
+  } 
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private institutionService: InstitutionService
   ,private innstitutionTypeService: InstitutionTypeService,private locationsService: LocationService) {
     this.addInstitutionForm = this.createAddInstitutionForm();
@@ -89,14 +94,15 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
     this.innstitutionTypeService.getInstitutionType().subscribe(x => {
       this.list = x;
       this.institutionType = this.list[0].id;
-      this.addInstitutionForm.controls['type'].setValue(this.institutionType);      
+          
+      this.addInstitutionForm.controls["type"].setValue(null);
     });
   }
 
   loadInstitutionHQ() {
     this.locationsService.getCountries().subscribe(x => {
       this.hqCountryList = x;
-      this.institutionHq = this.hqCountryList[0];
+      this.institutionHq = this.defaultLocation;
       this.addInstitutionForm.controls['institutionHq'].setValue(this.institutionHq); 
          
     });
@@ -105,7 +111,8 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
   loadInstitutionLocations() {
     this.locationsService.getCountries().subscribe(x => {
       this.countryList=x;
-      this.institutionLocations=this.countryList[0];      
+     
+      this.institutionLocations= this.defaultLocation;      
       this.addInstitutionForm.controls['institutionLocations'].setValue(this.institutionLocations);  
     });
     }
@@ -209,23 +216,42 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
     
   }
 
+  validatehq(location : any){
+    console.log((this.addInstitutionForm.controls["institutionHq"].value))
+    let value:any=this.addInstitutionForm.controls["institutionHq"].value
+    for(let tagLocations of this.institutionLocationList){
+      if(value!=0){
+        if(value.id==tagLocations.id){
+          this.addInstitutionForm.controls["institutionHq"].setValue(null);
+        }
+      }
+      
+    }    
+  }
+
   addCountry(location : any){       
       let obj: LocElement ={
       id: location.id,
       name: location.name,
       isoAlpha2: location.isoAlpha2
     }
+    let headq:any =(this.addInstitutionForm.controls["institutionHq"].value)    
     let found:Boolean=false;
     for(let data of this.institutionLocationList){
       if(data.id==location.id){
         found=true;
       }
     }
+    
     if(!found){
-      if(obj.id!=this.institutionHq.id){
-        this.institutionLocationList.add(obj);
-      }     
+      if(headq!=0){
+        if(obj.id!=headq.id ){
+          this.institutionLocationList.add(obj);
+        }    
+      }
+      
     }   
-    this.institutionLocations=this.countryList[0];
+    this.addInstitutionForm.controls["institutionLocations"].setValue(null);
+    
   }
 }

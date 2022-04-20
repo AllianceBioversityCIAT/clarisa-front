@@ -40,7 +40,8 @@
                 <div class="field-margin">
                     <label class="label regularFont">Institution Type</label>
                     <nb-form-field>
-                        <nb-select #typeInput class="regularFont" formControlName="type" [selected]="institutionType" [status]="validateField('type')">
+                        <nb-select #typeInput class="regularFont" formControlName="type" [placeholder]="defaultValue" [selected]="institutionType" [status]="validateField('type')">
+                            <nb-option [value]="0">{{defaultValue}}</nb-option>
                             <nb-option *ngFor="let item of list" [value]="item.id" >{{ item.name }}</nb-option>
                         </nb-select>
                     </nb-form-field>
@@ -54,7 +55,8 @@
                 <div class="field-margin">
                     <label class="label regularFont">Institution Headquarter</label>
                     <nb-form-field>
-                        <nb-select #hqInput class="regularFont" formControlName="institutionHq" [selected]="institutionHq" [status]="validateField('institutionHq')">
+                        <nb-select #hqInput class="regularFont" formControlName="institutionHq" [placeholder]="defaultValue" [selected]="institutionHq" [status]="validateField('institutionHq')" (selectedChange)="validatehq($event)">
+                            <nb-option [value]="0">{{defaultValue}}</nb-option>
                             <nb-option *ngFor="let item of hqCountryList" [value]="item" >{{ item.name }}</nb-option>
                         </nb-select>
                     </nb-form-field>
@@ -67,7 +69,8 @@
                 <div class="field-margin">
                     <label class="label regularFont">Institution Locations</label>
                     <nb-form-field>
-                        <nb-select #locationsInput class="regularFont" formControlName="institutionLocations" [selected]="institutionLocations" [status]="validateField('institutionLocations')">
+                        <nb-select #locationsInput class="regularFont" formControlName="institutionLocations" [placeholder]="defaultValue" [selected]="institutionLocations" [status]="validateField('institutionLocations')" (selectedChange)="addCountry($event)">
+                            <nb-option [value]="0">{{defaultValue}}</nb-option>
                             <nb-option *ngFor="let item of countryList" [value]="item">{{ item.name }}</nb-option>
                         </nb-select>                                 
                     </nb-form-field>
@@ -75,10 +78,7 @@
                         <div *ngIf="form['institutionLocations'].errors['required']" class="hiddenMessage">Institution Location is required.</div>
                     </div>
                 </div>  
-                <div class="field-margin">
-                    <label class="label regularFont"></label>
-                    <button nbButton status="basic" class="boldFont"  (click)="addCountry(locationsInput.selected)">Add</button>
-                </div>                            
+                                    
             </div>
             <div class="two-columns">
                 <div class="field-margin">

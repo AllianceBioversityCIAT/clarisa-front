@@ -20,12 +20,13 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
   @Input() type: string = '';
   @Input() hq:  LocElement =<LocElement> (<unknown>null);
   @Input() locations: LocElement[]=[];
+  public defaultValue : string = "Select an option...";
   editInstitutionForm!: FormGroup;
   submitted: boolean = false;
   institutionInfo: object = {};   
   institutionType: string = '';
   institutionHq: LocElement=<LocElement> (<unknown>null);
-  institutionLocations: LocElement=<LocElement> (<unknown>null);
+  institutionLocations: LocElement|string=<LocElement> (<unknown>null);
   list: any[] = [];
   hqCountryList: any[]=[];
   countryList: any[]=[];
@@ -33,11 +34,13 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
   
   institutionAlreadyExists: boolean = false;
   institutionSuccesfullyUpdated: boolean = false;
+   fillData:boolean = false;
   
   constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private institutionService: InstitutionService
   ,private innstitutionTypeService: InstitutionTypeService,private locationsService: LocationService) { }
 
   ngOnInit(): void {
+    this.fillData=true;
     this.editInstitutionForm = this.createEditInstitutionForm();
     this.loadInstitutionTypes();
     this.loadInstitutionHQ();
@@ -93,26 +96,25 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
   loadInstitutionTypes() {
     this.innstitutionTypeService.getInstitutionType().subscribe(x => {
       this.list = x;         
-      this.institutionType=this.type;
-      this.editInstitutionForm.controls['type'].setValue(this.type);  
-      
-      this.locations.forEach(loc => this.institutionLocationList.add(loc));
+      this.institutionType=this.type;  
+      this.editInstitutionForm.controls['type'].setValue(this.type);           
     });
   }
 
   loadInstitutionHQ() {
     this.locationsService.getCountries().subscribe(x => {
-      this.hqCountryList = x;  
+      this.hqCountryList = x;        
       this.institutionHq=this.hqCountryList.find(country => country.id==this.hq.id);          
-      this.editInstitutionForm.controls['institutionHq'].setValue(this.hq);         
+      this.editInstitutionForm.controls['institutionHq'].setValue(this.institutionHq);         
     });
     
   }
   loadInstitutionLocations() {
     this.locationsService.getCountries().subscribe(x => {
-      this.countryList=x;
-      this.institutionLocations=this.countryList[0];
-      this.editInstitutionForm.controls['institutionLocations'].setValue(this.institutionLocations);  
+      this.countryList=x;      
+      this.editInstitutionForm.controls['institutionLocations'].setValue(null);  
+      this.locations.forEach(loc => this.institutionLocationList.add(loc));
+      this.fillData=true;
     });
     }
 
@@ -177,7 +179,7 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
           this.editInstitutionForm.controls['name'].setValue(this.name);
           this.editInstitutionForm.controls['acronym'].setValue(this.acronym);
           this.editInstitutionForm.controls['website'].setValue(this.website);  
-
+          
   }
 
 
@@ -201,6 +203,19 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
     
   }
 
+  validatehq(location : any){
+    
+    let value:any=this.editInstitutionForm.controls["institutionHq"].value    
+    for(let tagLocations of this.institutionLocationList){
+      if(value!=0){
+        if(value.id==tagLocations.id){
+          this.editInstitutionForm.controls["institutionHq"].setValue(null);
+        }
+      }
+      
+    }    
+  }
+
   addCountry(location : any){       
       let obj: LocElement ={
       id: location.id,
@@ -219,6 +234,7 @@ export class DialogEditInstitutionPromptComponent implements OnInit {
       }
      
     }   
-    this.institutionLocations=this.countryList[0];
+    this.institutionLocations="0";
+    this.editInstitutionForm.controls["institutionLocations"].setValue(null);
   }
 }
