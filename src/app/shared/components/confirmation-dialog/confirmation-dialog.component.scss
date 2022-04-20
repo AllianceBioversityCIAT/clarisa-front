@@ -1,11 +1,5 @@
-@import "../../../../../../themes.scss";
-
 nb-card {
-    nb-card-header {
-        font-size: $font-l !important;
-    }
-
-    nb-card-body {
+    nb-card-footer {
         flex-flow: column;
 
         .one-column {
@@ -17,17 +11,12 @@ nb-card {
             flex-flow: row;
 
             >* {
-                width: 75%;
+                width: 50%;
             }
         }
 
         .field-margin {
             margin: 0 0.5rem;
-        }
-        
-        .field-spacing {
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
         }
     }
 }

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Role } from '../interfaces/Role';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,12 @@ export class RoleService {
     return this.http.get<any>(`${environment['apiUrl']}roles/all`);
   }
 
-  getRoleByAcronymCGIAREntity(acronym: any, cgiarEntity: any) {
-    return this.http.get<any>(`${environment['apiUrl']}roles/RoleByAcronym-CGIAREntity?cgiarEntity=${cgiarEntity}&acronym=${acronym}`);
+  getRoleByAcronymAndCGIAREntity(acronym: any, cgiarEntity: any) {
+    return this.http.get<any>(`${environment['apiUrl']}roles/getByParams?cgiarEntity=${cgiarEntity}&roleAcronym=${acronym}`);
+  }
+
+  getRolesByCGIAREntity(cgiarEntityId: number) : Observable<Role[]> {
+    return this.http.get<Role[]>(`${environment['apiUrl']}roles/roleByCGIAREntity/${cgiarEntityId}`);
   }
 
   getGlobalUnits() {

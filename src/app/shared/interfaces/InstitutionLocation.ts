@@ -1,6 +1,6 @@
 import { LocElement } from "./LocElement";
 
-export interface institutionLocation{
+export interface InstitutionLocation{
     location: LocElement,
     headquarter: boolean
 }
