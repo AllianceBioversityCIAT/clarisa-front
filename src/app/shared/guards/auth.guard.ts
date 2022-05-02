@@ -16,7 +16,8 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       // not logged in so redirect to login page with the return url
-      this.router.navigate(['/login']);
+      const userExists : boolean = this.authenticationService.currentUserValue?true:false;
+      this.router.navigate(['/login'], {state: {tokenExpired: userExists}});
       return false;
     }
   }

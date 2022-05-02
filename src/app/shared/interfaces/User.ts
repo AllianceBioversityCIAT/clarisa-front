@@ -8,4 +8,5 @@ export interface User extends BaseDTO {
     token: string;
     expiresIn: number;
     authenticated: boolean;
+    refreshToken: string;
 }
