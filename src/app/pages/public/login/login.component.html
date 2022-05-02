@@ -8,14 +8,13 @@
     <nb-card-body>
       <form [formGroup]="loginForm">
         <div class="form-group">
-          <label class="label regularFont">Email address</label>
+          <label class="label regularFont">Email address or Username</label>
           <nb-form-field>
             <nb-icon nbPrefix class="fas fa-envelope"></nb-icon>
-            <input type="email" nbInput fullWidth class="mediumFont" formControlName="signInEmail" [status]="validateField('signInEmail')">
+            <input type="text" nbInput fullWidth class="mediumFont" formControlName="signInEmail" [status]="validateField('signInEmail')">
           </nb-form-field>
           <div *ngIf="submitted && form['signInEmail'].errors" class="messageContainer status-danger">
-            <div *ngIf="form['signInEmail'].errors['required']" class="hiddenMessage">Email is required.</div>
-            <div *ngIf="form['signInEmail'].errors['email']" class="hiddenMessage">Email should have a valid format.</div>
+            <div *ngIf="form['signInEmail'].errors['required']" class="hiddenMessage">Email or username is required.</div>
           </div>
         </div>
         <div class="form-group">
