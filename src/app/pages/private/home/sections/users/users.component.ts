@@ -7,6 +7,8 @@ import { DialogEditUserPromptComponent } from 'src/app/shared/components/users/d
 import { DialogDeleteUserPromptComponent } from 'src/app/shared/components/users/dialog-delete-user-prompt/dialog-delete-user-prompt.component';
 import { DialogResetPasswordPromptComponent } from 'src/app/shared/components/users/dialog-reset-password-prompt/dialog-reset-password-prompt.component';
 import { DialogUserPermissionsPromptComponent } from 'src/app/shared/components/users/dialog-user-permissions-prompt/dialog-user-permissions-prompt.component';
+import { EventBusService } from 'src/app/shared/services/even-bus.service';
+import { EventData } from 'src/app/shared/interfaces/EventData';
 
 @Component({
   selector: 'app-users',
@@ -87,12 +89,24 @@ export class UsersComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   data: any;
 
-  constructor(private dialogService: NbDialogService, private userService: UserService) {
+  constructor(
+    private dialogService: NbDialogService, 
+    private userService: UserService,
+    private eventBusService: EventBusService
+    ) {
   }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe(x => {
-      this.source.load(x);
+    this.userService.getUsers().subscribe({
+      next : (x) => {
+        this.source.load(x);
+      },
+      error : (err) => {
+        console.log(err.error.message || err.error || err.message);
+        if(err.status === 403){
+          this.eventBusService.emit(new EventData('logout', null));
+        }
+      }
     });
   }
 
