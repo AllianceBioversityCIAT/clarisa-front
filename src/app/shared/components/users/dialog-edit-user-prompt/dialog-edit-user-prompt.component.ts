@@ -2,13 +2,14 @@ import { Component, Input, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { UserService } from '../../../services/user.service';
+import { BaseComponent } from '../../base.component';
 
 @Component({
   selector: 'app-dialog-edit-user-prompt',
   templateUrl: './dialog-edit-user-prompt.component.html',
   styleUrls: ['./dialog-edit-user-prompt.component.scss']
 })
-export class DialogEditUserPromptComponent implements OnInit {
+export class DialogEditUserPromptComponent extends BaseComponent implements OnInit {
   @Input() id: number = 0;
   @Input() firstName: string = '';
   @Input() lastName: string = '';
@@ -21,7 +22,13 @@ export class DialogEditUserPromptComponent implements OnInit {
   userUpdated: boolean = false;
   userInfo: object = {};
 
-  constructor(@Optional() protected ref: NbDialogRef<any>, private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(
+    @Optional() protected ref: NbDialogRef<any>, 
+    private _formBuilder: FormBuilder, 
+    private _userService: UserService,
+    ) {
+      super();
+    }
   
   ngOnInit(): void {
     this.editUserForm = this.createEditUserForm();
@@ -32,7 +39,7 @@ export class DialogEditUserPromptComponent implements OnInit {
   get form() { return this.editUserForm.controls; }
 
   createEditUserForm(): FormGroup {
-    return this.formBuilder.group(
+    return this._formBuilder.group(
       {
         firstName: [
           null,
@@ -107,12 +114,15 @@ export class DialogEditUserPromptComponent implements OnInit {
         email: email,
       };
 
-      this.userService.updateUser(this.userInfo).subscribe(x => {
-        this.userUpdated = true;
-        setTimeout(() => {
-          this.userUpdated = false;
-          this.ref.close(x);
-        }, 3000);
+      this._userService.updateUser(this.userInfo).subscribe({
+        next : (x) => {
+          this.userUpdated = true;
+          setTimeout(() => {
+            this.userUpdated = false;
+            this.ref.close(x);
+          }, 3000);
+        },
+        error : (err) => this.onError
       })
     }
   }
