@@ -82,8 +82,9 @@ import { OrElsePipe } from './shared/pipes/or-else.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
+    HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
@@ -104,7 +105,6 @@ import { OrElsePipe } from './shared/pipes/or-else.pipe';
     NbSelectModule,
     NbAlertModule,
     Ng2SmartTableModule,
-    HttpClientModule,
     NbTagModule,
     NbAutocompleteModule,
     NbSpinnerModule
