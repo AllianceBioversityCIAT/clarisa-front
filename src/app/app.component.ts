@@ -44,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.authenticationService.logout();
+      location.reload();
     });
   }
 
