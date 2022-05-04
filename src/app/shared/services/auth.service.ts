@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, SkipSelf } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -77,11 +77,7 @@ export class AuthService {
   }
 
   public get isLoggedIn(): boolean {
-    if(!this.currentUserValue){
-      return false;
-    }
-    
-    return this.tokenExpired;
+      return this.currentUserValue ? true : false;
   }
 
   getUserAD(userEmail: string, userPassword: string) {
@@ -95,12 +91,13 @@ export class AuthService {
 
   loginAD(email: string, password: string) {
     return this.getUserAD(email, password).pipe(map((user: User) => {
-      this.saveUser(user);
-      this.saveToken(user.token);
-      this.saveRefreshToken(user.refreshToken);
       if (this.currentUserSubject) {
         this.currentUserSubject.next(user);
       }
+
+      this.saveUser(user);
+      this.saveToken(user.token);
+      this.saveRefreshToken(user.refreshToken);
 
       //this.setExpirationSubscription(user.expiresIn);
       return user;
