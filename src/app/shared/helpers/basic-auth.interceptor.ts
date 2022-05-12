@@ -24,10 +24,10 @@ export class BasicAuthInterceptor implements HttpInterceptor {
     }
     console.log(`request handled on ${this.constructor.name}`);
 
-    next.handle(requestCopy).subscribe({
+    /*next.handle(requestCopy).subscribe({
       next: x=>console.log('next', x),
       error: error => console.log('error', error)
-    });
+    });*/
 
     return next.handle(requestCopy).pipe(catchError(error => {
       console.log('error on intercept', error);

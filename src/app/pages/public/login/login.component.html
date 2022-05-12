@@ -1,5 +1,6 @@
 <div class="col-md-4">
   <nb-alert status="danger" [style]="userDoesNotExist ? 'display: flex' : 'display: none'">The user does not exist</nb-alert>
+  <nb-alert status="danger" [style]="!isActive ? 'display: flex' : 'display: none'">Your account has been deactivated. Please contact the CLARISA staff</nb-alert>
   <nb-alert status="danger" [style]="incorrectPassword ? 'display: flex' : 'display: none'">The password is incorrect</nb-alert>
   <nb-alert status="warning" [style]="tokenExpired ? 'display: flex' : 'display: none'">You have been automatically logged-out because of inactivity</nb-alert>
   <nb-card>

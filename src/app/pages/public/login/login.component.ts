@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted: boolean = false;
+  isActive: boolean = true;
   userDoesNotExist: boolean = false;
   incorrectPassword: boolean = false;
   public tokenExpired : any = false;
@@ -57,7 +58,7 @@ export class LoginComponent implements OnInit {
           next: (res) => {
             if (res.authenticated === true) {
               this.router.navigate(['/home/users']);
-            console.log("navigated to users");
+              console.log("navigated to users");
             }
           }, 
           error: (error) => {
@@ -65,10 +66,17 @@ export class LoginComponent implements OnInit {
             this.tokenExpired = false;
             if (error.status == 403) {
               this.userDoesNotExist = false;
-              this.incorrectPassword = true;
+              if(error.error.isActive == false){
+                this.isActive = false;
+                this.incorrectPassword = false;
+              } else {
+                this.isActive = true;
+                this.incorrectPassword = true;
+              }
             } else if (error.status == 404) {
               this.userDoesNotExist = true;
               this.incorrectPassword = false;
+              this.isActive = false;
             }
           }
         }
