@@ -102,7 +102,7 @@ export class UsersComponent implements OnInit {
         this.source.load(x);
       },
       error : (err) => {
-        console.log(err.error.message || err.error || err.message);
+        //console.log(err.error.message || err.error || err.message);
         if(err.status === 403){
           this.eventBusService.emit(new EventData('logout', null));
         }

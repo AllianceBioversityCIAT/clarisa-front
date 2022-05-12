@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
         signInEmail: [
           null,
           Validators.compose([
-            Validators.email,
             Validators.required
           ])
         ],
