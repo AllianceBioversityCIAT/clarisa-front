@@ -136,10 +136,10 @@ export class DialogAddUserPromptComponent implements OnInit {
       if (x[0]) {
         if (x[0].id && x[0].id != null) {
           this.userAlreadyExists = true;
-          this.addUserForm.controls['username'].setValue(x[0].username);
-          this.addUserForm.controls['firstName'].setValue(x[0].firstName);
-          this.addUserForm.controls['lastName'].setValue(x[0].lastName);
         } 
+        this.addUserForm.controls['username'].setValue(x[0].username);
+        this.addUserForm.controls['firstName'].setValue(x[0].firstName);
+        this.addUserForm.controls['lastName'].setValue(x[0].lastName);
       } else {
         this.userAlreadyExists = false;
         this.addUserForm.controls['username'].reset();
