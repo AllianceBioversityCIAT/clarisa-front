@@ -134,21 +134,23 @@ export class DialogAddUserPromptComponent implements OnInit {
 
     this.userService.getUserByEmail(email).subscribe(x => {
       if (x[0]) {
-        if (x[0].id && x[0].id != null) {
+        if (x[0].id && x[0].id > 0) {
           this.userAlreadyExists = true;
-        } 
-        this.addUserForm.controls['username'].setValue(x[0].username);
-        this.addUserForm.controls['firstName'].setValue(x[0].firstName);
-        this.addUserForm.controls['lastName'].setValue(x[0].lastName);
+          this.showField = false;
+        } else {
+          this.addUserForm.controls['username'].setValue(x[0].username);
+          this.addUserForm.controls['firstName'].setValue(x[0].firstName);
+          this.addUserForm.controls['lastName'].setValue(x[0].lastName);
+          this.showField = true;
+        }
       } else {
         this.userAlreadyExists = false;
         this.addUserForm.controls['username'].reset();
         this.addUserForm.controls['firstName'].reset();
         this.addUserForm.controls['lastName'].reset();
+        this.showField = true;
       }
     });
-
-    this.showField = true;
   }
 
   getInputType() {
