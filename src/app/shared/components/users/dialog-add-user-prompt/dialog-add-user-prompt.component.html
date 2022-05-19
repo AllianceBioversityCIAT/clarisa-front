@@ -9,7 +9,7 @@
                     <label class="label regularFont">Email</label>
                     <nb-form-field>
                         <input #emailInput nbInput class="regularFont" formControlName="email" [status]="validateField('email')">
-                        <button nbSuffix nbButton ghost (click)="loadUserInfo()">
+                        <button nbSuffix [disabled]="this.emailInput.value.length > 0 ? 'disabled':''" nbButton ghost (click)="loadUserInfo()">
                             <nb-icon icon="search-outline" pack="eva" >
                             </nb-icon>
                         </button>
