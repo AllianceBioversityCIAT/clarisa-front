@@ -193,7 +193,7 @@ export class UsersComponent implements OnInit {
   openUserPermissions(dialog: any, data: any) {
     this.dialogService.open(dialog, {
       context: {
-        email: data.email,
+        user: data,
       }
     });
   }

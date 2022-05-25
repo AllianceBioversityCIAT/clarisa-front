@@ -1,13 +1,42 @@
 @import "../../../../../themes.scss";
 
 nb-card {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0;
-}
+    /*nb-card-header {
+        font-size: $font-l !important;
+    }*/
 
+    nb-card-body {
+        flex-flow: column;
+
+        .one-column {
+            width: calc(50% - 1rem) !important;
+        }
+
+        .two-columns {
+            display: flex;
+            flex-flow: row;
+
+            >* {
+                width: 75%;
+            }
+        }
+
+        .field-margin {
+            margin: 0 0.5rem;
+        }
+        
+        .field-spacing {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+}
 ::ng-deep nb-card-header {
     > a {
         text-decoration: none !important;
     }
+}
+
+#userRole ::ng-deep th > a.ng2-smart-action-add-add {
+    visibility: hidden;
 }
