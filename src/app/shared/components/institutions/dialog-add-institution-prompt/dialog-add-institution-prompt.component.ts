@@ -180,7 +180,7 @@ export class DialogAddInstitutionPromptComponent implements OnInit {
       if (x[0]) {
         if (x[0].id && x[0].id != null) {
           this.institutionAlreadyExists = true;
-          this.addInstitutionForm.controls['name'].setValue(x[0].username);
+          this.addInstitutionForm.controls['name'].setValue(x.username);
           this.addInstitutionForm.controls['acronym'].setValue(x[0].firstName);
           this.addInstitutionForm.controls['website'].setValue(x[0].lastName);
         } 

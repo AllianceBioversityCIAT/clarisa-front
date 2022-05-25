@@ -18,7 +18,8 @@ export class AppComponent implements OnInit, OnDestroy{
     "/home/users",
     "/home/roles",
     "/home/permissions",
-    "/home/institutions"
+    "/home/institutions",
+    "/home/duplicated-institutions"
 ] ;
 
   constructor(

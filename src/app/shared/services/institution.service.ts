@@ -13,9 +13,22 @@ import { environment } from '../../../environments/environment';
     return this.http.get<any>(`${environment['apiUrl']}institution/all`);
   }
 
+  getInstitutionParent(idParent: any) {
+    return this.http.get<any>(`${environment['apiUrl']}institution/institutionParent/${idParent}`);
+  }
+
+  getInstitutionChild(idParent: any) {
+    return this.http.get<any>(`${environment['apiUrl']}institution/childInstitutions/${idParent}`);
+  }
+
   getInstitutionbyId(id: any) {
     return this.http.get<any>(`${environment['apiUrl']}institution/get/${id}`);
   }
+
+  postInstitutionParent(institutionParent: any){
+    const body= institutionParent;
+    return this.http.post(`${environment['apiUrl']}institution/updateparent`, body);
+  } 
 
   postInstitution(institution: any) {
     const body = institution;

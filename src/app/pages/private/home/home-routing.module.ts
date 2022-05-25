@@ -6,6 +6,7 @@ import { InstitutionsComponent } from './sections/institutions/institutions.comp
 import { RolesComponent } from './sections/roles/roles.component';
 import { UsersComponent } from './sections/users/users.component';
 import { PermissionsComponent } from './sections/permissions/permissions.component';
+import { InstitutionsDuplicatedComponent } from './sections/institutions/institutionsDuplicated.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
   {
     path: 'permissions',
     component: PermissionsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'duplicated-institutions',
+    component: InstitutionsDuplicatedComponent,
     canActivate: [AuthGuard]
   }
 ];

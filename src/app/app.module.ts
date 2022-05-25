@@ -44,6 +44,7 @@ import { ResetAdminPasswordComponent } from './shared/components/reset-admin-pas
 import { RolesComponent } from './pages/private/home/sections/roles/roles.component';
 import { UsersComponent } from './pages/private/home/sections/users/users.component';
 import { InstitutionsComponent } from './pages/private/home/sections/institutions/institutions.component';
+import { InstitutionsDuplicatedComponent } from './pages/private/home/sections/institutions/institutionsDuplicated.component';
 import { PermissionsComponent } from './pages/private/home/sections/permissions/permissions.component';
 import { DialogAddRolePromptComponent } from './shared/components/roles/dialog-add-role-prompt/dialog-add-role-prompt.component';
 import { DialogEditRolePromptComponent } from './shared/components/roles/dialog-edit-role-prompt/dialog-edit-role-prompt.component';
@@ -71,6 +72,7 @@ import { OrElsePipe } from './shared/pipes/or-else.pipe';
     RolesComponent,
     UsersComponent,
     InstitutionsComponent,
+    InstitutionsDuplicatedComponent,
     PermissionsComponent,
     DialogAddRolePromptComponent,
     DialogEditRolePromptComponent,

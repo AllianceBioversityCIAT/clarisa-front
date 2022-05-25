@@ -18,8 +18,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/home/permissions',
   },
   {
-    title: 'Institutions',
-    icon: 'briefcase-outline',
-    link: '/home/institutions',
+    title: 'Institutions',   
+    children: [
+      {
+        title: 'Manage Institutions',
+        icon: 'briefcase-outline',
+        link: '/home/institutions',
+      },
+      {
+        title: ' Manage Duplicated',
+        icon: 'briefcase-outline',
+        link: '/home/duplicated-institutions',
+      }
+    ]
   },
+  
 ]

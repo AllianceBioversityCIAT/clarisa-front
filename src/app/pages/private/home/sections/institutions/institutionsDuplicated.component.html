@@ -1,0 +1,57 @@
+<nb-card>
+    <nb-card-header class="boldFont">
+        Duplicated Institution Management       
+    </nb-card-header> 
+    <nb-card-body >
+        <form [formGroup]="duplicatedInstitutionForm" class="example-items-columns" (keydown.enter)="$event.preventDefault()">
+        
+                <div class="four-columns">   
+                    <div class="field-margin">
+                        <label class="label regularFont">ID</label>                 
+                        <nb-form-field>                       
+                            <input #idInput nbInput class="regularFont" formControlName="id"  status="basic" (keydown.enter)="search()">                                                
+                        </nb-form-field>
+                    </div>
+                    <div class="field-margin">
+                        <label class="label regularFont">Name</label>
+                        <nb-form-field>                        
+                            <input #nameInput nbInput class="regularFont" formControlName="name"  status="basic"  [readonly]="true">                        
+                        </nb-form-field>
+                    </div>
+                    <div class="field-margin">
+                        <label class="label regularFont">Acronym</label>
+                        <nb-form-field>                        
+                            <input #acronymInput nbInput class="regularFont" formControlName="acronym"  status="basic" [readonly]="true">                        
+                        </nb-form-field>
+                    </div>  
+                    <div class="field-margin">
+                        <label class="label regularFont">Website</label>
+                        <nb-form-field>                        
+                            <input #websiteInput nbInput class="regularFont" formControlName="website"  status="basic" [readonly]="true">                        
+                        </nb-form-field>
+                    </div>                                                              
+                </div>
+                <div class="full-columns" ng-hide="true">
+                    <label class="label regularFont">Institution To Add</label>
+                    <nb-form-field>
+                        <nb-select #hqInput class="regularFont" formControlName="institutionList" [placeholder]="defaultValue"  status="basic" (selectedChange)="addInstitution($event)">
+                            <nb-option [value]="0">{{defaultValue}}</nb-option>
+                            <nb-option *ngFor="let item of institutionList" [value]="item" >{{ item.id }}-{{ item.name }}</nb-option>
+                        </nb-select>                        
+                    </nb-form-field>
+                                                             
+                </div>  
+                <div class="full-columns" ng-hide="true">
+                    <button nbButton status="success" class="boldFont"  (click)="submit()">Update</button>   
+                </div> 
+                       
+            <div>
+                <label class="label">Institution Related List</label>
+                <ng2-smart-table  [settings]="settings" [source]="source"  (custom)="onCustom($event)"></ng2-smart-table>
+
+            </div>
+            
+        </form>
+        
+    </nb-card-body>    
+</nb-card>

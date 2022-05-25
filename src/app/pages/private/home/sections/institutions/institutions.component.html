@@ -1,9 +1,12 @@
-<nb-card [nbSpinner]="loading" nbSpinnerMessage="Loading institutions" nbSpinnerSize="large" nbSpinnerStatus="primary">
+<nb-card>
     <nb-card-header class="boldFont">
         Institution List       
     </nb-card-header>
 
     <nb-card-body >
-        <ng2-smart-table  [settings]="settings" [source]="source" (create)="addInstitution()" (custom)="onCustom($event)"></ng2-smart-table>
+        <nb-card [nbSpinner]="loading"  nbSpinnerMessage="Loading institutions" nbSpinnerSize="large" nbSpinnerStatus="primary">
+            <ng2-smart-table  [settings]="settings" [source]="source" (create)="addInstitution()" (custom)="onCustom($event)"></ng2-smart-table>
+        </nb-card>
+       
     </nb-card-body>    
 </nb-card>
