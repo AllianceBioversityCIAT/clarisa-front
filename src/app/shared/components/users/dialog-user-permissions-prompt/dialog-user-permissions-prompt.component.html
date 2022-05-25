@@ -1,7 +1,61 @@
-<nb-card>
-    <nb-card-header class="boldFont">Edit permissions for user: <a class="boldFont">{{ email }}</a></nb-card-header>
+<nb-card id="userRole">
+    <nb-card-header class="boldFont">Edit permissions for user: <a class="boldFont">{{ user.email }}</a></nb-card-header>
     <nb-card-body>
-
+        <nb-card>
+            <nb-card-header class="boldFont">
+                Roles
+            </nb-card-header>
+            <nb-card-body>
+                <div class="two-columns">
+                    <div class="field-margin">
+                        <label class="label regularFont">CGIAR Entity</label>
+                        <nb-form-field>
+                            <nb-select 
+                                #cgiarEntityInput 
+                                class="regularFont" 
+                                [placeholder]="defaultValue"
+                                [formControl]="cgiarEntityControl" 
+                                [(selected)]="cgiarEntity" 
+                                (selectedChange)="loadRoleList()"
+                            >
+                                <nb-option>{{defaultValue}}</nb-option>
+                                <nb-option *ngFor="let entity of entityList$ | async" [value]="entity">{{entity.acronym??'' | orElse : entity.officialCode??''}}</nb-option>
+                            </nb-select>
+                        </nb-form-field>
+                        <!--div *ngIf="submitted && form['cgiarEntity'].errors" class="messageContainer status-danger">
+                            <div *ngIf="form['cgiarEntity'].errors['required']" class="hiddenMessage">Is CGIAR is required.</div>
+                        </div-->
+                    </div>
+                    <div class="field-margin">
+                        <label class="label regularFont">Role</label>
+                        <nb-form-field>
+                            <nb-select 
+                                #roleInput 
+                                [placeholder]="defaultValue"
+                                class="regularFont" 
+                                [formControl]="roleControl" 
+                                [(selected)]="role"
+                            >
+                                <nb-option>{{defaultValue}}</nb-option>
+                                <nb-option *ngFor="let role of roleList$ | async" [value]="role">{{role.acronym}} - {{role.description}}</nb-option>
+                            </nb-select>
+                        </nb-form-field>
+                        <!--div *ngIf="submitted && form['role'].errors" class="messageContainer status-danger">
+                            <div *ngIf="form['role'].errors['required']" class="hiddenMessage">Is CGIAR is required.</div>
+                        </div-->
+                    </div>
+                    <button nbButton status="success" (click)="addRole()" class="success boldFont" [disabled]="(this.role?.id)?'disabled':''">Add Role</button>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card>
+            <nb-card-header class="boldFont">
+                Role list
+            </nb-card-header>
+            <nb-card-body>
+                <ng2-smart-table [settings]="settings" (create)="null" [source]="source" (custom)="onCustom($event)"></ng2-smart-table>
+            </nb-card-body>
+        </nb-card>
     </nb-card-body>
     <nb-card-footer class="example-items-rows">
         <button nbButton status="danger" (click)="close()" class="cancel boldFont">Close</button>
