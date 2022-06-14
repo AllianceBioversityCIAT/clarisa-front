@@ -17,6 +17,7 @@ export class DialogEditUserPromptComponent extends BaseComponent implements OnIn
   @Input() cgiarUser: string = '';
   @Input() email: string = '';
   @Input() password: string = '';
+  @Input() isActive: string = '';
   editUserForm!: FormGroup;
   submitted: boolean = false;
   userUpdated: boolean = false;
@@ -103,7 +104,6 @@ export class DialogEditUserPromptComponent extends BaseComponent implements OnIn
 
   submit(firstName: any, lastName: any, username: any, cgiarUser: any, email: any) {
     this.submitted = true;
-
     if (this.editUserForm.valid) {
       this.userInfo = {
         id: this.id,
@@ -112,6 +112,7 @@ export class DialogEditUserPromptComponent extends BaseComponent implements OnIn
         username: username,
         cgiarUser: cgiarUser == 'Yes' ? true : false,
         email: email,
+        active: this.isActive,
       };
 
       this._userService.updateUser(this.userInfo).subscribe({

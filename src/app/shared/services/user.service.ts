@@ -25,7 +25,11 @@ export class UserService {
 
   updateUser(user: any) {
     const body = user;
-    
+    return this.http.put<any>(`${environment['apiUrl']}users/update`, body);
+  }
+
+  updateActiveUser(user: any) {
+    const body = user;
     return this.http.put<any>(`${environment['apiUrl']}users/update`, body);
   }
 

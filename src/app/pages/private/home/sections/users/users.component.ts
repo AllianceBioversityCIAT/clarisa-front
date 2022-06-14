@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
+import { Component, OnInit, Optional } from '@angular/core';
+import { NbDialogRef, NbDialogService, NbTabsetModule } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { UserService } from 'src/app/shared/services/user.service';
 import { DialogAddUserPromptComponent } from 'src/app/shared/components/users/dialog-add-user-prompt/dialog-add-user-prompt.component';
@@ -9,6 +9,9 @@ import { DialogResetPasswordPromptComponent } from 'src/app/shared/components/us
 import { DialogUserPermissionsPromptComponent } from 'src/app/shared/components/users/dialog-user-permissions-prompt/dialog-user-permissions-prompt.component';
 import { EventBusService } from 'src/app/shared/services/even-bus.service';
 import { EventData } from 'src/app/shared/interfaces/EventData';
+import { Confirmation } from 'src/app/shared/interfaces/Confirmation';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { identifierName } from '@angular/compiler';
 
 @Component({
   selector: 'app-users',
@@ -76,7 +79,58 @@ export class UsersComponent implements OnInit {
         type: 'string',
         width: '11%',
         valuePrepareFunction: (value: any) => {
-          return value ? 'Yes' : 'No';
+          return value? 'Yes':'No';
+        },
+      },
+      email: {
+        title: 'Email',
+        type: 'string',
+      },
+    },
+  };
+
+  settingsDeactive = {
+    mode: 'external',
+    
+    actions: {
+      edit: false,
+      delete: false,
+      add:false,
+      custom: [
+        {
+          name: 'edit',
+          title: '<i class="fas fa-pencil-alt"></i>'
+        },
+        {
+          name: 'active',
+          title: '<i class="fas fa-check"></i>'
+        }
+      ],
+    },
+    columns: {
+      id: {
+        title: 'ID',
+        type: 'number',
+        width: '5%',
+      },
+      firstName: {
+        title: 'First Name',
+        type: 'string',
+      },
+      lastName: {
+        title: 'Last Name',
+        type: 'string',
+      },
+      username: {
+        title: 'Username',
+        type: 'string',
+      },
+      cgiarUser: {
+        title: 'Is CGIAR',
+        type: 'string',
+        width: '11%',
+        valuePrepareFunction: (value: any) => {
+          return value? 'Yes':'No';
         },
       },
       email: {
@@ -87,19 +141,28 @@ export class UsersComponent implements OnInit {
   };
 
   source: LocalDataSource = new LocalDataSource();
+  sourceDeactive: LocalDataSource = new LocalDataSource();
   data: any;
+  userUpdated: boolean = false;
+  sort = [{
+    field: "id",
+    direction: "asc"
+  }]
+
 
   constructor(
     private dialogService: NbDialogService, 
     private userService: UserService,
-    private eventBusService: EventBusService
+    private eventBusService: EventBusService,
+    @Optional() protected ref: NbDialogRef<any>
     ) {
   }
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe({
       next : (x) => {
-        this.source.load(x);
+        this.source.load(x.filter((f:any)=> f.active === true));
+        this.sourceDeactive.load(x.filter((f:any)=> f.active === false));
       },
       error : (err) => {
         //console.log(err.error.message || err.error || err.message);
@@ -114,12 +177,12 @@ export class UsersComponent implements OnInit {
     this.openAddUser(DialogAddUserPromptComponent, this.data);
   }
 
-  onCustom(event: any) {
+  onCustom(event: any, table:boolean) {
     let action = event['action'];
 
     switch (action) {
       case 'edit':
-        this.editUser(event);
+        this.editUser(event, table);
         break;
       case 'password':
         this.userPassword(event);
@@ -130,14 +193,17 @@ export class UsersComponent implements OnInit {
       case 'permissions':
         this.userPermissions(event);
         break;
+      case 'active':
+      this.userActive(event);  
+        break;
 
       default:
         break;
     }
   }
 
-  editUser(event: any) {
-    this.openEditUser(DialogEditUserPromptComponent, event.data);
+  editUser(event: any, table: boolean) {
+    this.openEditUser(DialogEditUserPromptComponent, event.data, table);
   }
 
   userPassword(event: any) {
@@ -152,15 +218,20 @@ export class UsersComponent implements OnInit {
     this.openUserPermissions(DialogUserPermissionsPromptComponent, event.data);
   }
 
+  userActive(event: any){
+    this.openActiveUser(event.data);
+  }
+
   openAddUser(dialog: any, data: any) {
     this.dialogService.open(dialog, {
       context: {
         data: data
       }
     }).onClose.subscribe(info => this.source.add(info));
+    
   }
 
-  openEditUser(dialog: any, data: any) {
+  openEditUser(dialog: any, data: any, table: boolean) {
     this.dialogService.open(dialog, {
       context: {
         id: data.id,
@@ -169,9 +240,18 @@ export class UsersComponent implements OnInit {
         username: data.username,
         cgiarUser: data.cgiarUser,
         email: data.email,
-        password: data.password
+        password: data.password,
+        isActive: data.isActive,
       }
-    }).onClose.subscribe(info => this.source.update(data, info));
+    }).onClose.subscribe(info =>{
+      if(table === true){
+        this.source.update(data, info);
+      }else{
+        this.sourceDeactive.update(data,info);
+      }
+    } 
+    );
+      
   }
 
   openUserPassword(dialog: any, data: any) {
@@ -183,11 +263,20 @@ export class UsersComponent implements OnInit {
   }
 
   openDeleteUser(dialog: any, data: any) {
+    
     this.dialogService.open(dialog, {
       context: {
         data: data
       }
-    }).onClose.subscribe(info => info != undefined ? this.source.remove(data) : null);
+    }).onClose.subscribe(info =>  {
+      if(info != null){
+        this.source.remove(data);
+        this.sourceDeactive.add(data);
+        this.sourceDeactive.setSort(this.sort);
+        this.sourceDeactive.refresh();
+      }
+    } );
+    
   }
 
   openUserPermissions(dialog: any, data: any) {
@@ -196,6 +285,41 @@ export class UsersComponent implements OnInit {
         user: data,
       }
     });
+  }
+
+  openActiveUser(datas:any){
+    let data: Confirmation = {body: "Are you sure you want to active?"};
+    let dialogRef : NbDialogRef<ConfirmationDialogComponent> = this.dialogService.open(ConfirmationDialogComponent, {context: {data}});
+    let datos = {
+      id: datas.id,
+      firstName: datas.firstName,
+      lastName: datas.lastName,
+      username: datas.username,
+      cgiarUser: datas.cgiarUser == 'Yes' ? true : false,
+      email: datas.email,
+      active: !datas.active,
+    };
+    dialogRef.onClose.subscribe(result => {
+      if(result){
+        this.userService.updateActiveUser(datos).subscribe({
+          next:(x) => {
+            this.userUpdated = true;
+            setTimeout(() => {
+              this.userUpdated = false;
+              //this.ref.close(x);
+            }, 3000);
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        });
+        this.source.add(datas);
+        this.sourceDeactive.remove(datas);
+        this.source.setSort(this.sort);
+        this.source.refresh();
+      }
+    });
+    
   }
 
 }

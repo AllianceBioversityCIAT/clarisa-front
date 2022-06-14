@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/public/login/login.component';
@@ -33,7 +32,8 @@ import {
   NbAlertModule, 
   NbTagModule,
   NbAutocompleteModule,
-  NbSpinnerModule 
+  NbSpinnerModule, 
+  NbTabsetModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -107,7 +107,8 @@ import { OrElsePipe } from './shared/pipes/or-else.pipe';
     Ng2SmartTableModule,
     NbTagModule,
     NbAutocompleteModule,
-    NbSpinnerModule
+    NbSpinnerModule,
+    NbTabsetModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }
