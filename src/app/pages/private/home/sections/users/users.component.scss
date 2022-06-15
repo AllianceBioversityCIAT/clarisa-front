@@ -10,16 +10,6 @@ nb-card-header {
     font-weight: 800 !important;
 }
 
-::ng-deep ng2-st-tbody-custom {
-    float: left;
-    width: auto;
-    display: flex;
-
-    a.ng2-smart-action.ng2-smart-action-custom-custom {
-        margin-left: 0.25em;
-    }
-}
-
 ::ng-deep.nb-theme-default ng2-smart-table .ng2-smart-actions a.ng2-smart-action:not(:last-child) {
     border-right: none !important;
 }
@@ -35,3 +25,15 @@ nb-card-header {
 ::ng-deep td.ng2-smart-actions ng2-st-tbody-edit-delete {
     display: none !important;
 }
+
+
+::ng-deep ng2-st-tbody-custom {
+    float: none !important;
+    width: auto;
+    display: flex;
+
+    a.ng2-smart-action.ng2-smart-action-custom-custom {
+        margin-left: 0 !important;
+    }
+}
+

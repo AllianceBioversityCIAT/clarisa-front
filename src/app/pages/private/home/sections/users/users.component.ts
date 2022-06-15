@@ -13,6 +13,7 @@ import { Confirmation } from 'src/app/shared/interfaces/Confirmation';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { identifierName } from '@angular/compiler';
 
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -81,6 +82,15 @@ export class UsersComponent implements OnInit {
         valuePrepareFunction: (value: any) => {
           return value? 'Yes':'No';
         },
+        filterFunction(skills?: any, search?: string) {
+          let match = skills;
+          
+          if (search?.toLowerCase() === 'yes') {
+            return match;
+          } if (search?.toLowerCase() === 'no' && match == false) {
+            return 'No';
+          }
+        }
       },
       email: {
         title: 'Email',
@@ -132,6 +142,15 @@ export class UsersComponent implements OnInit {
         valuePrepareFunction: (value: any) => {
           return value? 'Yes':'No';
         },
+        filterFunction(skills?: any, search?: string) {
+          let match = skills;
+          
+          if (search?.toLowerCase() === 'yes') {
+            return match;
+          } if (search?.toLowerCase() === 'no' && match == false) {
+            return 'No';
+          }
+        }
       },
       email: {
         title: 'Email',
@@ -288,7 +307,7 @@ export class UsersComponent implements OnInit {
   }
 
   openActiveUser(datas:any){
-    let data: Confirmation = {body: "Are you sure you want to active?"};
+    let data: Confirmation = {body: "Are you sure you want to activate this user?", title:{messages:"Active user: ",user:`${datas.email}`}};
     let dialogRef : NbDialogRef<ConfirmationDialogComponent> = this.dialogService.open(ConfirmationDialogComponent, {context: {data}});
     let datos = {
       id: datas.id,
@@ -301,7 +320,8 @@ export class UsersComponent implements OnInit {
     };
     dialogRef.onClose.subscribe(result => {
       if(result){
-        this.userService.updateActiveUser(datos).subscribe({
+        this.userService.updateUser
+        (datos).subscribe({
           next:(x) => {
             this.userUpdated = true;
             setTimeout(() => {
