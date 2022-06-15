@@ -4,6 +4,13 @@
     </nb-card-header>
 
     <nb-card-body>
-        <ng2-smart-table [settings]="settings" [source]="source" (create)="addRole()" (custom)="onCustom($event)"></ng2-smart-table>
+        <nb-tabset>
+            <nb-tab tabTitle="Active">
+                <ng2-smart-table [settings]="settings" [source]="source" (create)="addRole()" (custom)="onCustom($event, true)"></ng2-smart-table>
+            </nb-tab>
+            <nb-tab tabTitle="Deactivated">
+                <ng2-smart-table [settings]="settingsDeactive" [source]="sourceDeactive"  (custom)="onCustom($event, false)"></ng2-smart-table>
+            </nb-tab>
+        </nb-tabset>
     </nb-card-body>
 </nb-card>
