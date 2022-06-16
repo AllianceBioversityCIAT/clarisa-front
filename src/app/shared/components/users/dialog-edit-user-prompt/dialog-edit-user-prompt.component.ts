@@ -17,7 +17,7 @@ export class DialogEditUserPromptComponent extends BaseComponent implements OnIn
   @Input() cgiarUser: string = '';
   @Input() email: string = '';
   @Input() password: string = '';
-  @Input() isActive: string = '';
+  @Input() active: string = '';
   editUserForm!: FormGroup;
   submitted: boolean = false;
   userUpdated: boolean = false;
@@ -112,7 +112,7 @@ export class DialogEditUserPromptComponent extends BaseComponent implements OnIn
         username: username,
         cgiarUser: cgiarUser == 'Yes' ? true : false,
         email: email,
-        active: this.isActive,
+        active: this.active,
       };
 
       this._userService.updateUser(this.userInfo).subscribe({

@@ -255,6 +255,7 @@ export class UsersComponent implements OnInit {
   }
 
   openEditUser(dialog: any, data: any, table: boolean) {
+    console.log(data);
     this.dialogService.open(dialog, {
       context: {
         id: data.id,
@@ -264,11 +265,13 @@ export class UsersComponent implements OnInit {
         cgiarUser: data.cgiarUser,
         email: data.email,
         password: data.password,
-        isActive: data.isActive,
+        active: data.active,
       }
+      
     }).onClose.subscribe(info =>{
       if(table === true){
         this.source.update(data, info);
+        console.log(data);
       }else{
         this.sourceDeactive.update(data,info);
       }
