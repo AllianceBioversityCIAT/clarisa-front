@@ -1,6 +1,12 @@
 <nb-card>
     <nb-card-header *ngIf="data?.title" class="boldFont">
-        {{data.title}}
+        <b>
+            {{data.title?.messages}}
+        </b>
+        <a  class="boldFont" *ngIf="data?.title?.user">
+            {{data.title?.user}}
+        </a>
+        
     </nb-card-header>
     <nb-card-body>
         <label class="label regularFont">{{data.body}}</label>

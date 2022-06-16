@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
             if (res.authenticated === true) {
               this.router.navigate(['/home/users']);
               console.log("navigated to users");
+              window.location.reload();
             }
           }, 
           error: (error) => {

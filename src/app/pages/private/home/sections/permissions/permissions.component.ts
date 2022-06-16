@@ -139,6 +139,9 @@ export class PermissionsComponent implements OnInit {
       this.roleService.updateRole(this.role).subscribe({
         next: (role) => {
           this.showUpdateToast();
+          this.selectedPermissions.clear();
+          this.cgiarEntity = new CGIAREntity(0,"");
+          this.role = new Role(0);
         }
       });
     }
