@@ -145,9 +145,9 @@ export class UsersComponent implements OnInit {
         filterFunction(skills?: any, search?: string) {
           let match = skills;
           
-          if (search?.toLowerCase() === 'yes') {
+          if (search?.toLowerCase().includes('yes')) {
             return match;
-          } if (search?.toLowerCase() === 'no' && match == false) {
+          } if (search?.toLowerCase().includes('no') && match == false) {
             return 'No';
           }
         }
@@ -163,6 +163,7 @@ export class UsersComponent implements OnInit {
   sourceDeactive: LocalDataSource = new LocalDataSource();
   data: any;
   userUpdated: boolean = false;
+  loading = false;
   sort = [{
     field: "id",
     direction: "asc"
@@ -178,10 +179,12 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.userService.getUsers().subscribe({
       next : (x) => {
         this.source.load(x.filter((f:any)=> f.active === true));
         this.sourceDeactive.load(x.filter((f:any)=> f.active === false));
+        this.loading = false;
       },
       error : (err) => {
         //console.log(err.error.message || err.error || err.message);
@@ -190,6 +193,7 @@ export class UsersComponent implements OnInit {
         }
       }
     });
+    
   }
 
   addUser() {

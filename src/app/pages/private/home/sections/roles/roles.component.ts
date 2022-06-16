@@ -120,6 +120,7 @@ export class RolesComponent implements OnInit {
   sourceDeactive: LocalDataSource = new LocalDataSource();
   data: any;
   roleUpdated: boolean = false;
+  loading = false;
   sort = [{
     field: "id",
     direction: "asc"
@@ -127,9 +128,11 @@ export class RolesComponent implements OnInit {
   constructor(private dialogService: NbDialogService, private roleService: RoleService) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.roleService.getRoles().subscribe(x => {
       this.source.load(x.filter((f:any)=> f.active === true));
         this.sourceDeactive.load(x.filter((f:any)=> f.active === false));
+        this.loading = false;
     });
   }
 
